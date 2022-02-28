@@ -4,7 +4,6 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Question\Question;
@@ -24,7 +23,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class CreateSuperAdminCommand extends Command {
 
     public function __construct(
-        private readonly EntityManagerInterface $em,
         private readonly ValidatorInterface $validator,
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly UserRepository $userRepository
@@ -85,14 +83,10 @@ class CreateSuperAdminCommand extends Command {
 
             return $answer;
         });
-        $plaintextPassword = $io->askQuestion($questionPassword);
-        $user = new User();
-        $user
-            ->setEmail($email)
-            ->setPassword($this->passwordHasher->hashPassword($user, $plaintextPassword));
 
-        $this->em->persist($user);
-        $this->em->flush();
+        $user = (new User())->setEmail($email);
+        $this->userRepository->upgradePassword($user, $this->passwordHasher->hashPassword($user, $io->askQuestion($questionPassword)));
+
         $io->success("Le compte super-administrateur '$email' à été créer. Vous pouvez vous connecter.");
         return Command::SUCCESS;
     }
