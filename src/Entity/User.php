@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+#[ORM\HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
@@ -22,6 +24,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'string')]
     private $password;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $lastname;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $firstname;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $updatedAt;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $emailPerso;
 
     public function getId(): ?int {
         return $this->id;
@@ -82,5 +99,120 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     public function eraseCredentials() {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getLastname(): ?string {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getEmailPerso(): ?string {
+        return $this->emailPerso;
+    }
+
+    public function setEmailPerso(?string $emailPerso): self {
+        $this->emailPerso = $emailPerso;
+
+        return $this;
+    }
+
+    public function setFullRoles(): self {
+        $this->setRoles([
+            "ROLE_SETTINGS" => [
+                "SERVICES" => [
+                    "VMWARE" => [
+                        "view",
+                        "edit",
+                        "delete"
+                    ],
+                    "PTERODACTYL" => [
+                        "view",
+                        "edit",
+                        "delete"
+                    ],
+                    "PLESK" => [
+                        "view",
+                        "edit",
+                        "delete"
+                    ],
+                    "DOMAINS" => [
+                        "view",
+                        "edit",
+                        "delete"
+                    ],
+                    "LICENCES" => [
+                        "view",
+                        "edit",
+                        "delete"
+                    ]
+                ],
+                "PAYMENTS" => [
+                    "view",
+                    "edit",
+                    "delete"
+                ],
+                "BILLINGS" => [
+                    "view",
+                    "edit",
+                    "delete"
+                ],
+                "SECURITY" => [
+                    "view",
+                    "edit",
+                    "delete"
+                ],
+                "USERS" => [
+                    "view",
+                    "edit",
+                    "delete"
+                ]
+            ]
+        ]);
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updatedTimestamps(): void {
+        $this->setUpdatedAt(new DateTimeImmutable());
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new DateTimeImmutable());
+        }
     }
 }

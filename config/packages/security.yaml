@@ -22,9 +22,8 @@ security:
             provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
             logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                path: security.logout
+                target: security.login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -36,8 +35,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:

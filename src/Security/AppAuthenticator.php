@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class AppAuthenticator extends AbstractLoginFormAuthenticator {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'security.login';
 
     private UrlGeneratorInterface $urlGenerator;
 

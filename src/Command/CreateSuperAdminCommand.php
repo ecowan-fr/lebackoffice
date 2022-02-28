@@ -47,6 +47,30 @@ class CreateSuperadminCommand extends Command {
             return Command::FAILURE;
         }
 
+        $questionLastName = new Question('Nom de famille du compte super-administrateur');
+        $questionLastName->setValidator(function ($answer) {
+            if (!is_string($answer) || trim($answer) == '' || empty($answer)) {
+                throw new RuntimeException(
+                    "Le nom de famille est obligatoire"
+                );
+            }
+            return $answer;
+        });
+
+        $lastname = $io->askQuestion($questionLastName);
+
+        $questionFirstName = new Question('Prénom du compte super-administrateur');
+        $questionFirstName->setValidator(function ($answer) {
+            if (!is_string($answer) || trim($answer) == '' || empty($answer)) {
+                throw new RuntimeException(
+                    "Le prénom est obligatoire"
+                );
+            }
+            return $answer;
+        });
+
+        $firstname = $io->askQuestion($questionFirstName);
+
         $questionEmail = new Question('Email du compte super-administrateur');
         $questionEmail->setValidator(function ($answer) {
             if (!is_string($answer) || trim($answer) == '' || empty($answer)) {
@@ -79,7 +103,12 @@ class CreateSuperadminCommand extends Command {
             return $answer;
         });
 
-        $user = (new User())->setEmail($email);
+        $user = (new User())
+            ->setLastname($lastname)
+            ->setFirstname($firstname)
+            ->setEmail($email)
+            ->setFullRoles();
+
         $this->userRepository->upgradePassword($user, $this->passwordHasher->hashPassword($user, $io->askQuestion($questionPassword)));
 
         $io->success("Le compte super-administrateur '$email' à été créer. Vous pouvez vous connecter.");
