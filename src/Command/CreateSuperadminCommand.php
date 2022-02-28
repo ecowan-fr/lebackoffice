@@ -86,7 +86,7 @@ class CreateSuperadminCommand extends Command {
                     "Un compte existe déjà avec cette adresse email"
                 );
             }
-            return $answer;
+            return strtolower($answer);
         });
 
         $email = $io->askQuestion($questionEmail);

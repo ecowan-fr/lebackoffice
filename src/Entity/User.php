@@ -152,56 +152,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     public function setFullRoles(): self {
+
         $this->setRoles([
-            "ROLE_SETTINGS" => [
-                "SERVICES" => [
-                    "VMWARE" => [
-                        "view",
-                        "edit",
-                        "delete"
-                    ],
-                    "PTERODACTYL" => [
-                        "view",
-                        "edit",
-                        "delete"
-                    ],
-                    "PLESK" => [
-                        "view",
-                        "edit",
-                        "delete"
-                    ],
-                    "DOMAINS" => [
-                        "view",
-                        "edit",
-                        "delete"
-                    ],
-                    "LICENCES" => [
-                        "view",
-                        "edit",
-                        "delete"
-                    ]
-                ],
-                "PAYMENTS" => [
-                    "view",
-                    "edit",
-                    "delete"
-                ],
-                "BILLINGS" => [
-                    "view",
-                    "edit",
-                    "delete"
-                ],
-                "SECURITY" => [
-                    "view",
-                    "edit",
-                    "delete"
-                ],
-                "USERS" => [
-                    "view",
-                    "edit",
-                    "delete"
-                ]
-            ]
+            "settings.view",
+            "settings.main.view",
+
+            "settings.services.vmware.view",
+            "settings.services.vmware.edit",
+            "settings.services.vmware.delete",
+
+            "settings.services.pterodactyl.view",
+            "settings.services.pterodactyl.edit",
+            "settings.services.pterodactyl.delete",
+
+            "settings.services.plesk.view",
+            "settings.services.plesk.edit",
+            "settings.services.plesk.delete",
+
+            "settings.services.domains.view",
+            "settings.services.domains.edit",
+            "settings.services.domains.delete",
+
+            "settings.services.licences.view",
+            "settings.services.licences.edit",
+            "settings.services.licences.delete",
+
+            "settings.payments.view",
+            "settings.payments.edit",
+            "settings.payments.delete",
+
+            "settings.billings.view",
+            "settings.billings.edit",
+            "settings.billings.delete",
+
+            "settings.security.view",
+            "settings.security.edit",
+            "settings.security.delete",
+
+            "settings.users.view",
+            "settings.users.edit",
+            "settings.users.delete"
         ]);
 
         return $this;
