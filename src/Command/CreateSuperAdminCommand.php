@@ -17,10 +17,10 @@ use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
-    name: 'app:create-super-admin',
+    name: 'app:create-superadmin',
     description: "Ajout d'un super administrateur",
 )]
-class CreateSuperAdminCommand extends Command {
+class CreateSuperadminCommand extends Command {
 
     public function __construct(
         private readonly ValidatorInterface $validator,
@@ -39,16 +39,11 @@ class CreateSuperAdminCommand extends Command {
         $io->writeln(''); //Ajout d'un retour a la ligne
         $io->title("Ajout d'un super administrateur");
 
-        $NullOutput = new NullOutput;
-
-        //Chec automatique si la base de donnée existe et si toute les migrations ont été jouées
         $command = $this->getApplication()->find('doctrine:migrations:up-to-date');
-        if ($command->run($input, $NullOutput) != 0) {
-            throw new RuntimeException(
-                "Toutes les migrations ne sont pas jouées.
-                Exécutez \"php bin/console doctrine:migrations:migrate\"
-                avant de relancer la création d'un super administrateur"
-            );
+        if ($command->run($input, new NullOutput) != 0) {
+            throw new RuntimeException("
+                Toutes les migrations ne sont pas jouées. Ré-exécutez les migrations ou le setup avant de relancer la création d'un super administrateur
+            ");
             return Command::FAILURE;
         }
 

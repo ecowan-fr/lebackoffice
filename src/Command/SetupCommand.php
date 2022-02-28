@@ -68,7 +68,7 @@ class SetupCommand extends Command {
         $progress->advance();
 
         //Création d'un super admin
-        $command = $this->getApplication()->find('app:create-super-admin');
+        $command = $this->getApplication()->find('app:create-superadmin');
         if ($command->run($input, $output) != 0) {
             throw new RuntimeException("Impossible d'ajouter le super administrateur !");
             return Command::FAILURE;
