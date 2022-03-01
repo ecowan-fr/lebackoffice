@@ -10,6 +10,13 @@ module.exports = {
       visby: 'Visby Round CF',
       marianne: 'Marianne'
     },
+    screens: {
+      print: { 'raw': 'print' },
+      sm: '600px',
+      md: '960px',
+      lg: '1280px',
+      xl: '1440px'
+    },
   },
   plugins: [],
 }

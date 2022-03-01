@@ -1,4 +1,7 @@
 export default (function () {
+    document.env = {
+        "API_KEY": 'test'
+    };
     let gestionSelect = () => {
         let selects = document.querySelectorAll('div.select');
         selects.forEach(element => {

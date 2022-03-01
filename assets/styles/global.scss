@@ -1,3 +1,7 @@
+html, body {
+    @apply font-marianne w-full h-full min-h-0 min-w-full flex flex-col;
+}
+
 .waves-effect {display: block;}
 
 @keyframes clignotement { 

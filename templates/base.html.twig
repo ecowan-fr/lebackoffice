@@ -31,8 +31,6 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="theme-color" content="#ffffff">
 	</head>
-	<body class="w-full h-screen flex flex-col justify-between text-xs font-normal font-marianne bg-gray-100 dark:bg-gray-800 text-slate-600 dark:text-slate-200">
-		<div class='pb-12 flex-grow mx-5'> {% block body %}{% endblock %}{% block js_body %}{% endblock %}
-			</div>
+	<body class="bg-gray-100 dark:bg-gray-800 text-slate-600 dark:text-slate-200"> {% block body %}{% endblock %}{% block js_body %}{% endblock %}
 		</body>
 	</html>
