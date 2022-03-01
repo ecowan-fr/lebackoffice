@@ -1,0 +1,58 @@
+.button,
+label.addlicence,
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+    @apply block shadow bg-gradient-to-r from-blue-400 to-blue-500 text-gray-100 dark:text-gray-100 text-xs text-center font-semibold flex-nowrap cursor-pointer border-none rounded py-3 px-5 select-none;
+    transition:.2s;
+
+    &:active { @apply ring-2 ring-offset-1 ring-offset-gray-100; }
+
+    &:hover { @apply ring-2; }
+
+    &.large {
+        @apply text-sm py-4 px-10;
+
+        &:active { @apply ring-4; }
+    }
+
+    &.xlarge {
+        @apply text-base py-5 px-16 ;
+
+        &:active { @apply ring-4 ring-offset-2; }
+    }
+
+    &.group { @apply rounded-none; }
+
+    &:disabled {
+        @apply cursor-not-allowed;
+
+        &:hover { @apply ring-0 ring-offset-0; }
+
+        &:active { @apply ring-0 ring-offset-0; }
+    }
+
+    &.transparent {
+        @apply bg-none shadow-none text-gray-600;
+    }
+
+    &.green { @apply from-green-400 to-green-500 ring-green-400; }
+
+    &.red { @apply from-red-400 to-red-500 ring-red-400; }
+
+    &.gray { @apply from-gray-400 to-gray-500 ring-gray-400; }
+}
+
+label.ring:hover {
+    @apply ring-2;
+    transition: .2s;
+}
+
+label.ring:active {
+    @apply ring-2 ring-offset-1 ring-offset-gray-100;
+    transition: .2s;
+}
+label.addlicence {
+    @apply mx-2 w-full md:w-2/3 border-2 border-gray-300 border-dashed rounded-lg p-10 text-center bg-none shadow-none from-transparent to-transparent;
+}

@@ -19,5 +19,11 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@hotwired/turbo": "^7.1.0",
+        "alpinejs": "^3.9.0",
+        "animate.css": "^4.1.1",
+        "node-waves": "^0.7.6"
     }
 }

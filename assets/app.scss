@@ -1,0 +1,29 @@
+//Animate
+@import 'animate.css';
+
+// Fonts
+@import './styles/fontawesome.scss';
+@import './styles/visbyroundcf.scss';
+@import './styles/marianne.scss';
+
+//Librairies
+@import './styles/global.scss';
+@import '../node_modules/node-waves/dist/waves.css';
+.waves-effect {display: block;}
+
+//Components
+@import './styles/components/table.scss';
+@import './styles/components/lightbox.scss';
+@import './styles/components/buttons.scss';
+@import './styles/components/input.scss';
+@import './styles/components/checkbox.scss';
+@import './styles/components/radio.scss';
+@import './styles/components/lists.scss';
+@import './styles/components/avatar.scss';
+@import './styles/components/breadcrumbs.scss';
+
+//Shared
+@import './styles/shared/header.scss';
+
+//Pages
+@import './styles/pages/settings.scss';

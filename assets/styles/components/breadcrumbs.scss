@@ -1,0 +1,39 @@
+nav.breadcrumbs {
+    @apply border border-gray-300 dark:border-gray-700 rounded inline-flex overflow-hidden h-12;
+
+    a.step {
+        @apply bg-white dark:bg-gray-900 font-extrabold text-sm text-gray-800 dark:text-gray-300 outline-none relative decoration-0 py-3 pr-7 pl-9 flex items-center;
+        transition: background 0.2s linear;
+        img {
+            @apply h-7;
+        }
+
+        &:hover,
+        &:hover:after,
+        &:hover:before {
+            @apply bg-gray-300 dark:bg-gray-700;
+        }
+
+        &:after,
+        &:before {
+            content: "";
+            @apply bg-white dark:bg-gray-900 bottom-0 absolute top-0 left-full z-10 w-4;
+            clip-path: polygon(50% 50%, -50% -50%, 0 100%);
+            transition: background 0.2s linear;
+        }
+
+        &:before {
+            @apply bg-gray-300 dark:bg-gray-700;
+            margin-left: 1px;
+        }
+
+        &:first-child {
+            @apply pl-7;
+        }
+
+        &:last-child {
+            @apply bg-gray-200 dark:bg-gray-600 cursor-default;
+            border-right: none;
+        }
+    }
+}

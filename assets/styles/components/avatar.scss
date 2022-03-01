@@ -1,0 +1,6 @@
+div.avatar {
+    @apply w-20 h-20 block rounded-full border-4 cursor-pointer;
+    background-position: center center;
+    background-size: 100%;
+    transition: .2s;
+}

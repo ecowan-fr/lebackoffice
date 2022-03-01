@@ -1,0 +1,47 @@
+div.radio-group {
+    @apply 
+        border
+        border-gray-400
+        dark:border-gray-500
+        inline-block
+        rounded
+        text-base
+        relative
+    ;
+
+    input[type=radio] {
+        @apply hidden;
+    }
+
+    label {
+        @apply
+            text-gray-400
+            dark:text-gray-500
+            cursor-pointer
+            py-5
+            inline-block
+            w-44
+            text-center
+            font-medium
+        ;
+
+        &.colorSelected {
+            @apply text-gray-600 dark:text-gray-300;
+        }
+    }
+
+    .selected {
+        @apply
+                bg-white
+                dark:bg-gray-700
+                rounded
+                absolute
+                left-0
+                top-0
+                h-full
+                -z-10
+                w-44
+            ;
+            transition: 0.2s cubic-bezier(.5,-0.01,.5,1.01);
+    }
+}

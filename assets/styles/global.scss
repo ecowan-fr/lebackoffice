@@ -1,0 +1,109 @@
+.waves-effect {display: block;}
+
+@keyframes clignotement { 
+    50% { opacity: 1; }
+    75% { opacity: 0; }
+}
+
+.clignotement { animation: clignotement 1s infinite; }
+
+@keyframes clignotement { 
+    50% { opacity: 1; }
+    75% { opacity: 0; }
+}
+
+a {
+    @apply text-blue-500 dark:text-blue-400 cursor-pointer;
+}
+
+.alert { 
+    @apply w-full bg-blue-100 py-5 px-7 rounded text-base flex items-center font-medium;
+
+    i {
+        @apply mr-5 text-3xl;
+    }
+
+    &.red {
+        @apply border-red-500 bg-red-100 dark:bg-red-800 dark:text-white;
+    }
+
+    &.blue {
+        @apply border-blue-500 bg-blue-100 dark:bg-blue-800 dark:text-white;
+    }
+
+    &.green {
+        @apply border-green-500 bg-green-100 dark:bg-green-800 dark:text-white;
+    }
+
+    &.orange {
+        @apply border-orange-500 bg-orange-100 dark:bg-orange-800 dark:text-white;
+    }
+}
+
+.card {
+    @apply bg-white dark:bg-gray-700 shadow-md rounded-xl p-5;
+
+    &.nopad {
+       padding: 0;
+    }
+}
+
+.badge {
+    @apply text-gray-300 px-2 py-1 rounded bg-gray-600;
+}
+
+.mark {
+    @apply w-5 mx-auto relative h-1 rounded-2xl bg-black dark:bg-white;
+
+    &::before {
+        content: '';
+        @apply absolute w-1 h-full -left-3/4 opacity-20 bg-inherit rounded-full;
+    }
+
+    &::after {
+        content: '';
+        @apply absolute w-1 h-full -right-3/4 opacity-20 bg-inherit rounded-full;
+    }
+}
+
+div.flashbag {
+    @apply absolute w-full flex flex-col items-center;
+    top:0.35rem;
+
+    & .flash {
+        @apply mt-2 bg-white z-20 border-2 pl-1 pr-5 py-1 rounded-full shadow-lg font-medium flex items-center;
+        animation: bounceInDown 1.1s;
+
+        i {
+            @apply text-base mr-2;
+        }
+
+        span {
+            @apply rounded-full py-1 px-3 flex items-center text-white font-bold;
+
+            &.success {
+                @apply bg-green-400;
+            }
+
+            &.error {
+                @apply bg-red-400;
+            }
+
+            &.info {
+                @apply bg-blue-400;
+            }
+
+            &.warning {
+                @apply bg-yellow-400;
+            }
+        }
+
+        p {
+            @apply ml-3 text-sm;
+        }
+
+        &:first-child {
+            @apply mt-0;
+        }
+    }
+}
