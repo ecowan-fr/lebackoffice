@@ -29,6 +29,8 @@ class SetupCommand extends Command {
             return Command::INVALID;
         }
 
+        $NullOutput = new NullOutput;
+
         if ($_ENV['APP_ENV'] === 'dev') {
             if (!$io->confirm("Docker est-il installé ?")) {
                 return Command::INVALID;
@@ -36,25 +38,26 @@ class SetupCommand extends Command {
             if (!$io->confirm("Les conteneurs sont-ils lancés ?")) {
                 return Command::INVALID;
             }
+
+            $progress = $io->createProgressBar('2');
+            $progress->start();
         } else {
             if (!$io->confirm("La base de données est-elle accessible ?")) {
                 return Command::INVALID;
             }
+
+            $progress = $io->createProgressBar('3');
+            $progress->start();
+
+            // Création de la base de donnée
+            $command = $this->getApplication()->find('doctrine:database:create');
+            if ($command->run($input, $NullOutput) != 0) {
+                throw new RuntimeException("Impossible de créer la base de données !");
+                return Command::FAILURE;
+            }
+
+            $progress->advance();
         }
-
-        $progress = $io->createProgressBar('3');
-        $progress->start();
-
-        $NullOutput = new NullOutput;
-
-        // Création de la base de donnée
-        $command = $this->getApplication()->find('doctrine:database:create');
-        if ($command->run($input, $NullOutput) != 0) {
-            throw new RuntimeException("Impossible de créer la base de données !");
-            return Command::FAILURE;
-        }
-
-        $progress->advance();
 
         // Ajout des migrations
         $migrationInput = new ArrayInput(['--no-interaction' => true]);

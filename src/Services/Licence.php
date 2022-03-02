@@ -92,7 +92,8 @@ class Licence {
                             if (!is_null($request->server->get('SERVER_ADDR')) && !$this->cidr_match($request->server->get('SERVER_ADDR') === '::1' ? "127.0.0.1" : $request->server->get('SERVER_ADDR'), json_decode($decrypted)->ip)) {
                                 return "La licence n'est pas valide.";
                             } else {
-                                if (!str_contains($request->getHost(), json_decode($decrypted)->url)) {
+                                $host = $request->getHost() === 'localhost' ? '127.0.0.1' : $request->getHost();
+                                if (!str_contains($host, json_decode($decrypted)->url)) {
                                     return "La licence n'est pas valide.";
                                 } else {
                                     return true;
