@@ -3,4 +3,7 @@
 {% block title 'Erreur serveur' %}
 {% block icon 'fa-bug' %}
 {% block color 'text-red-600' %}
-{% block description "Oops une erreur s'est glissée dans le code :(" %}
+{# {% block description "Oops une erreur s'est glissée dans le code :(" %} #}
+{% block description %}
+	{{exception.message}}
+{% endblock %}
