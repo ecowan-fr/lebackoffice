@@ -24,7 +24,7 @@ class CreateSuperadminCommand extends Command {
 
     public function __construct(
         private readonly ValidatorInterface $validator,
-        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly UserRepository $userRepository
     ) {
         parent::__construct();
@@ -109,7 +109,7 @@ class CreateSuperadminCommand extends Command {
             ->setEmail($email)
             ->setFullRoles();
 
-        $this->userRepository->upgradePassword($user, $this->passwordHasher->hashPassword($user, $io->askQuestion($questionPassword)));
+        $this->userRepository->upgradePassword($user, $this->userPasswordHasher->hashPassword($user, $io->askQuestion($questionPassword)));
 
         $io->success("Le compte super-administrateur '$email' à été créer. Vous pouvez vous connecter.");
         return Command::SUCCESS;

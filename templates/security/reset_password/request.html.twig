@@ -1,0 +1,30 @@
+{% extends 'security/base_security.html.twig' %}
+
+{% block title 'Mot de passe oublié' %}
+
+{% block security %}
+	<div class="w-full">
+		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
+	</div>
+
+	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">Mot de passe oublié</div>
+	<div class="flex items-baseline mt-2 font-light text-xs">
+		<div>Enter your email address and we will send you a link to reset your password.</div>
+	</div>
+
+	<a class="block my-8" href="{{ path('security.login') }}">
+		<i class="fa-duotone fa-circle-left"></i>
+		Retour à la connexion</a>
+
+	{% for flash_error in app.flashes('reset_password_error') %}
+		<div class="alert red" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	{{ form_start(requestForm) }}
+
+	<label for="reset_password_request_form_email" class="mt-6 block mb-2 text-gray-500">Adresse email</label>
+	{{ form_widget(requestForm.email, { 'attr': {'class': 'w-full'} }) }}
+
+	<button type="submit" class="mt-6 mb-1 large w-full">Demander un nouveau mot de passe</button>
+	{{ form_end(requestForm) }}
+{% endblock %}
