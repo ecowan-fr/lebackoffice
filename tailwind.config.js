@@ -1,5 +1,6 @@
 module.exports = {
   content: [
+    './src/**/*.php',
     './templates/**/*.html.twig',
     './assets/js/*.js'
   ],

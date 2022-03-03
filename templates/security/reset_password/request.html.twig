@@ -16,10 +16,6 @@
 		<i class="fa-duotone fa-circle-left"></i>
 		Retour à la connexion</a>
 
-	{% for flash_error in app.flashes('reset_password_error') %}
-		<div class="alert red" role="alert">{{ flash_error }}</div>
-	{% endfor %}
-
 	{{ form_start(requestForm) }}
 
 	<label for="reset_password_request_form_email" class="mt-6 block mb-2 text-gray-500">Adresse email</label>

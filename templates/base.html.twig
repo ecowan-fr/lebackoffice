@@ -31,6 +31,11 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="theme-color" content="#ffffff">
 	</head>
-	<body class="bg-gray-100 dark:bg-gray-800 text-slate-600 dark:text-slate-200"> {% block body %}{% endblock %}{% block js_body %}{% endblock %}
-		</body>
-	</html>
+	<body class="bg-gray-100 dark:bg-gray-800 text-slate-600 dark:text-slate-200">
+		<div class='flashbag animate__animated'>
+			{{ showFlashMessage(app.flashes) }}
+		</div>
+		{% block body %}{% endblock %}
+		{% block js_body %}{% endblock %}
+	</body>
+</html>

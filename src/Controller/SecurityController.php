@@ -86,11 +86,11 @@ class SecurityController extends AbstractController {
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $this->translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $this->translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
+            $this->addFlash('warning', sprintf(
+                '%s - %s',
+                $this->translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+                $this->translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+            ));
 
             return $this->redirectToRoute('security.resetpassword.checkemail');
         }
@@ -108,6 +108,8 @@ class SecurityController extends AbstractController {
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
+
+        $this->addFlash('success', 'Email envoyé.');
 
         return $this->redirectToRoute('security.resetpassword.checkemail');
     }
@@ -143,7 +145,7 @@ class SecurityController extends AbstractController {
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
+            $this->addFlash('error', sprintf(
                 '%s - %s',
                 $this->translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_VALIDATE, [], 'ResetPasswordBundle'),
                 $this->translator->trans($e->getReason(), [], 'ResetPasswordBundle')
@@ -164,6 +166,8 @@ class SecurityController extends AbstractController {
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
+
+            $this->addFlash('success', "Mot de passe modifié avec succées.");
 
             return $this->redirectToRoute('security.login');
         }
