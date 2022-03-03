@@ -1,0 +1,23 @@
+{% extends 'security/base_security.html.twig' %}
+
+{% block title 'Mot de passe oublié' %}
+
+{% block security %}
+	<div class="w-full">
+		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
+	</div>
+
+	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">Mot de passe oublié</div>
+	<div class="flex items-baseline mt-2 font-light text-xs">
+		<div>Enter your email address and we will send you a link to reset your password.</div>
+	</div>
+
+	<a class="block my-8" href="{{ path('security.login') }}">
+		<i class="fa-duotone fa-circle-left"></i>
+		Retour à la connexion</a>
+	<p>If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in
+		{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+	</p>
+	<p class="mt-5">If you don't receive an email please check your spam folder or
+		<a href="{{ path('security.resetpassword.request') }}">try again</a>.</p>
+{% endblock %}
