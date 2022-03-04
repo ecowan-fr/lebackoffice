@@ -26,9 +26,19 @@
 					<div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">{{ 'Application reserved for members of the Ecowan organization.'|trans({}, 'security') }}</div>
 				</div>
 			</div>
-			<div class="md:flex md:justify-end w-full sm:w-auto md:h-full py-8 px-4 sm:p-12 md:p-16 md:pt-24 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-white">
-				<div class="w-full max-w-96 sm:w-96 mx-auto sm:mx-0">
-					{% block security '' %}
+			<div class="md:flex md:justify-end w-full sm:w-auto h-full md:h-full sm:h-auto py-6 px-4 sm:p-12 sm:pb-10 md:p-16 md:pb-10 md:pt-24 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-white">
+				<div class="w-full max-w-96 sm:w-96 mx-auto sm:mx-0 flex flex-col justify-between h-full">
+					<div>
+						{% block security '' %}
+						</div>
+						<div class="text-center text-sm sm:mt-12 md:mt-0">
+							<a href="{{ path('locale.change', { locale:'en' }) }}">
+								<i class="fa-duotone fa-flag-usa"></i>
+								{{ 'English'|trans({}, 'language') }}</a>
+							<a href="{{ path('locale.change', { locale:'fr' }) }}" class="ml-5">
+								<i class="fa-duotone fa-baguette"></i>
+								{{ 'French'|trans({}, 'language') }}</a>
+						</div>
 					</div>
 				</div>
 			</div>
