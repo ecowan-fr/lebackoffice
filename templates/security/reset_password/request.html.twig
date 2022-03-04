@@ -1,26 +1,26 @@
 {% extends 'security/base_security.html.twig' %}
 
-{% block title 'Mot de passe oublié' %}
+{% block title 'Forgot your password'|trans({}, 'security') %}
 
 {% block security %}
 	<div class="w-full">
 		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
 	</div>
 
-	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">Mot de passe oublié</div>
+	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">{{ 'Forgot your password'|trans({}, 'security') }}</div>
 	<div class="flex items-baseline mt-2 font-light text-xs">
-		<div>Enter your email address and we will send you a link to reset your password.</div>
+		<div>{{ 'Enter your email address and we will send you a link to reset your password.'|trans({}, 'security') }}</div>
 	</div>
 
 	<a class="block my-8" href="{{ path('security.login') }}">
 		<i class="fa-duotone fa-circle-left"></i>
-		Retour à la connexion</a>
+		{{ 'Back to sign in'|trans({}, 'security') }}</a>
 
 	{{ form_start(requestForm) }}
 
-	<label for="reset_password_request_form_email" class="mt-6 block mb-2 text-gray-500">Adresse email</label>
+	<label for="reset_password_request_form_email" class="mt-6 block mb-2 text-gray-500">{{ 'Email adress'|trans({}, 'security') }}</label>
 	{{ form_widget(requestForm.email, { 'attr': {'class': 'w-full'} }) }}
 
-	<button type="submit" class="mt-6 mb-1 large w-full">Demander un nouveau mot de passe</button>
+	<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Request a new password'|trans({}, 'security') }}</button>
 	{{ form_end(requestForm) }}
 {% endblock %}

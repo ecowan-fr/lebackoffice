@@ -1,24 +1,24 @@
 {% extends 'security/base_security.html.twig' %}
 
-{% block title 'Se connecter' %}
+{% block title 'Sign in'|trans({}, 'security') %}
 
 {% block security %}
 	<div class="w-full">
 		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
 	</div>
 
-	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">Connexion</div>
+	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">{{ 'Sign in'|trans({}, 'security') }}</div>
 	<div class="flex items-baseline mt-2 font-light text-xs">
-		<div>Si vous n'avez pas de compte, merci de vous rapprocher de l'équipe de l'application.</div>
+		<div>{{ 'If you do not have an account, please contact the application team.'|trans({}, 'security')}}</div>
 	</div>
 	<form method="post" class="mt-8">
 		{% if error %}
 			{{ showAlert(error.messageKey|trans(error.messageData, 'security'), 'error', 'mt-5') }}
 		{% endif %}
-		<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">Utilisateur</label>
+		<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">{{ 'Email adress'|trans({},'security') }}</label>
 		<input id="inputEmail" value="{{ last_username }}" name="email" class="w-full" type="email" placeholder="someone@ecowan.fr" autocomplete="username" required autofocus>
 
-		<label for="inputPassword" class="mt-6 block mb-2 text-gray-500">Mot de passe</label>
+		<label for="inputPassword" class="mt-6 block mb-2 text-gray-500">{{ 'Password'|trans({}, 'security') }}</label>
 		<input id="inputPassword" name="password" class="w-full" type="password" autocomplete="current-password" required>
 
 		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -26,17 +26,18 @@
 		<div class="inline-flex items-end justify-between w-full mt-12">
 			<label>
 				<input type="checkbox" name="_remember_me">
-				Se souvenir
+				{{ 'Remember me'|trans({}, 'security') }}
 			</label>
-			<a href="{{ path('security.resetpassword.request') }}" class="text-md font-medium text-primary-500">Mot de passe oublié ?
+			<a href="{{ path('security.resetpassword.request') }}" class="text-md font-medium text-primary-500">{{ 'Forgot your password'|trans({}, 'security') }}
+				?
 			</a>
 		</div>
 
-		<button type="submit" class="mt-6 mb-1 large w-full">Se connecter</button>
+		<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
 
 		<div class="flex items-center mt-10">
 			<div class="flex-auto mt-px border-t"></div>
-			<div class="mx-2 text-secondary">ou continuer avec</div>
+			<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
 			<div class="flex-auto mt-px border-t"></div>
 		</div>
 		<div class="flex justify-between w-full mt-10 gap-5">

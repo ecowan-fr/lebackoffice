@@ -1,25 +1,25 @@
 {% extends 'security/base_security.html.twig' %}
 
-{% block title 'Mot de passe oublié' %}
+{% block title 'Reset your password'|trans({}, 'security') %}
 
 {% block security %}
 	<div class="w-full">
 		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
 	</div>
 
-	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">Mot de passe oublié</div>
+	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">{{ 'Forgot your password'|trans({}, 'security') }}</div>
 	<div class="flex items-baseline mt-2 font-light text-xs">
-		<div>Reset your password</div>
+		<div>{{ 'Reset your password'|trans({}, 'security') }}</div>
 	</div>
 
 	{{ form_start(resetForm) }}
 
-	<label for="change_password_form_plainPassword_first" class="mt-6 block mb-2 text-gray-500">Nouveau mot de passe</label>
+	<label for="change_password_form_plainPassword_first" class="mt-6 block mb-2 text-gray-500">{{ 'New Password'|trans({}, 'security') }}</label>
 	{{ form_widget(resetForm.plainPassword.first, { 'attr': {'class': 'w-full'} }) }}
 
-	<label for="change_password_form_plainPassword_second" class="mt-6 block mb-2 text-gray-500">Confirmer votre mot de passe</label>
+	<label for="change_password_form_plainPassword_second" class="mt-6 block mb-2 text-gray-500">{{ 'Confirm your password'|trans({}, 'security') }}</label>
 	{{ form_widget(resetForm.plainPassword.second, { 'attr': {'class': 'w-full'} }) }}
 
-	<button type="submit" class="mt-8 mb-1 large w-full">Enregistrer le nouveau mot de passe</button>
+	<button type="submit" class="mt-8 mb-1 large w-full">{{ 'Reset your password'|trans({}, 'security') }}</button>
 	{{ form_end(resetForm) }}
 {% endblock %}

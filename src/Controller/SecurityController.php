@@ -33,7 +33,7 @@ class SecurityController extends AbstractController {
     ) {
     }
 
-    #[Route(path: '/login', name: 'security.login')]
+    #[Route(path: '/login', name: 'security.login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response {
         if ($this->getUser()) {
             return $this->redirectToRoute('home.home');
@@ -41,6 +41,7 @@ class SecurityController extends AbstractController {
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -50,12 +51,12 @@ class SecurityController extends AbstractController {
         ]);
     }
 
-    #[Route(path: '/logout', name: 'security.logout')]
+    #[Route(path: '/logout', name: 'security.logout', methods: ['GET'])]
     public function logout(): void {
         throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route('/reset-password', name: 'security.resetpassword.request')]
+    #[Route('/reset-password', name: 'security.resetpassword.request', methods: ['GET', 'POST'])]
     public function request(Request $request): Response {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
@@ -109,12 +110,12 @@ class SecurityController extends AbstractController {
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
-        $this->addFlash('success', 'Email envoyé.');
+        $this->addFlash('success', $this->translator->trans('Email sent.'));
 
         return $this->redirectToRoute('security.resetpassword.checkemail');
     }
 
-    #[Route('/reset-password/check-email', name: 'security.resetpassword.checkemail')]
+    #[Route('/reset-password/check-email', name: 'security.resetpassword.checkemail', methods: ['GET'])]
     public function checkEmail(): Response {
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
@@ -127,7 +128,7 @@ class SecurityController extends AbstractController {
         ]);
     }
 
-    #[Route('/reset-password/reset/{token}', name: 'security.resetpassword.resetpassword')]
+    #[Route('/reset-password/reset/{token}', name: 'security.resetpassword.resetpassword', methods: ['GET', 'POST'])]
     public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher, string $token = null): Response {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -167,7 +168,7 @@ class SecurityController extends AbstractController {
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            $this->addFlash('success', "Mot de passe modifié avec succées.");
+            $this->addFlash('success', $this->translator->trans('Password changed successfully.'));
 
             return $this->redirectToRoute('security.login');
         }

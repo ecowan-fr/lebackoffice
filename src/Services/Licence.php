@@ -4,6 +4,7 @@ namespace App\Services;
 
 use \DateTime;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * LA MODIFICATION DE CETTE CLASSE AFIN D'AVOIR ACCESS AUX SERVICES PRÉSENTS
@@ -15,7 +16,9 @@ class Licence {
 
     private string $licence;
 
-    public function __construct() {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
         $this->licence = $_ENV['APP_LICENCE'];
     }
 
@@ -42,7 +45,7 @@ class Licence {
      */
     public function isValid(Request $request): bool|string {
         if ($this->licence === '') {
-            return "Aucune licence n'est présente";
+            return $this->translator->trans('No license is found.');
         }
 
         $data = str_split(base64_decode($this->licence), 512);
@@ -50,7 +53,7 @@ class Licence {
         $decrypted = '';
         $f5sd654f4 = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . base64_decode('UzUxRjVFMUc1Q0M1UjhHLnBlbQ==');
         if (!is_readable($f5sd654f4)) {
-            return "Impossible de lire la clé de déchiffrement.";
+            return $this->translator->trans('Unable to read decryption key.');
         } else {
             $fp = fopen($f5sd654f4, "r");
             $read = fread($fp, filesize($f5sd654f4));
@@ -58,7 +61,7 @@ class Licence {
             $f4e864s61c1 = openssl_get_publickey($read);
 
             if (!$f4e864s61c1) {
-                return "La clé de déchiffrement n'est pas valide.";
+                return $this->translator->trans('The decryption key is invalid.');
             } else {
                 foreach ($data as $value) {
                     $partial = '';
@@ -71,7 +74,7 @@ class Licence {
                 }
 
                 if (!$decrypted) {
-                    return "Impossible de déchiffrer la licence.";
+                    return $this->translator->trans('Failed to decrypt license.');
                 } else {
                     $checkHash = '';
                     foreach (json_decode($decrypted) as $key => $value) {
@@ -81,20 +84,20 @@ class Licence {
                     }
 
                     if (hash('sha512', $checkHash) != json_decode($decrypted)->hash) {
-                        return "La licence n'est pas valide.";
+                        return $this->translator->trans('The license is invalid.');
                     } else {
                         $creation = new Datetime(json_decode($decrypted)->created);
                         $expiration = new Datetime(json_decode($decrypted)->expire);
                         $now = new Datetime();
                         if ($now->diff($expiration)->invert || !$now->diff($creation)->invert) {
-                            return "La licence n'est pas valide.";
+                            return $this->translator->trans('The license is invalid.');
                         } else {
                             if (!is_null($request->server->get('SERVER_ADDR')) && !$this->cidr_match($request->server->get('SERVER_ADDR') === '::1' ? "127.0.0.1" : $request->server->get('SERVER_ADDR'), json_decode($decrypted)->ip)) {
-                                return "La licence n'est pas valide.";
+                                return $this->translator->trans('The license is invalid.');
                             } else {
                                 $host = $request->getHost() === 'localhost' ? '127.0.0.1' : $request->getHost();
                                 if (!str_contains($host, json_decode($decrypted)->url)) {
-                                    return "La licence n'est pas valide.";
+                                    return $this->translator->trans('The license is invalid.');
                                 } else {
                                     return true;
                                 }
