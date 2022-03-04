@@ -2,10 +2,16 @@
 
 namespace App\Twig;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class AlertExtension extends AbstractExtension {
+
+    public function __construct(
+        private TranslatorInterface $translator
+    ) {
+    }
 
     public function getFunctions(): array {
         return [
@@ -45,16 +51,16 @@ class AlertExtension extends AbstractExtension {
             foreach ($value as $key2 => $value2) {
                 switch ($key) {
                     case 'warning':
-                        $icon = "<i class='fas fa-radiation-alt'></i> Attention";
+                        $icon = "<i class='fas fa-radiation-alt'></i> " . $this->translator->trans('Warning', [], 'global');
                         break;
                     case 'info':
-                        $icon = "<i class='fas fa-info'></i> Information";
+                        $icon = "<i class='fas fa-info'></i> Info";
                         break;
                     case 'success':
                         $icon = "<i class='fas fa-check'></i> OK";
                         break;
                     case 'error':
-                        $icon = "<i class='fas fa-exclamation'></i> Erreur";
+                        $icon = "<i class='fas fa-exclamation'></i> " . $this->translator->trans('Error', [], 'validators');
                         break;
                 }
                 $html .= "<div class='flash $key'><div class='flex items-center'><span class='$key'>$icon</span><p>$value2</p></div></div>";
