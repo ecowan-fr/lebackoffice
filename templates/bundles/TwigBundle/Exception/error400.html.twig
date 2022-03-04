@@ -1,6 +1,6 @@
 {% extends 'bundles/TwigBundle/Exception/layout.html.twig' %}
 
-{% block title 'Requête erronée' %}
+{% block title 'Bad request'|trans({}, 'error') %}
 {% block icon 'fa-code' %}
 {% block color 'text-gray-600' %}
-{% block description "La requête ne semble pas correcte :(" %}
+{% block description 'The request does not seem correct.'|trans({}, 'error') %}

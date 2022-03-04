@@ -12,9 +12,6 @@
 		<div>{{ 'If you do not have an account, please contact the application team.'|trans({}, 'security')}}</div>
 	</div>
 	<form method="post" class="mt-8">
-		{% if error %}
-			{{ showAlert(error.messageKey|trans(error.messageData, 'security'), 'error', 'mt-5') }}
-		{% endif %}
 		<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">{{ 'Email adress'|trans({},'security') }}</label>
 		<input id="inputEmail" value="{{ last_username }}" name="email" class="w-full" type="email" placeholder="someone@ecowan.fr" autocomplete="username" required autofocus>
 

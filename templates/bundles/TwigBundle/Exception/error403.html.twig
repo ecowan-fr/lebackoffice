@@ -1,6 +1,6 @@
 {% extends 'bundles/TwigBundle/Exception/layout.html.twig' %}
 
-{% block title 'Accès interdit' %}
+{% block title 'Access forbidden'|trans({}, 'error') %}
 {% block icon 'fa-ban' %}
 {% block color 'text-orange-600' %}
-{% block description "Vous n'êtes pas autorisé à voir cette resource :(" %}
+{% block description 'Not privileged to request the resource.'|trans({}, 'security') %}

@@ -1,6 +1,6 @@
 {% extends 'bundles/TwigBundle/Exception/layout.html.twig' %}
 
-{% block title 'Page introuvable' %}
+{% block title 'Page not found'|trans({}, 'error') %}
 {% block icon 'fa-map-signs' %}
 {% block color 'text-yellow-500' %}
-{% block description "Mais rassurez vous tout espoir n'est pas perdu" %}
+{% block description "But don't worry, all hope is not lost."|trans({}, 'error') %}

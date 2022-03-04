@@ -76,7 +76,7 @@
 'The host could not be resolved.': 'The host could not be resolved.'
 'This value does not match the expected {{ charset }} charset.': 'This value does not match the expected {{ charset }} charset.'
 'This is not a valid Business Identifier Code (BIC).': 'This is not a valid Business Identifier Code (BIC).'
-Error: Error
+'Error': 'Error'
 'This is not a valid UUID.': 'This is not a valid UUID.'
 'This value should be a multiple of {{ compared_value }}.': 'This value should be a multiple of {{ compared_value }}.'
 'This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.': 'This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.'

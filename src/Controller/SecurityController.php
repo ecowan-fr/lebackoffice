@@ -39,15 +39,15 @@ class SecurityController extends AbstractController {
             return $this->redirectToRoute('home.home');
         }
 
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error) {
+            $this->addFlash('error', $this->translator->trans($error->getMessageKey(), [], 'security'));
+        }
 
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error
+            'last_username' => $lastUsername
         ]);
     }
 
@@ -83,10 +83,6 @@ class SecurityController extends AbstractController {
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
             $this->addFlash('warning', sprintf(
                 '%s - %s',
                 $this->translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
@@ -97,7 +93,7 @@ class SecurityController extends AbstractController {
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('noreply@ecowan.fr', 'Lebackoffice'))
+            ->from(new Address($_ENV['MAILER_FROM'], 'Lebackoffice'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('security/reset_password/email.html.twig')
@@ -110,7 +106,7 @@ class SecurityController extends AbstractController {
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
-        $this->addFlash('success', $this->translator->trans('Email sent.'));
+        $this->addFlash('success', $this->translator->trans('Email sent.', [], 'global'));
 
         return $this->redirectToRoute('security.resetpassword.checkemail');
     }

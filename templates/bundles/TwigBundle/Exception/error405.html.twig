@@ -1,6 +1,6 @@
 {% extends 'bundles/TwigBundle/Exception/layout.html.twig' %}
 
-{% block title 'Méthode non autorisée' %}
+{% block title 'Method not allowed'|trans({}, 'error') %}
 {% block icon 'fa-file-code' %}
 {% block color 'text-green-700' %}
-{% block description "Mais rassurez vous tout espoir n'est pas perdu" %}
+{% block description "But don't worry, all hope is not lost."|trans({}, 'error') %}
