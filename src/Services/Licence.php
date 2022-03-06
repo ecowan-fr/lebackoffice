@@ -17,7 +17,7 @@ class Licence {
     private string $licence;
 
     public function __construct(
-        private readonly TranslatorInterface $translator,
+        private readonly TranslatorInterface $translator
     ) {
         $this->licence = $_ENV['APP_LICENCE'];
     }
@@ -44,6 +44,24 @@ class Licence {
      * @return boolean|string
      */
     public function isValid(Request $request): bool|string {
+        $session = $request->getSession();
+
+        if ($session->get('licence') === $this->licence) {
+            return true;
+        } else {
+            $result = $this->verifValid($request);
+            if ($result === true) {
+                $session->set('licence', $this->licence);
+            }
+            return $result;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return boolean|string
+     */
+    private function verifValid(Request $request): bool|string {
         if ($this->licence === '') {
             return $this->translator->trans('No license is found.');
         }

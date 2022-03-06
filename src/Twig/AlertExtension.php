@@ -9,7 +9,7 @@ use Twig\TwigFunction;
 class AlertExtension extends AbstractExtension {
 
     public function __construct(
-        private TranslatorInterface $translator
+        private readonly TranslatorInterface $translator
     ) {
     }
 

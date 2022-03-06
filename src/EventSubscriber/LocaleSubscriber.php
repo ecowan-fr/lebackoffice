@@ -7,11 +7,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocaleSubscriber implements EventSubscriberInterface {
-    private $defaultLocale;
 
-    public function __construct(string $defaultLocale = 'fr') {
-        $this->defaultLocale = $defaultLocale;
-    }
+    private string $defaultLocale = 'fr';
 
     public static function getSubscribedEvents() {
         return [
@@ -26,12 +23,11 @@ class LocaleSubscriber implements EventSubscriberInterface {
             return;
         }
 
-        // try to see if the locale has been set as a _locale routing parameter
+        $session = $request->getSession();
         if ($locale = $request->attributes->get('_locale')) {
-            $request->getSession()->set('_locale', $locale);
+            $session->set('_locale', $locale);
         } else {
-            // if no explicit locale has been set on this request, use one from the session
-            $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
+            $request->setLocale($session->get('_locale', $this->defaultLocale));
         }
     }
 }
