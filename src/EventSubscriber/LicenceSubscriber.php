@@ -30,8 +30,8 @@ class LicenceSubscriber implements EventSubscriberInterface {
     public function onKernelController(ControllerEvent $event) {
         if (is_array($event->getController())) {
             $licence = $this->licence->isValid($event->getRequest());
-            if ($licence !== true) {
-                throw new Exception($licence);
+            if (!$licence) {
+                throw new Exception($this->licence->message);
             }
         }
     }
