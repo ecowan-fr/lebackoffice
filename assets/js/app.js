@@ -1,7 +1,4 @@
 export default (function () {
-    document.env = {
-        "API_KEY": 'test'
-    };
     let gestionSelect = () => {
         let selects = document.querySelectorAll('div.select');
         selects.forEach(element => {
@@ -13,7 +10,7 @@ export default (function () {
                 let liEncours = document.querySelectorAll('div.select li[value=' + input.value + ']')[0]
                 if (liEncours) {
                     affichage.innerHTML = liEncours.children[0].children[0].children[0].innerHTML
-                    liEncours.children[0].children[0].children[1].innerHTML = '<i class="fas fa-check"></i>'
+                    liEncours.children[0].children[0].children[1].innerHTML = '<i class="fa-solid fa-check"></i>'
                 }
             }
             element.addEventListener('click', event => {
@@ -29,28 +26,13 @@ export default (function () {
                         const li2 = lis[index2];
                         li2.children[0].children[0].children[1].innerHTML = '';
                     }
-                    li.children[0].children[0].children[1].innerHTML = '<i class="fas fa-check"></i>'
+                    li.children[0].children[0].children[1].innerHTML = '<i class="fa-solid fa-check"></i>'
                     input.attributes.value.value = li.attributes.value.value
                     affichage.innerHTML = li.children[0].children[0].children[0].innerHTML
                     dataSelect.classList.add('hidden')
                 })
             }
         });
-    }
-
-    global.createCookieWelcome = () => {
-        fetch("/api/cookies/welcome", {
-            method: 'POST',
-            headers: new Headers({
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + document.env.API_KEY
-            })
-        }).then((response) => {
-            if (response.status != 201) {
-                throw new Error("HTTP status " + response.status);
-            }
-            return response.json();
-        })
     }
 
     document.addEventListener('click', event => {
@@ -118,7 +100,7 @@ export default (function () {
         var tbody = event.path[4].children[1];
         tbody.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
             checkbox.checked = input.checked
-        });
+        })
     }
 
     // Gestion des radios tesla
@@ -151,14 +133,14 @@ export default (function () {
             let submainlink = document.querySelector('#submainlink')
             if (String(item.dataset.menu).split(' ').includes(document.location.pathname.split('/')[1])) {
                 item.classList.add('selected')
-                item.children[0].classList.replace('fal', 'fas')
+                item.children[0].classList.replace('fa-light', 'fa-solid')
                 submainlink.style.left = item.offsetLeft + 'px'
                 submainlink.style.width = item.offsetWidth + 'px'
                 submainlink.classList.add('bg-blue-500')
                 submainlinkSet = true
             } else {
                 item.classList.remove('selected')
-                item.children[0].classList.replace('fas', 'fal')
+                item.children[0].classList.replace('fa-solid', 'fa-light')
                 if (!submainlinkSet) {
                     submainlink.classList.remove('bg-blue-500')
                 }
@@ -183,29 +165,16 @@ export default (function () {
 
         autoSelectRadio()
 
-        setTheme();
+        setTheme()
 
         submainlink()
 
         window.addEventListener('resize', () => {
             submainlink()
-        });
-
-        //Affichage du message de classification
-        fetch("/api/cookies/welcome", {
-            method: 'GET',
-            headers: new Headers({
-                "Authorization": "Bearer " + document.env.API_KEY
-            })
-        }).then((response) => {
-            if (response.status == 404) {
-                Lightbox.S('framework', 'welcome')
-            }
-            return response.json();
         })
-    });
+    })
 
     document.addEventListener("turbo:before-render", function () {
         clearTimeout(document.timeoutFlash)
-    });
-})();
+    })
+})()

@@ -34,6 +34,10 @@
 		<div class='flashbag animate__animated'>
 			{{ showFlashMessage(app.flashes) }}
 		</div>
+		{% if app.user %}
+			{% include "partials/_navbar.html.twig" %}
+			{% include "partials/_lightbox.html.twig" %}
+		{% endif %}
 		{% block body %}{% endblock %}
 		{% block js_body %}{% endblock %}
 	</body>

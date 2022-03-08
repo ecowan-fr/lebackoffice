@@ -48,8 +48,7 @@ global.Lightbox = {
         fetch("/api/lightbox/" + module + "/" + page, {
             method: 'GET',
             headers: new Headers({
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + document.env.API_KEY
+                "Content-Type": "application/json"
             })
         }).then((response) => {
             if (response.status != 200) {

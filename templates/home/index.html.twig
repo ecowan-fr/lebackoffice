@@ -3,6 +3,33 @@
 {% block title 'Dashboard' %}
 
 {% block body %}
-	<div class="mx-auto bg-red-100 p-5">Dashboard</div>
-	<a class="button mt-10" href="{{ path('security.logout') }}">Se déconnecter</a>
+	<div class="container mt-10 mx-auto">
+		<div class="flex justify-between items-center mx-5">
+			<div>
+				<p class="text-lg font-visby font-bold">Bienvenue sur lebackoffice by ecowan
+					{{ app.user.firstname }}
+					{{ app.user.lastname }}</p>
+			</div>
+			<div class="flex relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
+				<div class="avatar z-10 waves-effect" style="background-image: url('https://d17v9ds8p1uxd3.cloudfront.net/img_hum/ava_3.png')" :class="! showMenu ? 'border-gray-300 dark:border-gray-700' : 'border-blue-500'" @click="showMenu = !showMenu"></div>
+				<div x-show="showMenu" class="absolute -right-6 -top-5 w-80 card nopad" x-transition:enter=" transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
+					<div class="p-6 flex items-center justify-center border-b border-gray-200 w-full flex-col">
+						<div class="mt-28 text-center">
+							<div class="font-bold font-visby text-2xl">{{ app.user.firstname }}
+								{{ app.user.lastname }}</div>
+							<div class="text-gray-500 text-lg mt-2">{{ app.user.email }}</div>
+						</div>
+						<div class="mt-8">
+							<a href="" class="green button w-full">{{ 'My account'|trans({}, 'home') }}</a>
+						</div>
+					</div>
+					<div class="border-b border-gray-200 text-center rounded-b-xl">
+						<a href="{{ path('security.logout') }}" class="waves-effect text-gray-500 pt-5 pb-4 block hover:bg-gray-100 transition-colors duration-150 ease-linear rounded-b-xl text-base">
+							<i class="fas fa-sign-out-alt mr-4"></i>
+							{{ 'Logout'|trans({}, 'home') }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
