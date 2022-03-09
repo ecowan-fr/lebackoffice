@@ -4,8 +4,7 @@ export default (function () {
         fetch("/api/cookies/welcome", {
             method: 'POST',
             headers: new Headers({
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + document.env.API_KEY
+                "Content-Type": "application/json"
             })
         }).then((response) => {
             if (response.status != 201) {
@@ -16,14 +15,15 @@ export default (function () {
     }
 
     document.addEventListener("turbo:load", function () {
-        //Affichage du message de classification
+        //Affichage du message de bienvenue
         fetch("/api/cookies/welcome", {
             method: 'GET',
             headers: new Headers({
+                "Content-Type": "application/json"
             })
         }).then((response) => {
             if (response.status == 404) {
-                Lightbox.S('framework', 'welcome')
+                Lightbox.S('welcome')
             }
             return response.json();
         })

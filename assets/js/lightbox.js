@@ -9,7 +9,7 @@ global.Lightbox = {
                 let bgcolor = data[3] != undefined ? data[2] : '#FFFFFF'
                 item.dataset.lightboxinit = true
                 item.addEventListener('click', function (e) {
-                    return Lightbox[taille](module, page, bgcolor)
+                    return Lightbox[taille](page, bgcolor)
                 })
             }
         })
@@ -18,17 +18,17 @@ global.Lightbox = {
             document.getElementById('lightbox').style.display = "block"
         }
     },
-    S: function (module, page, bgcolor = '#FFFFFF') {
-        return this.box('600', module, page, bgcolor)
+    S: function (page, bgcolor = '#FFFFFF') {
+        return this.box('600', page, bgcolor)
     },
-    M: function (module, page, bgcolor = '#FFFFFF') {
-        return this.box('768', module, page, bgcolor)
+    M: function (page, bgcolor = '#FFFFFF') {
+        return this.box('768', page, bgcolor)
     },
-    L: function (module, page, bgcolor = '#FFFFFF') {
-        return this.box('992', module, page, bgcolor)
+    L: function (page, bgcolor = '#FFFFFF') {
+        return this.box('992', page, bgcolor)
     },
-    box: function (taille, module, page, bgcolor) {
-        return document.getElementById('lightbox').classList.remove('-z-50'), document.getElementById('lightbox').classList.add('z-50'), document.getElementById('lightbox').style.width = taille + "px", this.center(taille), this.api(module, page), document.getElementById('lightbox').style.visibility = "visible", document.getElementById('lightbox').style.opacity = 1
+    box: function (taille, page, bgcolor) {
+        return document.getElementById('lightbox').classList.remove('-z-50'), document.getElementById('lightbox').classList.add('z-50'), document.getElementById('lightbox').style.width = taille + "px", this.center(taille), this.api(page), document.getElementById('lightbox').style.visibility = "visible", document.getElementById('lightbox').style.opacity = 1
     },
     center: function (taille) {
         var elem = document.getElementById('lightbox')
@@ -44,8 +44,8 @@ global.Lightbox = {
     close: function (id) {
         return document.getElementById('lightbox').classList.add('-z-50'), document.getElementById('lightbox').classList.remove('z-50'), document.getElementById('lightbox').style.visibility = "hidden", document.getElementById('lightbox').style.opacity = 0
     },
-    api: function (module, page) {
-        fetch("/api/lightbox/" + module + "/" + page, {
+    api: function (page) {
+        fetch("/api/lightbox/" + page, {
             method: 'GET',
             headers: new Headers({
                 "Content-Type": "application/json"
