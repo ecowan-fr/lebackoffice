@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
                 'tags' => [
                     'Fonctionnement interne du backoffice'
                 ],
-                'summary' => 'Récupérer le contenue HTML d\'une Lightbox',
+                'summary' => 'Récupére le contenue HTML d\'une Lightbox',
                 'description' => '',
                 'parameters' => [
                     [
