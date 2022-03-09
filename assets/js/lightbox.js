@@ -56,7 +56,7 @@ global.Lightbox = {
             }
             return response.json();
         }).then((data) => {
-            document.getElementById('lightbox').innerHTML = data
+            document.getElementById('lightbox').innerHTML = data.html
             var scripts = document.querySelectorAll("#lightbox script");
             scripts.forEach(element => { eval(element.textContent) });
         })

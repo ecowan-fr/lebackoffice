@@ -13,51 +13,43 @@ use Symfony\Component\Validator\Constraints\NotBlank;
             'path' => '/lightbox/{name}',
             'openapi_context' => [
                 'tags' => [
-                    'Fonctionnement interne du backoffice'
+                    'Internal functioning of the backoffice'
                 ],
-                'summary' => 'Récupére le contenue HTML d\'une Lightbox',
-                'description' => '',
-                'parameters' => [
-                    [
-                        'in' => 'path',
-                        'name' => 'name',
-                        'description' => 'Nom de la Lighbox',
-                        'required' => true,
-                        'schema' => [
-                            'type' => 'string'
-                        ]
-                    ]
-                ],
-                'responses' => [
-                    '200' => [
-                        'description' => 'Le code HTML de la Lightbox à bien été récupéré.',
-                        'content' => [
-                            'application/json' => [
-                                'schema' => [
-                                    'type' => 'string',
-                                    'example' => "<div class=\"boxtitle\">...<\/div>\n"
-                                ]
-                            ]
-                        ]
-                    ],
-                    '404' => [
-                        'description' => 'Cette lightbox n\'existe pas.',
-                    ]
-                ]
+                'summary' => 'Retrieves the HTML code from a lightbox',
+                'description' => ''
             ]
         ]
-    ],
-    formats: [
-        'json'
     ]
 )]
 class Lightbox {
     #[
         ApiProperty(
             identifier: true,
-            description: 'Nom de la lightbox'
+            description: 'Lightbox name',
+            example: "welcome"
         ),
         NotBlank()
     ]
     private string $name;
+
+    #[
+        ApiProperty(
+            description: 'HTML code from a lightbox',
+            example: "<div class=\"boxtitle\">...<\/div>\n"
+        )
+    ]
+    private string $html;
+
+    public function __construct(string $name, string $html) {
+        $this->name = $name;
+        $this->html = $html;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getHtml(): string {
+        return $this->html;
+    }
 }

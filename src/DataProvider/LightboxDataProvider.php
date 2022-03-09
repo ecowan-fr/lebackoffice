@@ -24,7 +24,7 @@ class LightboxDataProvider implements RestrictedDataProviderInterface, ItemDataP
         $lightbox = 'lightbox/' . $id . '.html.twig';
         $file = $this->twig_path . '/' . $lightbox;
         if (file_exists($file)) {
-            return $this->twig->render($lightbox);
+            return new Lightbox(name: $id, html: $this->twig->render($lightbox));
         } else {
             throw new NotFoundHttpException('La lightbox n\'existe pas.');
         }
