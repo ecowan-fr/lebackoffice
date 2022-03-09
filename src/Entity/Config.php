@@ -24,7 +24,7 @@ class Config {
     private $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $UpdatedAt;
+    private $updatedAt;
 
     public function getId(): ?int {
         return $this->id;
@@ -61,11 +61,11 @@ class Config {
     }
 
     public function getUpdatedAt(): ?DateTimeImmutable {
-        return $this->UpdatedAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $UpdatedAt): self {
-        $this->UpdatedAt = $UpdatedAt;
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
