@@ -14,10 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Config[]    findAll()
  * @method Config[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ConfigRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class ConfigRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Config::class);
     }
 
@@ -25,8 +23,7 @@ class ConfigRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Config $entity, bool $flush = true): void
-    {
+    public function add(Config $entity, bool $flush = true): void {
         $this->_em->persist($entity);
         if ($flush) {
             $this->_em->flush();
@@ -37,12 +34,16 @@ class ConfigRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Config $entity, bool $flush = true): void
-    {
+    public function remove(Config $entity, bool $flush = true): void {
         $this->_em->remove($entity);
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function get(string $setting): ?string {
+        $data = $this->findOneBy(['setting' => $setting]);
+        return $data ? $data->getSetting() : null;
     }
 
     // /**

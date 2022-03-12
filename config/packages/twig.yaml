@@ -3,7 +3,7 @@ twig:
     form_themes:
         - 'tailwind_2_layout.html.twig'
     globals:
-        configuration: "@App\\Services\\Configuration"
+        configuration: "@App\\Repository\\ConfigRepository"
 
 when@test:
     twig:
