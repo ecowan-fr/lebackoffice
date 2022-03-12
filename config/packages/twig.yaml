@@ -2,6 +2,8 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes:
         - 'tailwind_2_layout.html.twig'
+    globals:
+        configuration: "@App\\Services\\Configuration"
 
 when@test:
     twig:
