@@ -16,7 +16,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
                     'Internal functioning of the backoffice'
                 ],
                 'summary' => 'Retrieves the HTML code from a lightbox',
-                'description' => ''
+                'description' => '',
+                'security' => [['bearerAuth' => []]]
             ]
         ]
     ]

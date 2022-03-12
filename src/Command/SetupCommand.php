@@ -39,19 +39,21 @@ class SetupCommand extends Command {
                 return Command::INVALID;
             }
 
-            $progress = $io->createProgressBar('2');
+            $progress = $io->createProgressBar('3');
             $progress->start();
         } else {
             if (!$io->confirm("La base de données est-elle accessible ?")) {
                 return Command::INVALID;
             }
 
-            $progress = $io->createProgressBar('3');
+            $progress = $io->createProgressBar('4');
             $progress->start();
 
             // Création de la base de donnée
+            $io->writeln(''); //Ajout d'un retour a la ligne
+            $io->title("Création de la base de donnée");
             $command = $this->getApplication()->find('doctrine:database:create');
-            if ($command->run($input, $NullOutput) != 0) {
+            if ($command->run($input, $output) != 0) {
                 throw new RuntimeException("Impossible de créer la base de données !");
                 return Command::FAILURE;
             }
@@ -60,17 +62,32 @@ class SetupCommand extends Command {
         }
 
         // Ajout des migrations
+        $io->writeln(''); //Ajout d'un retour a la ligne
+        $io->title("Ajout des migrations dans la base de donnée");
         $migrationInput = new ArrayInput(['--no-interaction' => true]);
         $migrationInput->setInteractive(false);
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
-        if ($command->run($migrationInput, $NullOutput) != 0) {
+        if ($command->run($migrationInput, $output) != 0) {
             throw new RuntimeException("Impossible d'ajouter les migrations !");
             return Command::FAILURE;
         }
 
         $progress->advance();
 
+        //Création des certificats JWT
+        $io->writeln(''); //Ajout d'un retour a la ligne
+        $io->title("Création d'une pair de clé RSA pour les tokens JWT");
+        $jwtInput = new ArrayInput(['--overwrite' => true]);
+        $command = $this->getApplication()->find('lexik:jwt:generate-keypair');
+        if ($command->run($jwtInput, $output) != 0) {
+            throw new RuntimeException("Impossible de créer une pair de clé SSL ! Essayez d'installer openssl et relancer le script en root.");
+            return Command::FAILURE;
+        }
+
+        $progress->advance();
+
         //Création d'un super admin
+        $io->writeln(''); //Ajout d'un retour a la ligne
         $command = $this->getApplication()->find('app:create-superadmin');
         if ($command->run($input, $output) != 0) {
             throw new RuntimeException("Impossible d'ajouter le super administrateur !");

@@ -12,7 +12,7 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20220228173156 extends AbstractMigration {
     public function getDescription(): string {
-        return '';
+        return "Ajout de la table user et messenger_messages";
     }
 
     public function up(Schema $schema): void {

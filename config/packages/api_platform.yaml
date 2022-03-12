@@ -7,9 +7,5 @@ api_platform:
         versions: [3]
     show_webby: false
     title: 'API Lebackoffice by ecowan'
-    description: "API destinée aux utilisateurs interne et aux clients. Afin de pouvoir l'utiliser, vous devez utliser votre token d'api qui se trouve sur votre compte. Le token doit etre envoyé dans un header : `Authorization: Bearer {token}` pour toutes les requettes à l'API."
-    version: '0.0.1'
-    openapi:
-        contact:
-            name: 'BOYER Thomas'
-            email: 'tboyer@ecowan.fr'
+    description: "API for internal users and customers. To consume the api, you must generate a JWT token via `/api/login` and use it in your requests in the header : `Authorization: Bearer {JWT-token}`."
+    version: '1.0.0'

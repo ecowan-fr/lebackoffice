@@ -12,7 +12,7 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20220302172150 extends AbstractMigration {
     public function getDescription(): string {
-        return '';
+        return "Ajout de la table reset_password_request";
     }
 
     public function up(Schema $schema): void {
