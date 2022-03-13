@@ -30,6 +30,7 @@ security:
             custom_authenticator:
                 - App\Security\AppAuthenticator
                 - App\Security\GithubAuthenticator
+                - App\Security\GoogleAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
