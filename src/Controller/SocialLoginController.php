@@ -8,6 +8,7 @@ use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/oauth')]
 class SocialLoginController extends AbstractController {
 
     private const SCOPES = [
@@ -29,14 +30,14 @@ class SocialLoginController extends AbstractController {
         }
     }
 
-    #[Route('/oauth/connect/{service}', name: 'oauth.login', methods: ['GET'])]
+    #[Route('/connect/{service}', name: 'oauth.login', methods: ['GET'])]
     public function connect(string $service): RedirectResponse {
         $this->ensureServiceAccepted($service);
 
         return $this->clientRegistry->getClient($service)->redirect(self::SCOPES[$service], ['a' => 1]);
     }
 
-    #[Route('/oauth/check/{service}', name: 'oauth.check', methods: ['GET'])]
+    #[Route('/check/{service}', name: 'oauth.check', methods: ['GET'])]
     public function check(): Response {
         return new Response();
     }

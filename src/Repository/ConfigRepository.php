@@ -43,12 +43,12 @@ class ConfigRepository extends ServiceEntityRepository {
 
     public function get(string $setting): ?string {
         $data = $this->findOneBy(['setting' => $setting]);
-        return $data ? $data->getSetting() : null;
+        return $data ? $data->getValue() : null;
     }
 
     public function isTrue(string $setting): bool {
         $data = $this->get($setting);
-        return is_bool($data) ? $data : false;
+        return $data == 1 ? true : false;
     }
 
     // /**
