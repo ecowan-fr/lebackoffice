@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use Exception;
-use App\Services\Licence;
+use App\Services\LicenceService;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class LicenceSubscriber implements EventSubscriberInterface {
 
     public function __construct(
-        private readonly Licence $licence
+        private readonly LicenceService $licence
     ) {
     }
 

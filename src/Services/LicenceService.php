@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * EN VERTUE DES ARTICLES 5 ET ARTICLES 6 DES CONDITIONS GENERALES D'UTILISATION
  * @see https://github.com/ecowan-fr/lebackoffice/blob/main/terms.md
  */
-class Licence {
+class LicenceService {
 
     private string $licence;
     public string $message;
