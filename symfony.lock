@@ -31,6 +31,9 @@
     "doctrine/common": {
         "version": "3.2.2"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.5.2"
+    },
     "doctrine/dbal": {
         "version": "3.3.2"
     },
@@ -49,6 +52,18 @@
             "./config/packages/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -97,6 +112,27 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "guzzlehttp/guzzle": {
+        "version": "7.4.1"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.5.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "2.1.0"
+    },
+    "knpuniversity/oauth2-client-bundle": {
+        "version": "2.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.20",
+            "ref": "1ff300d8c030f55c99219cc55050b97a695af3f6"
+        },
+        "files": [
+            "./config/packages/knpu_oauth2_client.yaml"
+        ]
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -105,6 +141,15 @@
     },
     "lcobucci/jwt": {
         "version": "4.0.4"
+    },
+    "league/oauth2-client": {
+        "version": "2.6.1"
+    },
+    "league/oauth2-github": {
+        "version": "3.0.0"
+    },
+    "league/oauth2-google": {
+        "version": "4.0.0"
     },
     "lexik/jwt-authentication-bundle": {
         "version": "2.14",
@@ -139,6 +184,9 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -160,11 +208,23 @@
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "2.0.1"
     },
     "psr/log": {
         "version": "3.0.0"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
@@ -177,6 +237,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "stevenmaguire/oauth2-microsoft": {
+        "version": "2.2.0"
     },
     "symfony/asset": {
         "version": "v6.0.3"
@@ -576,5 +639,8 @@
     },
     "willdurand/negotiation": {
         "version": "3.1.0"
+    },
+    "wohali/oauth2-discord-new": {
+        "version": "1.1.0"
     }
 }

@@ -40,6 +40,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $emailPerso;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $lastLoginIp;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $lastLoginAt;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $discordId;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $googleId;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $githubId;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $microsoftId;
+
     public function getId(): ?int {
         return $this->id;
     }
@@ -210,5 +228,69 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new DateTimeImmutable());
         }
+    }
+
+    public function getLastLoginIp(): ?string {
+        return $this->lastLoginIp;
+    }
+
+    public function setLastLoginIp(string $lastLoginIp): self {
+        $this->lastLoginIp = $lastLoginIp;
+
+        return $this;
+    }
+
+    public function getLastLoginAt(): ?DateTimeImmutable {
+        return $this->lastLoginAt;
+    }
+
+    public function setLastLoginAt(DateTimeImmutable $lastLoginAt): self {
+        $this->lastLoginAt = $lastLoginAt;
+
+        return $this;
+    }
+
+    public function getDiscordId(): ?string {
+        return $this->discordId;
+    }
+
+    public function setDiscordId(?string $discordId): self {
+        $this->discordId = $discordId;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): self {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    public function getGithubId(): ?string {
+        return $this->githubId;
+    }
+
+    public function setGithubId(?string $githubId): self {
+        $this->githubId = $githubId;
+
+        return $this;
+    }
+
+    public function getMicrosoftId(): ?string {
+        return $this->microsoftId;
+    }
+
+    public function setMicrosoftId(?string $microsoftId): self {
+        $this->microsoftId = $microsoftId;
+
+        return $this;
+    }
+
+    public function useOauth(): bool {
+        return null !== $this->discordId || null !== $this->googleId || null !== $this->githubId || null !== $this->microsoftId;
     }
 }

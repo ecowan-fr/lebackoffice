@@ -46,6 +46,11 @@ class ConfigRepository extends ServiceEntityRepository {
         return $data ? $data->getSetting() : null;
     }
 
+    public function isTrue(string $setting): bool {
+        $data = $this->get($setting);
+        return is_bool($data) ? $data : false;
+    }
+
     // /**
     //  * @return Config[] Returns an array of Config objects
     //  */

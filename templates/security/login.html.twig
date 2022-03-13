@@ -31,22 +31,39 @@
 		</div>
 
 		<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
-
-		<div class="flex items-center mt-10">
-			<div class="flex-auto mt-px border-t"></div>
-			<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
-			<div class="flex-auto mt-px border-t"></div>
-		</div>
-		<div class="flex justify-between w-full mt-10 gap-5 mb-5">
-			<a href="#" class="link-auth-more waves-effect">
-				<i class="fa-brands fa-google"></i>
-			</a>
-			<a href="#" class="link-auth-more waves-effect">
-				<i class="fa-brands fa-microsoft"></i>
-			</a>
-			<a href="#" class="link-auth-more waves-effect">
-				<i class="fa-brands fa-github"></i>
-			</a>
-		</div>
+		{% if
+			configuration.isTrue('login.oauth.discord') or
+			configuration.isTrue('login.oauth.google') or
+			configuration.isTrue('login.oauth.github') or
+			configuration.isTrue('login.oauth.microsoft')
+		%}
+			<div class="flex items-center mt-10">
+				<div class="flex-auto mt-px border-t"></div>
+				<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
+				<div class="flex-auto mt-px border-t"></div>
+			</div>
+			<div class="flex justify-between w-full mt-10 gap-5 mb-5">
+				{% if configuration.isTrue('login.oauth.discord') %}
+					<a href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
+						<i class="fa-brands fa-discord"></i>
+					</a>
+				{% endif %}
+				{% if configuration.isTrue('login.oauth.google') %}
+					<a href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
+						<i class="fa-brands fa-google"></i>
+					</a>
+				{% endif %}
+				{% if configuration.isTrue('login.oauth.github') %}
+					<a href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
+						<i class="fa-brands fa-github"></i>
+					</a>
+				{% endif %}
+				{% if configuration.isTrue('login.oauth.microsoft') %}
+					<a href="{{ path('oauth.login', {service: 'microsoft'}) }}" class="link-auth-more waves-effect">
+						<i class="fa-brands fa-microsoft"></i>
+					</a>
+				{% endif %}
+			</div>
+		{% endif %}
 	</form>
 {% endblock %}

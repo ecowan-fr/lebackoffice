@@ -17,7 +17,7 @@ class Config {
     #[ORM\Column(type: 'string', length: 255)]
     private $setting;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $value;
 
     #[ORM\Column(type: 'datetime_immutable')]

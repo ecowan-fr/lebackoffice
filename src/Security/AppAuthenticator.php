@@ -2,6 +2,9 @@
 
 namespace App\Security;
 
+use App\Entity\User;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +27,8 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator {
     public const LOGIN_ROUTE = 'security.login';
 
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly EntityManagerInterface $em
     ) {
     }
 
@@ -44,6 +48,12 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator {
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response {
+        /** @var User $user */
+        $user = $token->getUser();
+        $user->setLastLoginIp($request->getClientIp())
+            ->setLastLoginAt(new DateTimeImmutable());
+        $this->em->flush();
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }

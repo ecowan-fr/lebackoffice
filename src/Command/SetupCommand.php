@@ -39,15 +39,19 @@ class SetupCommand extends Command {
                 return Command::INVALID;
             }
 
-            $progress = $io->createProgressBar('3');
+            $progress = $io->createProgressBar('4');
             $progress->start();
+
+            $fixtures = [];
         } else {
             if (!$io->confirm("La base de données est-elle accessible ?")) {
                 return Command::INVALID;
             }
 
-            $progress = $io->createProgressBar('4');
+            $progress = $io->createProgressBar('5');
             $progress->start();
+
+            $fixtures = ['--group' => ['production']];
 
             // Création de la base de donnée
             $io->writeln(''); //Ajout d'un retour a la ligne
@@ -69,6 +73,19 @@ class SetupCommand extends Command {
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         if ($command->run($migrationInput, $output) != 0) {
             throw new RuntimeException("Impossible d'ajouter les migrations !");
+            return Command::FAILURE;
+        }
+
+        $progress->advance();
+
+        //Ajout des fixtures
+        $io->writeln(''); //Ajout d'un retour a la ligne
+        $io->title("Ajout des fixtures");
+        $fixturesInput = new ArrayInput($fixtures);
+        $fixturesInput->setInteractive(false);
+        $command = $this->getApplication()->find('doctrine:fixtures:load');
+        if ($command->run($fixturesInput, $output) != 0) {
+            throw new RuntimeException("Impossible de rajouter les fixtures");
             return Command::FAILURE;
         }
 
