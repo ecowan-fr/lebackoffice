@@ -2,6 +2,12 @@
 
 {% block title 'Sign in'|trans({}, 'security') %}
 
+{% set password = configuration.isTrue('login.password') %}
+{% set discord = configuration.isTrue('login.oauth.discord') %}
+{% set google = configuration.isTrue('login.oauth.google') %}
+{% set github = configuration.isTrue('login.oauth.github') %}
+{% set azure = configuration.isTrue('login.oauth.azure') %}
+
 {% block security %}
 	<div class="w-full">
 		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
@@ -11,58 +17,60 @@
 	<div class="flex items-baseline mt-2 font-light text-xs">
 		<div>{{ 'If you do not have an account, please contact the application team.'|trans({}, 'security')}}</div>
 	</div>
-	<form method="post" class="mt-8">
-		<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">{{ 'Email adress'|trans({},'security') }}</label>
-		<input id="inputEmail" value="{{ last_username }}" name="email" class="w-full" type="email" placeholder="someone@ecowan.fr" autocomplete="username" required autofocus>
+	{% if password %}
+		<form method="post" class="mt-8">
+			<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">{{ 'Email adress'|trans({},'security') }}</label>
+			<input id="inputEmail" value="{{ last_username }}" name="email" class="w-full" type="email" placeholder="someone@ecowan.fr" autocomplete="username" required autofocus>
 
-		<label for="inputPassword" class="mt-6 block mb-2 text-gray-500">{{ 'Password'|trans({}, 'security') }}</label>
-		<input id="inputPassword" name="password" class="w-full" type="password" autocomplete="current-password" required>
+			<label for="inputPassword" class="mt-6 block mb-2 text-gray-500">{{ 'Password'|trans({}, 'security') }}</label>
+			<input id="inputPassword" name="password" class="w-full" type="password" autocomplete="current-password" required>
 
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-		<div class="inline-flex items-end justify-between w-full mt-12">
-			<label>
-				<input type="checkbox" name="_remember_me">
-				{{ 'Remember me'|trans({}, 'security') }}
-			</label>
-			<a href="{{ path('security.resetpassword.request') }}" class="text-md font-medium text-primary-500">{{ 'Forgot your password'|trans({}, 'security') }}
-				?
-			</a>
-		</div>
-
-		<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
-		{% set discord = configuration.isTrue('login.oauth.discord') %}
-		{% set google = configuration.isTrue('login.oauth.google') %}
-		{% set github = configuration.isTrue('login.oauth.github') %}
-		{% set microsoft = configuration.isTrue('login.oauth.microsoft') %}
-		{% if discord or google or github or microsoft %}
+			<div class="inline-flex items-end justify-between w-full mt-12">
+				<label>
+					<input type="checkbox" name="_remember_me">
+					{{ 'Remember me'|trans({}, 'security') }}
+				</label>
+				<a href="{{ path('security.resetpassword.request') }}" class="text-md font-medium text-primary-500">{{ 'Forgot your password'|trans({}, 'security') }}
+					?
+				</a>
+			</div>
+			<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
+		</form>
+	{% endif %}
+	{% if not password and not discord and not google and not github and not azure %}
+		{{ showAlert('info', "Aucun systéme de connexion n'est disponible", 'mt-10')}}
+	{% endif %}
+	{% if (discord or google or github or azure) %}
+		{% if password %}
 			<div class="flex items-center mt-10">
 				<div class="flex-auto mt-px border-t"></div>
 				<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
 				<div class="flex-auto mt-px border-t"></div>
 			</div>
-			<div class="flex justify-between w-full mt-10 gap-5 mb-5">
-				{% if discord %}
-					<a href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
-						<i class="fa-brands fa-discord"></i>
-					</a>
-				{% endif %}
-				{% if google %}
-					<a href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
-						<i class="fa-brands fa-google"></i>
-					</a>
-				{% endif %}
-				{% if github %}
-					<a href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
-						<i class="fa-brands fa-github"></i>
-					</a>
-				{% endif %}
-				{% if microsoft %}
-					<a href="{{ path('oauth.login', {service: 'microsoft'}) }}" class="link-auth-more waves-effect">
-						<i class="fa-brands fa-microsoft"></i>
-					</a>
-				{% endif %}
-			</div>
 		{% endif %}
-	</form>
+		<div class="flex justify-between w-full mt-10 gap-5 mb-5">
+			{% if discord %}
+				<a href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
+					<i class="fa-brands fa-discord"></i>
+				</a>
+			{% endif %}
+			{% if google %}
+				<a href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
+					<i class="fa-brands fa-google"></i>
+				</a>
+			{% endif %}
+			{% if github %}
+				<a href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
+					<i class="fa-brands fa-github"></i>
+				</a>
+			{% endif %}
+			{% if azure %}
+				<a href="{{ path('oauth.login', {service: 'azure'}) }}" class="link-auth-more waves-effect">
+					<i class="fa-brands fa-microsoft"></i>
+				</a>
+			{% endif %}
+		</div>
+	{% endif %}
 {% endblock %}

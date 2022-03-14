@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private $githubId;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $microsoftId;
+    private $azureId;
 
     public function getId(): ?int {
         return $this->id;
@@ -280,12 +280,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
-    public function getMicrosoftId(): ?string {
-        return $this->microsoftId;
+    public function getAzureId(): ?string {
+        return $this->azureId;
     }
 
-    public function setMicrosoftId(?string $microsoftId): self {
-        $this->microsoftId = $microsoftId;
+    public function setAzureId(?string $azureId): self {
+        $this->azureId = $azureId;
 
         return $this;
     }

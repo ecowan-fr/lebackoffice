@@ -16,10 +16,11 @@ class ConfigurationsFixtures extends Fixture implements FixtureGroupInterface {
     public function load(ObjectManager $manager): void {
 
         $configurations = [
+            ["name" => "login.password", "value" => "1"],
             ["name" => "login.oauth.discord", "value" => "0"],
             ["name" => "login.oauth.google", "value" => "0"],
             ["name" => "login.oauth.github", "value" => "0"],
-            ["name" => "login.oauth.microsoft", "value" => "0"],
+            ["name" => "login.oauth.azure", "value" => "0"],
             ["name" => "structure_name", "value" => ""],
             ["name" => "structure_type", "value" => ""],
             ["name" => "structure_siret", "value" => ""],

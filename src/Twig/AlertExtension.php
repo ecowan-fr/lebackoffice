@@ -20,7 +20,7 @@ class AlertExtension extends AbstractExtension {
         ];
     }
 
-    public function showAlert(string $message, string $type, ?string $class = null) {
+    public function showAlert(string $type, string $message, ?string $class = null) {
         switch ($type) {
             case 'warning':
                 $icon = "<i class='fa-solid fa-circle-radiation text-yellow-500'></i>";

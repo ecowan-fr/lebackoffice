@@ -109,6 +109,9 @@
     "fig/link-util": {
         "version": "1.2.0"
     },
+    "firebase/php-jwt": {
+        "version": "v5.5.1"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -237,9 +240,6 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
-    },
-    "stevenmaguire/oauth2-microsoft": {
-        "version": "2.2.0"
     },
     "symfony/asset": {
         "version": "v6.0.3"
@@ -627,6 +627,9 @@
         "files": [
             "./config/packages/reset_password.yaml"
         ]
+    },
+    "thenetworg/oauth2-azure": {
+        "version": "v2.0.1"
     },
     "twig/extra-bundle": {
         "version": "v3.3.8"

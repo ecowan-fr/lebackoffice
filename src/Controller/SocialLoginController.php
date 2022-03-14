@@ -12,10 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SocialLoginController extends AbstractController {
 
     private const SCOPES = [
-        'discord' => [],
+        'discord' => ['identify'],
         'google' => [],
-        'github' => ['read:user', 'user:email'],
-        'microsoft' => []
+        'github' => ['read:user'],
+        'azure' => ['profile']
     ];
 
     public function __construct(
