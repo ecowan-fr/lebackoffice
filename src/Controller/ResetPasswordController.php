@@ -19,7 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 
-#[Route('/reset-password')]
+#[Route(path: '/reset-password')]
 class ResetPasswordController extends AbstractController {
 
     use ResetPasswordControllerTrait;
@@ -32,7 +32,7 @@ class ResetPasswordController extends AbstractController {
     ) {
     }
 
-    #[Route('/', name: 'security.resetpassword.request', methods: ['GET', 'POST'])]
+    #[Route(path: '', name: 'security.resetpassword.request', methods: ['GET', 'POST'])]
     public function request(Request $request): Response {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
@@ -87,7 +87,7 @@ class ResetPasswordController extends AbstractController {
         return $this->redirectToRoute('security.resetpassword.checkemail');
     }
 
-    #[Route('/check-email', name: 'security.resetpassword.checkemail', methods: ['GET'])]
+    #[Route(path: '/check-email', name: 'security.resetpassword.checkemail', methods: ['GET'])]
     public function checkEmail(): Response {
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
@@ -100,7 +100,7 @@ class ResetPasswordController extends AbstractController {
         ]);
     }
 
-    #[Route('/reset/{token}', name: 'security.resetpassword.resetpassword', methods: ['GET', 'POST'])]
+    #[Route(path: '/reset/{token}', name: 'security.resetpassword.resetpassword', methods: ['GET', 'POST'])]
     public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher, string $token = null): Response {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
