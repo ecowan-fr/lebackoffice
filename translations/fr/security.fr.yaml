@@ -35,3 +35,7 @@
 'New Password': 'Nouveau mot de passe'
 'Confirm your password': 'Confirmer votre mot de passe'
 'Password changed successfully.': 'Mot de passe modifié avec succées.'
+'An error occurred while retrieving the access token %s' : 'Une erreur est survenue lors de la récupération du token d''accès %s'
+'An error occurred while communicating with %s': 'Une erreur est survenue lors de la communication avec %s'
+'You are authenticated with %s' : 'Vous êtes authentifié avec %s'
+'No users found with this account %s': 'Aucun utilisateur trouvé avec ce compte %s'

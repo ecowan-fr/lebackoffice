@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
 
@@ -35,7 +36,8 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         private readonly ClientRegistry $clientRegistry,
         protected EntityManagerInterface $em,
         private readonly RouterInterface $router,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator
     ) {
     }
 
@@ -53,7 +55,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
 
     public function supports(Request $request): bool {
         if ('' === $this->serviceName) {
-            throw new Exception("You must set a \$serviceName property (for instance 'github')");
+            throw new Exception("You must set a \$serviceName property.");
         }
 
         return 'oauth.check' === $request->attributes->get('_route') && $request->get('service') === $this->serviceName;
@@ -65,7 +67,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
             $accessToken = $client->getAccessToken();
         } catch (Exception) {
             throw new CustomUserMessageAuthenticationException(
-                sprintf("Une erreur est survenue lors de la récupération du token d'accès %s", $this->serviceName)
+                $this->translator->trans('An error occurred while retrieving the access token %s', ['%s' => $this->serviceName], 'security')
             );
         }
 
@@ -73,7 +75,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
             $resourceOwner = $this->getResourceOwnerFromCredentials($accessToken);
         } catch (Exception) {
             throw new CustomUserMessageAuthenticationException(
-                sprintf("Une erreur est survenue lors de la communication avec %s", $this->serviceName)
+                $this->translator->trans('An error occurred while communicating with %s', ['%s' => $this->serviceName], 'security')
             );
         }
 
@@ -93,7 +95,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         /** @var Session */
         $session = $request->getSession();
 
-        $session->getFlashBag()->add('success', "Vous êtes authentifié avec " . $this->serviceName);
+        $session->getFlashBag()->add('success', $this->translator->trans('You are authenticated with %s', ['%s' => $this->serviceName], 'security'));
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -106,7 +108,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         $session = $request->getSession();
 
         if ($exception instanceof UserOauthNotFoundException) {
-            $session->getFlashBag()->add('error', "Aucun utilisateur trouvé avec ce compte " . $this->serviceName);
+            $session->getFlashBag()->add('error', $this->translator->trans('No users found with this account %s', ['%s' => $this->serviceName], 'security'));
         } else {
             $session->getFlashBag()->add('error', $exception->getMessage());
         }

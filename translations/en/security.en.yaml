@@ -35,3 +35,7 @@
 'New Password': 'New Password'
 'Confirm your password': 'Confirm your password'
 'Password changed successfully.': 'Password changed successfully.'
+'An error occurred while retrieving the access token %s' : 'An error occurred while retrieving the access token %s'
+'An error occurred while communicating with %s': 'An error occurred while communicating with %s'
+'You are authenticated with %s' : 'You are authenticated with %s'
+'No users found with this account %s': 'No users found with this account %s'
