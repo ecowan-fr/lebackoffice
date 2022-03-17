@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use Exception;
-use App\Services\LicenceService;
+use App\Service\LicenceService;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
