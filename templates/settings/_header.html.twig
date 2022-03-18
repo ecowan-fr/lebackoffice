@@ -1,0 +1,28 @@
+{% set route = app.request.get('_route') %}
+
+<div class="container mx-auto mt-16">
+	<nav class="breadcrumbs">
+		<a href="{{ path('settings.index') }}" class="step">{{ 'Settings'|trans({},'settings') }}</a>
+
+		{% if 
+            route == 'settings.services.index' or
+            route == 'settings.services.vmware'
+        %}
+			<a href='#' class='step'><img src='{{ asset('images/icons/basket.png') }}' alt='services'>
+				{{ 'Service Settings'|trans({}, 'settings') }}</a>
+		{% endif %}
+
+		{% if route == 'settings.services.vmware' %}
+			<a href='#' class='step'><img src='{{ asset('images/services/vmware.png') }}' alt='services'>
+				Vmware</a>";
+		{% endif %}
+
+		{% if 
+            route == 'settings.main' or
+            route == 'settings.loginsystem'
+        %}
+			<a href='#' class='step'><img src='{{ asset('images/icons/settings.png') }}' alt='services'>
+				{{ 'General Settings'|trans({}, 'settings') }}</a>
+		{% endif %}
+	</nav>
+</div>

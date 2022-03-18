@@ -2,7 +2,7 @@
 	<div class="container mx-auto flex items-center h-14" x-data="{ showMenuServices : false, showMenuBilling : false }">
 		<div class="select-none" style="margin-top:2px;">
 			<a class="waves-effect waves-light" href="{{ path('home.home') }}">
-				<img data-logolight="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}" data-logodark="{{ asset('images/logo/vert-blanc/logo-vert-clair.svg') }}" class="h-8 logoprincipal" src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}" alt="Logo lebackoffice">
+				<img data-logolight="{{ asset(logos.light) }}" data-logodark="{{ asset(logos.dark) }}" class="h-8 logoprincipal" src="{{ asset(logos.light) }}" alt="Logo lebackoffice">
 			</a>
 		</div>
 		<div
@@ -43,9 +43,11 @@
 			<a href="/api" target="_blanck" class="mainmenu" data-menu="api">
 				<i class="fa-light fa-code"></i>
 			</a>
-			<a href="/settings" class="mainmenu" data-menu="settings">
-				<i class="fa-light fa-cog"></i>
-			</a>
+			{% if is_granted('settings.view') %}
+				<a href="{{ path('settings.index') }}" class="mainmenu" data-menu="settings">
+					<i class="fa-light fa-cog"></i>
+				</a>
+			{% endif %}
 		</div>
 		<div id="submainlink"></div>
 	</div>

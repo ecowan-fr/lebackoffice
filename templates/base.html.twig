@@ -1,3 +1,6 @@
+{% set configs = configuration.getAll() %}
+{% set logos = configuration.getLogos(configs) %}
+
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
 	<head>
@@ -37,8 +40,13 @@
 		{% if app.user %}
 			{% include "partials/_navbar.html.twig" %}
 			{% include "partials/_lightbox.html.twig" %}
+			<div class="flex-grow">
+			{% endif %}
+			{% block body %}{% endblock %}
+			{% block js_body %}{% endblock %}
+			{% if app.user %}
+			</div>
+			{% include "partials/_footer.html.twig" %}
 		{% endif %}
-		{% block body %}{% endblock %}
-		{% block js_body %}{% endblock %}
 	</body>
 </html>

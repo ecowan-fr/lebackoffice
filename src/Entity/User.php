@@ -180,6 +180,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         $this->setRoles([
             "settings.view",
             "settings.main.view",
+            "settings.main.edit",
 
             "settings.services.vmware.view",
             "settings.services.vmware.edit",

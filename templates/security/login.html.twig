@@ -2,22 +2,16 @@
 
 {% block title 'Sign in'|trans({}, 'security') %}
 
-{% set password = configuration.isTrue('login.password') %}
-{% set discord = configuration.isTrue('login.oauth.discord') %}
-{% set google = configuration.isTrue('login.oauth.google') %}
-{% set github = configuration.isTrue('login.oauth.github') %}
-{% set azure = configuration.isTrue('login.oauth.azure') %}
-
 {% block security %}
 	<div class="w-full">
-		<img src="{{ asset('images/logo/vert-gris/logo-vert-fonce.svg') }}">
+		<img data-logolight="{{ asset(logos.light) }}" data-logodark="{{ asset(logos.dark) }}" src="{{ asset(logos.light) }}" alt="Logo lebackoffice">
 	</div>
 
 	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">{{ 'Sign in'|trans({}, 'security') }}</div>
 	<div class="flex items-baseline mt-2 font-light text-xs">
 		<div>{{ 'If you do not have an account, please contact the application team.'|trans({}, 'security')}}</div>
 	</div>
-	{% if password %}
+	{% if configs['login.password'] %}
 		<form method="post" class="mt-8">
 			<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">{{ 'Email adress'|trans({},'security') }}</label>
 			<input id="inputEmail" value="{{ last_username }}" name="email" class="w-full" type="email" placeholder="someone@ecowan.fr" autocomplete="username" required autofocus>
@@ -39,11 +33,11 @@
 			<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
 		</form>
 	{% endif %}
-	{% if not password and not discord and not google and not github and not azure %}
+	{% if not configs['login.password'] and not configs['login.oauth.discord'] and not configs['login.oauth.google'] and not configs['login.oauth.github'] and not configs['login.oauth.azure'] %}
 		{{ showAlert('info', "Aucun systéme de connexion n'est disponible", 'mt-10')}}
 	{% endif %}
-	{% if (discord or google or github or azure) %}
-		{% if password %}
+	{% if (configs['login.oauth.discord'] or configs['login.oauth.google'] or configs['login.oauth.github'] or configs['login.oauth.azure']) %}
+		{% if configs['login.password'] %}
 			<div class="flex items-center mt-10">
 				<div class="flex-auto mt-px border-t"></div>
 				<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
@@ -51,22 +45,22 @@
 			</div>
 		{% endif %}
 		<div class="flex justify-between w-full mt-10 gap-5 mb-5">
-			{% if discord %}
+			{% if configs['login.oauth.discord'] %}
 				<a href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-discord"></i>
 				</a>
 			{% endif %}
-			{% if google %}
+			{% if configs['login.oauth.google'] %}
 				<a href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-google"></i>
 				</a>
 			{% endif %}
-			{% if github %}
+			{% if configs['login.oauth.github'] %}
 				<a href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-github"></i>
 				</a>
 			{% endif %}
-			{% if azure %}
+			{% if configs['login.oauth.azure'] %}
 				<a href="{{ path('oauth.login', {service: 'azure'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-microsoft"></i>
 				</a>

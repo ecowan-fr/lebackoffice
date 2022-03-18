@@ -2,11 +2,13 @@
 
 namespace App\Repository;
 
+use Exception;
 use App\Entity\Config;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
+use DateTimeImmutable;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Config|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,14 +43,51 @@ class ConfigRepository extends ServiceEntityRepository {
         }
     }
 
-    public function get(string $setting): ?string {
-        $data = $this->findOneBy(['setting' => $setting]);
-        return $data ? $data->getValue() : null;
+    public function getAll(): array {
+        $configs = $this->findAll();
+        $data = [];
+        foreach ($configs as $key => $value) {
+            $data[$value->getSetting()] = $value->getValue();
+        }
+
+        return $data;
     }
 
-    public function isTrue(string $setting): bool {
-        $data = $this->get($setting);
-        return $data == 1 ? true : false;
+    public function saveMultiple(array $data): void {
+        foreach ($data as $setting => $value) {
+            try {
+                $this->save($setting, $value);
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
+    }
+
+    public function save(string $setting, string $value): bool {
+        /** @var Config */
+        $Config = $this->findOneBy(['setting' => $setting]);
+        if (!is_null($Config)) {
+            $Config
+                ->setValue($value)
+                ->setUpdatedAt(new DateTimeImmutable);
+            $this->_em->flush();
+            return true;
+        }
+
+        return throw new Exception("Impossible d'enregistrer la configuration.");
+    }
+
+    public function getLogos(array $configs): array {
+        $logos = [];
+        if (!$configs['structure.logo.custom']) {
+            $logos['light'] = "/images/logo/logo-lebackoffice-noir.svg";
+            $logos['dark'] = "/images/logo/logo-lebackoffice-blanc.svg";
+        } else {
+            $logos['light'] = $configs['structure.logo.url.light'];
+            $logos['dark'] = $configs['structure.logo.url.dark'];
+        }
+
+        return $logos;
     }
 
     // /**

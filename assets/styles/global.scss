@@ -1,5 +1,9 @@
 html, body {
-    @apply font-marianne w-full h-full min-h-0 min-w-full flex flex-col;
+    @apply w-full h-screen min-h-screen;
+}
+
+body {
+    @apply font-marianne flex flex-col;
 }
 
 .waves-effect {display: block;}
@@ -10,11 +14,6 @@ html, body {
 }
 
 .clignotement { animation: clignotement 1s infinite; }
-
-@keyframes clignotement { 
-    50% { opacity: 1; }
-    75% { opacity: 0; }
-}
 
 a {
     @apply text-blue-500 dark:text-blue-400 cursor-pointer;
