@@ -48,7 +48,7 @@ class SettingsController extends AbstractController {
                 throw $this->createAccessDeniedException();
             }
 
-            if (!$this->isCsrfTokenValid('settings-main-name', $request->request->get('token'))) {
+            if ($this->isCsrfTokenValid('settings-main-name', $request->request->get('token'))) {
                 $structure_name = $request->get('structure_name');
                 $structure_type = $request->get('structure_type');
                 $structure_siret = $request->get('structure_siret');
@@ -87,8 +87,9 @@ class SettingsController extends AbstractController {
                     $this->addFlash('error', "Impossible d'enregistrer les paramettres.");
                     throw $e;
                 }
+            } else {
+                $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
             }
-            $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
             return $this->redirectToRoute('settings.main');
         }
         return $this->render('settings/main.html.twig');
