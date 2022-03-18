@@ -70,7 +70,7 @@ class LicenceService {
      */
     private function verifValid(Request $request): bool {
         if ($this->licence === '') {
-            $this->message = $this->translator->trans('No license is found.');
+            $this->message = $this->translator->trans('No license is found.', [], 'licence');
             return false;
         }
 
@@ -79,16 +79,16 @@ class LicenceService {
         $decrypted = '';
         $f5sd654f4 = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . base64_decode('UzUxRjVFMUc1Q0M1UjhHLnBlbQ==');
         if (!is_readable($f5sd654f4)) {
-            $this->message = $this->translator->trans('Unable to read decryption key.');
+            $this->message = $this->translator->trans('Unable to read decryption key.', [], 'licence');
             return false;
         } else {
             $fp = fopen($f5sd654f4, "r");
             $read = fread($fp, filesize($f5sd654f4));
             fclose($fp);
-            $f4e864s61c1 = openssl_get_publickey($read);
+            $f4e864s61c1 = openssl_pkey_get_public($read);
 
             if (!$f4e864s61c1) {
-                $this->message = $this->translator->trans('The decryption key is invalid.');
+                $this->message = $this->translator->trans('The decryption key is invalid.', [], 'licence');
                 return false;
             } else {
                 foreach ($data as $value) {
@@ -102,7 +102,7 @@ class LicenceService {
                 }
 
                 if (!$decrypted) {
-                    $this->message = $this->translator->trans('Failed to decrypt license.');
+                    $this->message = $this->translator->trans('Failed to decrypt license.', [], 'licence');
                     return false;
                 } else {
                     $checkHash = '';
@@ -113,23 +113,23 @@ class LicenceService {
                     }
 
                     if (hash('sha512', $checkHash) != json_decode($decrypted)->hash) {
-                        $this->message = $this->translator->trans('The license is invalid.');
+                        $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
                         return false;
                     } else {
                         $creation = new Datetime(json_decode($decrypted)->created);
                         $expiration = new Datetime(json_decode($decrypted)->expire);
                         $now = new Datetime();
                         if ($now->diff($expiration)->invert || !$now->diff($creation)->invert) {
-                            $this->message = $this->translator->trans('The license is invalid.');
+                            $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
                             return false;
                         } else {
                             if (!is_null($request->server->get('SERVER_ADDR')) && !$this->cidr_match($request->server->get('SERVER_ADDR') === '::1' ? "127.0.0.1" : $request->server->get('SERVER_ADDR'), json_decode($decrypted)->ip)) {
-                                $this->message = $this->translator->trans('The license is invalid.');
+                                $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
                                 return false;
                             } else {
                                 $host = $request->getHost() === 'localhost' ? '127.0.0.1' : $request->getHost();
                                 if (!str_contains($host, json_decode($decrypted)->url)) {
-                                    $this->message = $this->translator->trans('The license is invalid.');
+                                    $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
                                     return false;
                                 } else {
                                     $this->infos = json_decode($decrypted);
