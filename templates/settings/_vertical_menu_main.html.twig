@@ -1,0 +1,10 @@
+{% set route = app.request.get('_route') %}
+
+<div class="vertical_menu">
+	<a href="{{ path('settings.main') }}" class="waves-effect {{ route == 'settings.main' ? 'active':null }}">
+		<i class="fa-duotone fa-city text-blue-500"></i>Stucture</a>
+	<a href="#" class="waves-effect {{ route == '' ? 'active':null }}">
+		<i class="fa-duotone fa-sign-in text-green-500"></i>Systèmes de connexion</a>
+	<a href="#" class="waves-effect {{ route == '' ? 'active':null }}">
+		<i class="fa-duotone fa-file-certificate text-red-500"></i>Licence</a>
+</div>

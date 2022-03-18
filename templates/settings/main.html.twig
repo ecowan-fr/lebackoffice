@@ -7,14 +7,7 @@
 <div class="container mx-auto mt-10">
 	<div class="flex flex-col lg:flex-row">
 		<div>
-			<div class="vertical_menu">
-				<a href="{{ path('settings.main') }}" class="waves-effect active">
-					<i class="fa-duotone fa-city text-blue-500"></i>Stucture</a>
-				<a href="#" class="waves-effect">
-					<i class="fa-duotone fa-sign-in text-green-500"></i>Systèmes de connexion</a>
-				<a href="#" class="waves-effect">
-					<i class="fa-duotone fa-file-certificate text-red-500"></i>Licence</a>
-			</div>
+			{% include "settings/_vertical_menu_main.html.twig" %}
 		</div>
 		<div class="flex-grow sm:ml-10">
 			<p class="font-extrabold text-4xl text-center">Informations sur la structure</p>
@@ -127,6 +120,7 @@
 				{% if is_granted('settings.main.edit') %}
 					<button class="large mt-16 green mx-auto" type="submit">
 						<i class="fad fa-save mr-3"></i>Enregistrer toutes les informations</button>
+					<input type="hidden" name="token" value="{{ csrf_token('settings-main-name') }}"/>
 				</form>
 			{% endif %}
 			<div class="relative mt-10">
@@ -148,6 +142,7 @@
 								<span class="mt-5 block text-lg font-medium text-gray-700">Importer un logo light</span>
 								<form action="{{ path('settings.saveLogo') }}" method="post" enctype="multipart/form-data">
 									<input onChange="submit();" name="structure_logo_url_light" type='file' class="hidden" accept=".png,.jpg,.jpeg,.svg">
+									<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo') }}"/>
 								</form>
 							</label>
 						{% else %}
@@ -171,6 +166,7 @@
 								<span class="mt-5 block text-lg font-medium text-gray-700">Importer un logo dark</span>
 								<form action="{{ path('settings.saveLogo') }}" method="post" enctype="multipart/form-data">
 									<input onChange="submit();" name="structure_logo_url_dark" type='file' class="hidden" accept=".png,.jpg,.jpeg,.svg">
+									<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo') }}"/>
 								</form>
 							</label>
 						{% else %}
@@ -192,6 +188,7 @@
                 <form action="{{ path('settings.saveLogoCustom') }}" method="post">
                     <input class="radio-tesla" onchange="submit();" value="0" type="radio" id="structure.logo.custom.no" name="structure_logo_custom" {% if not configs['structure.logo.custom'] %} checked {% endif %}>
                     <input class="radio-tesla" onchange="submit();" value="1" type="radio" id="structure.logo.custom.yes" name="structure_logo_custom" {% if configs['structure.logo.custom'] %} checked {% endif %}>
+					<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo-custom') }}"/>
                 </form>
                 <div class="radio-group mt-3">
                     <label for="structure.logo.custom.no"><i class="fas fa-times-circle mr-3 text-red-400"></i>Non</label>
