@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Settings;
 
 use Exception;
 use App\Service\FileUploaderService;
@@ -15,10 +15,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[
-    Route('/settings'),
+    Route('/settings/main'),
     IsGranted('settings.view')
 ]
-class SettingsController extends AbstractController {
+class MainController extends AbstractController {
 
     private $defaultLogoLight = "/images/logo/logo-lebackoffice-noir.svg";
     private $defaultLogoDark = "/images/logo/logo-lebackoffice-blanc.svg";
@@ -29,14 +29,9 @@ class SettingsController extends AbstractController {
     ) {
     }
 
-    #[Route(path: '', name: 'settings.index', methods: ['GET'])]
-    public function index(): Response {
-        return $this->render('settings/index.html.twig');
-    }
-
     #[
         Route(
-            path: '/main',
+            path: '',
             name: 'settings.main',
             methods: ['GET', 'POST']
         ),
@@ -97,8 +92,8 @@ class SettingsController extends AbstractController {
 
     #[
         Route(
-            path: '/main/savelogocustom',
-            name: 'settings.saveLogoCustom',
+            path: '/savelogocustom',
+            name: 'settings.main.saveLogoCustom',
             methods: ['POST']
         ),
         IsGranted('settings.main.edit')
@@ -124,8 +119,8 @@ class SettingsController extends AbstractController {
 
     #[
         Route(
-            path: '/main/savelogo',
-            name: 'settings.saveLogo',
+            path: '/savelogo',
+            name: 'settings.main.saveLogo',
             methods: ['POST']
         ),
         IsGranted('settings.main.edit')
@@ -163,8 +158,8 @@ class SettingsController extends AbstractController {
 
     #[
         Route(
-            path: '/main/deletelogo/{type}',
-            name: 'settings.deleteLogo',
+            path: '/deletelogo/{type}',
+            name: 'settings.main.deleteLogo',
             requirements: [
                 'type' => 'structure.logo.url.light|structure.logo.url.dark'
             ],

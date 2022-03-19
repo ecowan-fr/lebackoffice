@@ -147,7 +147,7 @@
 									<i class="fa-duotone fa-image text-blue-400 text-7xl"></i>
 									<span class="mt-5 block text-lg font-medium text-gray-700">{{ 'Upload a logo'|trans({}, 'settings') }}
 										light</span>
-									<form action="{{ path('settings.saveLogo') }}" method="post" enctype="multipart/form-data">
+									<form action="{{ path('settings.main.saveLogo') }}" method="post" enctype="multipart/form-data">
 										<input onchange="submit();" name="structure_logo_url_light" type='file' class="hidden" accept=".png,.jpg,.jpeg,.svg">
 										<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo') }}"/>
 									</form>
@@ -160,7 +160,7 @@
 								<img src="{{ configs['structure.logo.url.light'] }}" alt="Logo" class="max-w-full">
 							</div>
 							{% if is_granted('settings.main.edit') %}
-								<a href="{{ path('settings.deleteLogo', {type:'structure.logo.url.light'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
+								<a href="{{ path('settings.main.deleteLogo', {type:'structure.logo.url.light'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
 							{% endif %}
 						{% endif %}
 					</div>
@@ -172,7 +172,7 @@
 									<i class="fa-duotone fa-image text-blue-800 text-7xl"></i>
 									<span class="mt-5 block text-lg font-medium text-gray-700">{{ 'Upload a logo'|trans({}, 'settings') }}
 										dark</span>
-									<form action="{{ path('settings.saveLogo') }}" method="post" enctype="multipart/form-data">
+									<form action="{{ path('settings.main.saveLogo') }}" method="post" enctype="multipart/form-data">
 										<input onchange="submit();" name="structure_logo_url_dark" type='file' class="hidden" accept=".png,.jpg,.jpeg,.svg">
 										<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo') }}"/>
 									</form>
@@ -185,7 +185,7 @@
 								<img src="{{ configs['structure.logo.url.dark'] }}" alt="Logo" class="max-w-full">
 							</div>
 							{% if is_granted('settings.main.edit') %}
-								<a href="{{ path('settings.deleteLogo', {type:'structure.logo.url.dark'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
+								<a href="{{ path('settings.main.deleteLogo', {type:'structure.logo.url.dark'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
 							{% endif %}
 						{% endif %}
 					</div>
@@ -193,7 +193,7 @@
 				<div class="mt-14">
 					<p class="text-base font-medium">{{ 'Use custom logos on the backoffice'|trans({}, 'settings') }}</p>
 					{% if is_granted('settings.main.edit') %}
-						<form action="{{ path('settings.saveLogoCustom') }}" method="post">
+						<form action="{{ path('settings.main.saveLogoCustom') }}" method="post">
 							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="structure.logo.custom.no" name="structure_logo_custom" {% if not configs['structure.logo.custom'] %} checked {% endif %}>
 							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="structure.logo.custom.yes" name="structure_logo_custom" {% if configs['structure.logo.custom'] %} checked {% endif %}>
 							<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo-custom') }}"/>
