@@ -33,7 +33,7 @@
 					<tr>
 						<td class="text-right font-bold text-base w-1/2">{{ 'Authorized URL'|trans({}, 'licence') }}
 							:</td>
-						<td class="w-1/2">{{ licence.url }}</td>
+						<td class="w-1/2">https://*.{{ licence.url == '127.0.0.1' ? '127.0.0.1 et https://*.localhost' }}</td>
 					</tr>
 					<tr>
 						<td class="text-right font-bold text-base w-1/2">{{ 'IP address range allowed'|trans({}, 'licence') }}
