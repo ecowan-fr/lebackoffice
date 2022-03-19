@@ -3,20 +3,21 @@
 namespace App\Controller\Settings;
 
 use Exception;
-use App\Service\FileUploaderService;
 use App\Repository\ConfigRepository;
+use App\Service\FileUploaderService;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[
     Route('/settings/main'),
-    IsGranted('settings.view')
+    Security("is_granted('settings.view') and is_granted('settings.main.view')")
 ]
 class MainController extends AbstractController {
 
@@ -34,8 +35,7 @@ class MainController extends AbstractController {
             path: '',
             name: 'settings.main',
             methods: ['GET', 'POST']
-        ),
-        IsGranted('settings.main.view')
+        )
     ]
     public function main(Request $request): Response {
         if ($request->isMethod('POST')) {
@@ -167,7 +167,7 @@ class MainController extends AbstractController {
         ),
         IsGranted('settings.main.edit')
     ]
-    public function deleteLogo(string $type, Filesystem $filesystem) {
+    public function deleteLogo(string $type, Filesystem $filesystem): RedirectResponse {
         try {
             $value = $type === 'structure.logo.url.light' ? $this->defaultLogoLight : $this->defaultLogoDark;
             $filesystem->remove($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . str_replace('/', DIRECTORY_SEPARATOR, $this->configRepository->findOneBy(['setting' => $type])->getValue()));
@@ -177,5 +177,17 @@ class MainController extends AbstractController {
             $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
         }
         return $this->redirectToRoute('settings.main');
+    }
+
+    #[
+        Route(
+            path: '/licence',
+            name: 'settings.main.licence',
+            methods: ['GET']
+        )
+    ]
+    public function licence(Request $request): Response {
+        $licence = json_decode($request->getSession()->get('licence'))->infos;
+        return $this->render('settings/licence.html.twig', compact('licence'));
     }
 }

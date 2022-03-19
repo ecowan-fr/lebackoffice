@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Settings'|trans({}, 'settings') %}
+
+{% block body %}
+	{% include "settings/_header.html.twig" %}
+	<div class="container mx-auto mt-10">
+		<div class="flex flex-col lg:flex-row">
+			<div>
+				{% include "settings/_vertical_menu_main.html.twig" %}
+			</div>
+			<div class="flex-grow sm:ml-10">
+				<p class="font-extrabold text-4xl text-center">{{ 'Content of your license'|trans({}, 'licence') }}</p>
+				<div class="mt-10">
+					{{ showAlert('success', 'Valid license'|trans({}, 'licence'))}}
+				</div>
+				<table class="mt-5">
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'Unique identifiers'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2">{{ licence.id }}</td>
+					</tr>
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'License type'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2 align-middle">{{ licence.type == 'premium' ? '<i class="fa-solid text-xl fa-circle-star text-yellow-500"></i> Premium' : '<i class="fa-solid text-xl fa-shield-heart text-lime-600"></i> Community'  }}</td>
+					</tr>
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'Account email address'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2">{{ licence.email }}</td>
+					</tr>
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'Authorized URL'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2">{{ licence.url }}</td>
+					</tr>
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'IP address range allowed'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2">{{ licence.ip }}</td>
+					</tr>
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'Creation date'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2">{{ licence.created|date('d/m/Y H:i:s e') }}</td>
+					</tr>
+					<tr>
+						<td class="text-right font-bold text-base w-1/2">{{ 'Expiration date'|trans({}, 'licence') }}
+							:</td>
+						<td class="w-1/2">{{ licence.expire|date('d/m/Y H:i:s e') }}</td>
+					</tr>
+				</table>
+				<div class="mt-5">
+					{{ showAlert('info', 'To modify your license, go to the ". env" file of your installation and modify the APP_LICENCE environment variable.'|trans({},'licence'))}}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
