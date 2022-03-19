@@ -208,7 +208,15 @@
 							<div class="selected"></div>
 						</div>
 					{% else %}
-						<p class='my-5 font-bold'>{{ configs['structure.logo.custom'] == 1 ? "<i class='fas fa-check-circle mr-3 text-green-400'></i>Oui" : "<i class='fas fa-times-circle mr-3 text-red-400'></i>Non" }}</p>
+						<p class='my-5 font-bold'>
+							{% if configs['structure.logo.custom'] == 1 %}
+								<i class='fas fa-check-circle mr-3 text-green-400'></i>
+								{{ 'Yes'|trans({}, 'global') }}
+							{% else %}
+								<i class='fas fa-times-circle mr-3 text-red-400'></i>
+								{{ 'No'|trans({}, 'global') }}
+							{% endif %}
+						</p>
 					{% endif %}
 				</div>
 			</div>
