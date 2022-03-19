@@ -24,6 +24,13 @@
 					{% endif %}
 					<div class="flex flex-col lg:flex-row w-full mt-10">
 						<div class="w-full">
+							{% set types = {
+								0: 'No organization'|trans({}, 'settings'),
+								1: 'No profit organization'|trans({}, 'settings'),
+								2: 'Non-governmental organisation'|trans({}, 'settings'),
+								3: 'Company'|trans({}, 'settings'),
+								4: 'Other'|trans({}, 'global')
+							} %}
 							{% if is_granted('settings.main.edit') %}
 								<label for="structure_name" class="block mb-1 text-gray-500">{{ 'Organization name'|trans({},'settings')}}
 									<span class="font-bold text-red-600">*</span>
@@ -32,13 +39,6 @@
 								<label for="structure_type" class="mt-4 block mb-1 text-gray-500">{{ 'Organization type'|trans({},'settings') }}
 									<span class="font-bold text-red-600">*</span>
 								</label>
-								{% set types = {
-								0: 'No organization'|trans({}, 'settings'),
-								1: 'No profit organization'|trans({}, 'settings'),
-								2: 'Non-governmental organisation'|trans({}, 'settings'),
-								3: 'Company'|trans({}, 'settings'),
-								4: 'Other'|trans({}, 'global')
-							} %}
 								<select class="w-full" name="structure_type" id="structure_type" required>
 									{% for key,type in types %}
 										<option value="{{ key }}" {% if configs['structure.type'] == key %} selected {% endif %}>{{ type }}</option>
@@ -49,7 +49,7 @@
 								<p class="mt-4 text-sm">{{ configs['structure.name'] == '' ? 'Aucune information' : configs['structure.name'] }}</p>
 
 								<p class="font-bold mt-10">{{ 'Organization type'|trans({},'settings')}}</p>
-								<p class="mt-4 text-sm">{{ configs['structure.type'] == '' ? 'Aucune information' : configs['structure.type'] }}</p>
+								<p class="mt-4 text-sm">{{ configs['structure.type'] == '' ? 'Aucune information' : types[configs['structure.type']] }}</p>
 							{% endif %}
 						</div>
 						<div class="w-full lg:ml-10 mt-4 lg:mt-0">
