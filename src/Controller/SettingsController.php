@@ -62,7 +62,7 @@ class SettingsController extends AbstractController {
                 $structure_adress = $request->get('structure_adress');
 
                 if ($structure_name === '' || $structure_type === '' || $structure_email === '') {
-                    $this->addFlash('error', "Les champs Nom, Type et Email de la structure sont obligatoire.");
+                    $this->addFlash('error', $this->translator->trans('The Name, Type and Email fields of the structure are required.', [], 'settings'));
                     return $this->redirectToRoute('settings.main');
                 }
 
@@ -82,9 +82,9 @@ class SettingsController extends AbstractController {
 
                 try {
                     $this->configRepository->saveMultiple($data);
-                    $this->addFlash('success', "Configuration enregistré.");
+                    $this->addFlash('success', $this->translator->trans('Settings saved.', [], 'settings'));
                 } catch (Exception $e) {
-                    $this->addFlash('error', "Impossible d'enregistrer les paramettres.");
+                    $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
                     throw $e;
                 }
             } else {
@@ -107,14 +107,14 @@ class SettingsController extends AbstractController {
         if ($this->isCsrfTokenValid('settings-main-logo-custom', $request->request->get('token'))) {
             $custom = $request->request->get('structure_logo_custom');
             if ($custom != '1' && $custom != '0') {
-                $this->addFlash('error', "La donnée envoyé n'est pas la bonne.");
+                $this->addFlash('error', $this->translator->trans('This value should be of type {{ type }}.', ['{{ type }}' => '0 - 1'], 'validators'));
                 return $this->redirectToRoute('settings.main');
             }
             try {
                 $this->configRepository->save('structure.logo.custom', $custom);
-                $this->addFlash('success', "Configuration enregistré.");
+                $this->addFlash('success', $this->translator->trans('Settings saved.', [], 'settings'));
             } catch (Exception $e) {
-                $this->addFlash('error', "Impossible d'enregistrer la configuration.");
+                $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
             }
         } else {
             $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
@@ -139,19 +139,19 @@ class SettingsController extends AbstractController {
                 $type = 'structure.logo.url.dark';
                 $file = $request->files->get('structure_logo_url_dark');
             } else {
-                $this->addFlash('error', 'Aucun fichier reçu.');
+                $this->addFlash('error', $this->translator->trans('No file was uploaded.', [], 'validators'));
                 return $this->redirectToRoute('settings.main');
             }
 
             if (!$file || !in_array($file->getClientMimeType(), ['image/jpeg', 'image/png', 'image/svg+xml'])) {
-                $this->addFlash('error', 'Logo non valide. Exention autorisé : .png - .jpg - .jpeg - .svg.');
+                $this->addFlash('error', $this->translator->trans('The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.', ['{{ type }}' => $file->getClientMimeType(), '{{ types }}' => '.png - .jpg - .jpeg - .svg.'], 'validators'));
                 return $this->redirectToRoute('settings.main');
             }
 
             try {
                 $filename = $fileUploader->upload($file);
                 $this->configRepository->save($type, "/" . $fileUploader->getTargetDirectory() . $filename);
-                $this->addFlash('success', "Le fichier '$filename' à été enregistré.");
+                $this->addFlash('success', $this->translator->trans('The file "%n" has been saved.', ['%n' => $filename], 'settings'));
             } catch (Exception $e) {
                 $this->addFlash('error', $e->getMessage());
             }
@@ -177,9 +177,9 @@ class SettingsController extends AbstractController {
             $value = $type === 'structure.logo.url.light' ? $this->defaultLogoLight : $this->defaultLogoDark;
             $filesystem->remove($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . str_replace('/', DIRECTORY_SEPARATOR, $this->configRepository->findOneBy(['setting' => $type])->getValue()));
             $this->configRepository->save($type, $value);
-            $this->addFlash('success', "Logo suprimé.");
+            $this->addFlash('success', $this->translator->trans('Settings saved.', [], 'settings'));
         } catch (Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+            $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
         }
         return $this->redirectToRoute('settings.main');
     }
