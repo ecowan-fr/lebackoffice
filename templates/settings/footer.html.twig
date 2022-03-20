@@ -12,9 +12,9 @@
 				{% include "settings/_vertical_menu_main.html.twig" %}
 			</div>
 			<div class="flex-grow sm:ml-10">
-				<p class="font-extrabold text-4xl text-center">Configuration du bas de page</p>
+				<p class="font-extrabold text-4xl text-center">{{ 'Footer Setup'|trans({}, 'settings') }}</p>
 				<div class="mt-14">
-					<p class="text-base font-medium">Activer le bas de page sur toutes les pages du backffice</p>
+					<p class="text-base font-medium">{{ 'Enable footer on all backffice pages'|trans({}, 'settings') }}</p>
 					{% if is_granted('settings.main.edit') %}
 						<form action="{{ path('settings.main.footer.active') }}" method="post">
 							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="footer.active.no" name="footer_active" {% if not configs['footer.active'] %} checked {% endif %}>
@@ -24,55 +24,50 @@
 						<div class="radio-group mt-3">
 							<label for="footer.active.no">
 								<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
-								Désactivé</label>
+								{{ 'Disable'|trans({}, 'global') }}</label>
 							<label for="footer.active.yes">
 								<i class="fa-solid fa-toggle-on mr-3 text-green-400"></i>
-								Activé</label>
+								{{ 'Enable'|trans({}, 'global') }}</label>
 							<div class="selected"></div>
 						</div>
 					{% else %}
 						<p class='my-5 font-bold'>
 							{% if configs['footer.active'] == 1 %}
 								<i class='fa-solid fa-toggle-on mr-3 text-green-400'></i>
-								Activé
+								{{ 'Enable'|trans({}, 'global') }}
 							{% else %}
 								<i class='fa-solid fa-toggle-off mr-3 text-red-400'></i>
-								Désactivé
+								{{ 'Disable'|trans({}, 'global') }}
 							{% endif %}
 						</p>
 					{% endif %}
 				</div>
 				{% if configs['footer.active'] %}
 					<div class="mt-10">
-						{{ showAlert('info',"
-						Le bas de page est pourvu de 3 zones.
-						À gauche, au centre et à droite.
-						Dans chaque zone, vous pouvez activer ou non le logo du backoffice,
-						un texte personnalisé ou le système de classification de document.
-						") }}
+						{{ showAlert('info','The bottom of the page has 3 zones. Left, center and right. In each zone, you can activate or not the logo of the backoffice, a personalized text or the document classification system.'|trans({}, 'settings')) }}
 					</div>
 					{% set zones = {
 						left: {
-							name: 'Zone de gauche',
+							name: 'Left zone'|trans({}, 'settings'),
 							color: 'border-blue-400 text-blue-400',
 							icon: 'fa-border-left'
 						},
 						center: {
-							name: 'Zone du centre',
+							name: 'Center zone'|trans({}, 'settings'),
 							color: 'border-green-400 text-green-400',
 							icon: 'fa-border-center-v'
 						},
 						right: {
-							name: 'Zone de droite',
+							name: 'Right zone'|trans({}, 'settings'),
 							color: 'border-red-400 text-red-400',
 							icon: 'fa-border-right'
 						},
 					} %}
 					{% set types = {
-						null: 'None'|trans({}, 'settings'),
+						null: 'None'|trans({}, 'global'),
 						logo: 'The Backoffice logo'|trans({}, 'settings'),
 						timbre: 'Classification system'|trans({}, 'settings'),
-						text: 'A text'|trans({}, 'settings'),
+						text: 'A text'|trans({}, 'global'),
 					} %}
 					{% for key, zone in zones %}
 						<div class="mt-10 border-4 border-dotted {{ zone.color }} w-full p-5">
