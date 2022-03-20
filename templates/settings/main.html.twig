@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% set classification = 'C' %}
+
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block body %}
@@ -200,10 +202,10 @@
 						</form>
 						<div class="radio-group mt-3">
 							<label for="structure.logo.custom.no">
-								<i class="fas fa-times-circle mr-3 text-red-400"></i>
+								<i class="fa-solid fa-times-circle mr-3 text-red-400"></i>
 								{{ 'No'|trans({}, 'global') }}</label>
 							<label for="structure.logo.custom.yes">
-								<i class="fas fa-check-circle mr-3 text-green-400"></i>
+								<i class="fa-solid fa-check-circle mr-3 text-green-400"></i>
 								{{ 'Yes'|trans({}, 'global') }}</label>
 							<div class="selected"></div>
 						</div>

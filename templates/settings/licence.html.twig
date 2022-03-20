@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% set classification = 'C' %}
+
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block body %}
@@ -51,9 +53,11 @@
 						<td class="w-1/2">{{ licence.expire|date('d/m/Y H:i:s e') }}</td>
 					</tr>
 				</table>
-				<div class="mt-5">
-					{{ showAlert('info', 'To modify your license, go to the ". env" file of your installation and modify the APP_LICENCE environment variable.'|trans({},'licence'))}}
-				</div>
+				{% if is_granted('settings.main.edit') %}
+					<div class="mt-5">
+						{{ showAlert('info', 'To modify your license, go to the ". env" file of your installation and modify the APP_LICENCE environment variable.'|trans({},'licence'))}}
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

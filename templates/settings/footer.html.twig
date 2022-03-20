@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% set classification = 'C' %}
+
+{% block title 'Settings'|trans({}, 'settings') %}
+
+{% block body %}
+	{% include "settings/_header.html.twig" %}
+	<div class="container mx-auto mt-10">
+		<div class="flex flex-col lg:flex-row">
+			<div>
+				{% include "settings/_vertical_menu_main.html.twig" %}
+			</div>
+			<div class="flex-grow sm:ml-10">
+				<p class="font-extrabold text-4xl text-center">Configuration du bas de page</p>
+				<div class="mt-14">
+					<p class="text-base font-medium">Activer le bas de page sur toutes les pages du backffice</p>
+					{% if is_granted('settings.main.edit') %}
+						<form action="{{ path('settings.main.footer.active') }}" method="post">
+							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="footer.active.no" name="footer_active" {% if not configs['footer.active'] %} checked {% endif %}>
+							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="footer.active.yes" name="footer_active" {% if configs['footer.active'] %} checked {% endif %}>
+							<input type="hidden" name="token" value="{{ csrf_token('settings-footer-active') }}"/>
+						</form>
+						<div class="radio-group mt-3">
+							<label for="footer.active.no">
+								<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
+								Désactivé</label>
+							<label for="footer.active.yes">
+								<i class="fa-solid fa-toggle-on mr-3 text-green-400"></i>
+								Activé</label>
+							<div class="selected"></div>
+						</div>
+					{% else %}
+						<p class='my-5 font-bold'>
+							{% if configs['footer.active'] == 1 %}
+								<i class='fa-solid fa-toggle-on mr-3 text-green-400'></i>
+								Activé
+							{% else %}
+								<i class='fa-solid fa-toggle-off mr-3 text-red-400'></i>
+								Désactivé
+							{% endif %}
+						</p>
+					{% endif %}
+				</div>
+				{% if configs['footer.active'] %}
+					<div class="mt-10">
+						{{ showAlert('info',"
+						Le bas de page est pourvu de 3 zones.
+						À gauche, au centre et à droite.
+						Dans chaque zone, vous pouvez activer ou non le logo du backoffice,
+						un texte personnalisé ou le système de classification de document.
+						") }}
+					</div>
+					{% set zones = {
+						left: {
+							name: 'Zone de gauche',
+							color: 'border-blue-400 text-blue-400',
+							icon: 'fa-border-left'
+						},
+						center: {
+							name: 'Zone du centre',
+							color: 'border-green-400 text-green-400',
+							icon: 'fa-border-center-v'
+						},
+						right: {
+							name: 'Zone de droite',
+							color: 'border-red-400 text-red-400',
+							icon: 'fa-border-right'
+						},
+					} %}
+					{% set types = {
+						null: 'None'|trans({}, 'settings'),
+						logo: 'The Backoffice logo'|trans({}, 'settings'),
+						timbre: 'Classification system'|trans({}, 'settings'),
+						text: 'A text'|trans({}, 'settings'),
+					} %}
+					{% for key, zone in zones %}
+						<div class="mt-10 border-4 border-dotted {{ zone.color }} w-full p-5">
+							<p class="font-bold text-2xl">
+								<i class="fa-duotone {{ zone.icon }} mr-4"></i>
+								{{ zone.name }}
+							</p>
+							{% if is_granted('settings.main.edit') %}
+								<form method="post">
+									<div class="text-slate-600 dark:text-slate-200 mt-5">
+										<select class="w-full text-slate-600 dark:text-slate-200" name="{{ 'footer_' ~ key ~ '_type' }}" id="{{ 'footer.' ~ key ~ '.type' }}" onchange="submit();" required>
+											{% for key2,type in types %}
+												<option value="{{ key2 }}" {% if configs['footer.' ~ key ~ '.type'] == key2 %} selected {% endif %}>{{ type }}</option>
+											{% endfor %}
+										</select>
+										<input type="hidden" name="token" value="{{ csrf_token('settings-main-footer-type') }}"/>
+										{% if configs['footer.' ~ key ~ '.type'] == 'text' %}
+											<input id="{{ 'footer.' ~ key ~ '.text' }}" name="{{ 'footer.' ~ key ~ '.text' }}" class="w-full mt-5" value="{{ configs['footer.' ~ key ~ '.text'] }}" type="text">
+										{% endif %}
+									</div>
+								</form>
+							{% else %}
+								<p class="text-slate-600 dark:text-slate-200 font-bold mt-5 ml-10">
+									{% if configs['footer.' ~ key ~ '.type'] == 'logo' %}
+										<i class="fa-solid fa-image"></i>
+									{% elseif configs['footer.' ~ key ~ '.type'] == 'text' %}
+										<i class="fa-solid fa-align-left"></i>
+									{% elseif configs['footer.' ~ key ~ '.type'] == 'timbre' %}
+										<i class="fa-solid fa-stamp"></i>
+									{% endif %}
+
+									{{ types[configs['footer.' ~ key ~ '.type']] }}</p>
+								{% if configs['footer.' ~ key ~ '.type'] == 'text' %}
+									<p class="text-slate-600 dark:text-slate-200 mt-4 ml-10">{{ configs['footer.' ~ key ~ '.text'] }}</p>
+								{% endif %}
+							{% endif %}
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

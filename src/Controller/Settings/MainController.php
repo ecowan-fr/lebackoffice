@@ -190,4 +190,91 @@ class MainController extends AbstractController {
         $licence = json_decode($request->getSession()->get('licence'))->infos;
         return $this->render('settings/licence.html.twig', compact('licence'));
     }
+
+    #[
+        Route(
+            path: '/footer',
+            name: 'settings.main.footer',
+            methods: ['GET', 'POST']
+        )
+    ]
+    public function footer(Request $request) {
+        if ($request->isMethod('POST')) {
+            if (!$this->isGranted('settings.main.edit')) {
+                throw $this->createAccessDeniedException();
+            }
+
+            if ($this->isCsrfTokenValid('settings-main-footer-type', $request->request->get('token'))) {
+                $typeText = null;
+                if ($request->request->get('footer_left_type')) {
+                    $type = 'footer.left.type';
+                    $data = $request->request->get('footer_left_type');
+                    if ($data === 'text' && !is_null($request->request->get('footer_left_text'))) {
+                        $typeText = 'footer.left.text';
+                        $text = $request->request->get('footer_left_text');
+                    }
+                } elseif ($request->request->get('footer_center_type')) {
+                    $type = 'footer.center.type';
+                    $data = $request->request->get('footer_center_type');
+                    if ($data === 'text' && !is_null($request->request->get('footer_center_text'))) {
+                        $typeText = 'footer.center.text';
+                        $text = $request->request->get('footer_center_text');
+                    }
+                } elseif ($request->request->get('footer_right_type')) {
+                    $type = 'footer.right.type';
+                    $data = $request->request->get('footer_right_type');
+                    if ($data === 'text' && !is_null($request->request->get('footer_right_text'))) {
+                        $typeText = 'footer.right.text';
+                        $text = $request->request->get('footer_right_text');
+                    }
+                } else {
+                    $this->addFlash('error', $this->translator->trans('One or more of the given values is invalid.', [], 'validators'));
+                    return $this->redirectToRoute('settings.main.footer');
+                }
+
+                try {
+                    $this->configRepository->save($type, $data);
+                    if ($data === 'text' && !is_null($typeText)) {
+                        $this->configRepository->save($typeText, $text);
+                    }
+                    $this->addFlash('success', $this->translator->trans('Settings saved.', [], 'settings'));
+                } catch (Exception $e) {
+                    $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
+                    throw $e;
+                }
+            } else {
+                $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
+            }
+            return $this->redirectToRoute('settings.main.footer');
+        }
+
+        return $this->render('settings/footer.html.twig');
+    }
+
+    #[
+        Route(
+            path: '/footer/active',
+            name: 'settings.main.footer.active',
+            methods: ['POST']
+        ),
+        IsGranted('settings.main.edit')
+    ]
+    public function setFooterActive(Request $request): RedirectResponse {
+        if ($this->isCsrfTokenValid('settings-footer-active', $request->request->get('token'))) {
+            $active = $request->request->get('footer_active');
+            if ($active != '1' && $active != '0') {
+                $this->addFlash('error', $this->translator->trans('This value should be of type {{ type }}.', ['{{ type }}' => '0 - 1'], 'validators'));
+                return $this->redirectToRoute('settings.main.footer');
+            }
+            try {
+                $this->configRepository->save('footer.active', $active);
+                $this->addFlash('success', $this->translator->trans('Settings saved.', [], 'settings'));
+            } catch (Exception $e) {
+                $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
+            }
+        } else {
+            $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
+        }
+        return $this->redirectToRoute('settings.main.footer');
+    }
 }

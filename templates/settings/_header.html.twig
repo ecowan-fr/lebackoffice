@@ -18,7 +18,8 @@
 
 		{% if 
             route == 'settings.main' or
-            route == 'settings.main.licence'
+            route == 'settings.main.licence' or
+            route == 'settings.main.footer'
         %}
 			<a href='#' class='step'><img src='{{ asset('images/icons/settings.png') }}' alt='services'>
 				{{ 'General Settings'|trans({}, 'settings') }}</a>
