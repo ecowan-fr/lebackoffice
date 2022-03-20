@@ -33,11 +33,11 @@ class MainController extends AbstractController {
     #[
         Route(
             path: '',
-            name: 'settings.main',
+            name: 'settings.main.index',
             methods: ['GET', 'POST']
         )
     ]
-    public function main(Request $request): Response {
+    public function index(Request $request): Response {
         if ($request->isMethod('POST')) {
             if (!$this->isGranted('settings.main.edit')) {
                 throw $this->createAccessDeniedException();
@@ -58,7 +58,7 @@ class MainController extends AbstractController {
 
                 if ($structure_name === '' || $structure_type === '' || $structure_email === '') {
                     $this->addFlash('error', $this->translator->trans('The Name, Type and Email fields of the structure are required.', [], 'settings'));
-                    return $this->redirectToRoute('settings.main');
+                    return $this->redirectToRoute('settings.main.index');
                 }
 
                 $data = [
@@ -85,9 +85,9 @@ class MainController extends AbstractController {
             } else {
                 $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
             }
-            return $this->redirectToRoute('settings.main');
+            return $this->redirectToRoute('settings.main.index');
         }
-        return $this->render('settings/main.html.twig');
+        return $this->render('settings/main/index.html.twig');
     }
 
     #[
@@ -103,7 +103,7 @@ class MainController extends AbstractController {
             $custom = $request->request->get('structure_logo_custom');
             if ($custom != '1' && $custom != '0') {
                 $this->addFlash('error', $this->translator->trans('This value should be of type {{ type }}.', ['{{ type }}' => '0 - 1'], 'validators'));
-                return $this->redirectToRoute('settings.main');
+                return $this->redirectToRoute('settings.main.index');
             }
             try {
                 $this->configRepository->save('structure.logo.custom', $custom);
@@ -114,7 +114,7 @@ class MainController extends AbstractController {
         } else {
             $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
         }
-        return $this->redirectToRoute('settings.main');
+        return $this->redirectToRoute('settings.main.index');
     }
 
     #[
@@ -135,12 +135,12 @@ class MainController extends AbstractController {
                 $file = $request->files->get('structure_logo_url_dark');
             } else {
                 $this->addFlash('error', $this->translator->trans('No file was uploaded.', [], 'validators'));
-                return $this->redirectToRoute('settings.main');
+                return $this->redirectToRoute('settings.main.index');
             }
 
             if (!$file || !in_array($file->getClientMimeType(), ['image/jpeg', 'image/png', 'image/svg+xml'])) {
                 $this->addFlash('error', $this->translator->trans('The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.', ['{{ type }}' => $file->getClientMimeType(), '{{ types }}' => '.png - .jpg - .jpeg - .svg.'], 'validators'));
-                return $this->redirectToRoute('settings.main');
+                return $this->redirectToRoute('settings.main.index');
             }
 
             try {
@@ -153,7 +153,7 @@ class MainController extends AbstractController {
         } else {
             $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
         }
-        return $this->redirectToRoute('settings.main');
+        return $this->redirectToRoute('settings.main.index');
     }
 
     #[
@@ -176,7 +176,7 @@ class MainController extends AbstractController {
         } catch (Exception $e) {
             $this->addFlash('error', $this->translator->trans('Unable to save settings.', [], 'settings'));
         }
-        return $this->redirectToRoute('settings.main');
+        return $this->redirectToRoute('settings.main.index');
     }
 
     #[
@@ -188,7 +188,7 @@ class MainController extends AbstractController {
     ]
     public function licence(Request $request): Response {
         $licence = json_decode($request->getSession()->get('licence'))->infos;
-        return $this->render('settings/licence.html.twig', compact('licence'));
+        return $this->render('settings/main/licence.html.twig', compact('licence'));
     }
 
     #[
@@ -248,13 +248,13 @@ class MainController extends AbstractController {
             return $this->redirectToRoute('settings.main.footer');
         }
 
-        return $this->render('settings/footer.html.twig');
+        return $this->render('settings/main/footer.html.twig');
     }
 
     #[
         Route(
             path: '/footer/active',
-            name: 'settings.main.footer.active',
+            name: 'settings.main.footeractive',
             methods: ['POST']
         ),
         IsGranted('settings.main.edit')

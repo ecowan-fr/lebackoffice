@@ -13,7 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 ]
 class IndexController extends AbstractController {
 
-    #[Route(path: '', name: 'settings.index', methods: ['GET'])]
+    #[
+        Route(
+            path: '',
+            name: 'settings.index',
+            methods: ['GET']
+        )
+    ]
     public function index(): Response {
         return $this->render('settings/index.html.twig');
     }

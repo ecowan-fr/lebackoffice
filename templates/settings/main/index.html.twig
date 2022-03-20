@@ -5,11 +5,11 @@
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block body %}
-	{% include "settings/_header.html.twig" %}
+	{% include "settings/main/_header.html.twig" %}
 	<div class="container mx-auto mt-10">
 		<div class="flex flex-col lg:flex-row">
 			<div>
-				{% include "settings/_vertical_menu_main.html.twig" %}
+				{% include "settings/main/_vertical_menu_main.html.twig" %}
 			</div>
 			<div class="flex-grow sm:ml-10">
 				<p class="font-extrabold text-4xl text-center">{{ 'Organization informations'|trans({}, 'settings') }}</p>
