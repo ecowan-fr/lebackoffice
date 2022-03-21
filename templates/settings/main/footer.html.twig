@@ -5,7 +5,7 @@
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block body %}
-	{% include "settings/main/_header.html.twig" %}
+	{% include "settings/_header.html.twig" %}
 	<div class="container mx-auto mt-10">
 		<div class="flex flex-col lg:flex-row">
 			<div>
@@ -13,26 +13,26 @@
 			</div>
 			<div class="flex-grow sm:ml-10">
 				<p class="font-extrabold text-4xl text-center">{{ 'Footer Setup'|trans({}, 'settings') }}</p>
-				<div class="mt-14">
+				<div class="mt-16">
 					<p class="text-base font-medium">{{ 'Enable footer on all backffice pages'|trans({}, 'settings') }}</p>
 					{% if is_granted('settings.main.edit') %}
-						<form action="{{ path('settings.main.footeractive') }}" method="post">
-							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="footer.active.no" name="footer_active" {% if not configs['footer.active'] %} checked {% endif %}>
-							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="footer.active.yes" name="footer_active" {% if configs['footer.active'] %} checked {% endif %}>
-							<input type="hidden" name="token" value="{{ csrf_token('settings-footer-active') }}"/>
+						<form action="{{ path('settings.savesetting') }}" method="post">
+							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="footer_active_no" name="footer_active" {% if not configs.footer_active %} checked {% endif %}>
+							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="footer_active_yes" name="footer_active" {% if configs.footer_active %} checked {% endif %}>
+							<input type="hidden" name="token" value="{{ csrf_token('settings') }}"/>
 						</form>
-						<div class="radio-group mt-3">
-							<label for="footer.active.no">
+						<div class="radio-group my-5">
+							<label for="footer_active_no">
 								<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
 								{{ 'Disable'|trans({}, 'global') }}</label>
-							<label for="footer.active.yes">
+							<label for="footer_active_yes">
 								<i class="fa-solid fa-toggle-on mr-3 text-green-400"></i>
 								{{ 'Enable'|trans({}, 'global') }}</label>
 							<div class="selected"></div>
 						</div>
 					{% else %}
 						<p class='my-5 font-bold'>
-							{% if configs['footer.active'] == 1 %}
+							{% if configs.footer_active %}
 								<i class='fa-solid fa-toggle-on mr-3 text-green-400'></i>
 								{{ 'Enable'|trans({}, 'global') }}
 							{% else %}
@@ -42,10 +42,8 @@
 						</p>
 					{% endif %}
 				</div>
-				{% if configs['footer.active'] %}
-					<div class="mt-10">
-						{{ showAlert('info','The bottom of the page has 3 zones. Left, center and right. In each zone, you can activate or not the logo of the backoffice, a personalized text or the document classification system.'|trans({}, 'settings')) }}
-					</div>
+				{% if configs.footer_active %}
+					{{ showAlert('info','The bottom of the page has 3 zones. Left, center and right. In each zone, you can activate or not the logo of the backoffice, a personalized text or the document classification system.'|trans({}, 'settings'), 'mt-10') }}
 					{% set zones = {
 						left: {
 							name: 'Left zone'|trans({}, 'settings'),
@@ -70,38 +68,38 @@
 						text: 'A text'|trans({}, 'global'),
 					} %}
 					{% for key, zone in zones %}
-						<div class="mt-10 border-4 border-dotted {{ zone.color }} w-full p-5">
+						<div class="mt-10 border-4 border-dotted {{ zone.color }} w-full p-6">
 							<p class="font-bold text-2xl">
 								<i class="fa-duotone {{ zone.icon }} mr-4"></i>
 								{{ zone.name }}
 							</p>
 							{% if is_granted('settings.main.edit') %}
-								<form method="post">
+								<form action="{{ path('settings.savesetting') }}" method="post">
 									<div class="text-slate-600 dark:text-slate-200 mt-5">
-										<select class="w-full text-slate-600 dark:text-slate-200" name="{{ 'footer_' ~ key ~ '_type' }}" id="{{ 'footer.' ~ key ~ '.type' }}" onchange="submit();" required>
+										<select class="w-full text-slate-600 dark:text-slate-200" name="{{ 'footer_' ~ key ~ '_type' }}" id="{{ 'footer_' ~ key ~ '_type' }}" onchange="submit();" required>
 											{% for key2,type in types %}
-												<option value="{{ key2 }}" {% if configs['footer.' ~ key ~ '.type'] == key2 %} selected {% endif %}>{{ type }}</option>
+												<option value="{{ key2 }}" {% if configs['footer_' ~ key ~ '_type'] == key2 %} selected {% endif %}>{{ type }}</option>
 											{% endfor %}
 										</select>
-										<input type="hidden" name="token" value="{{ csrf_token('settings-main-footer-type') }}"/>
-										{% if configs['footer.' ~ key ~ '.type'] == 'text' %}
-											<input id="{{ 'footer.' ~ key ~ '.text' }}" name="{{ 'footer.' ~ key ~ '.text' }}" class="w-full mt-5" value="{{ configs['footer.' ~ key ~ '.text'] }}" type="text">
+										{% if configs['footer_' ~ key ~ '_type'] == 'text' %}
+											<input id="{{ 'footer_' ~ key ~ '_text' }}" name="{{ 'footer_' ~ key ~ '_text' }}" class="w-full mt-5" value="{{ configs['footer_' ~ key ~ '_text'] }}" type="text">
 										{% endif %}
 									</div>
+									<input type="hidden" name="token" value="{{ csrf_token('settings') }}"/>
 								</form>
 							{% else %}
 								<p class="text-slate-600 dark:text-slate-200 font-bold mt-5 ml-10">
-									{% if configs['footer.' ~ key ~ '.type'] == 'logo' %}
+									{% if configs['footer_' ~ key ~ '_type'] == 'logo' %}
 										<i class="fa-solid fa-image"></i>
-									{% elseif configs['footer.' ~ key ~ '.type'] == 'text' %}
+									{% elseif configs['footer_' ~ key ~ '_type'] == 'text' %}
 										<i class="fa-solid fa-align-left"></i>
-									{% elseif configs['footer.' ~ key ~ '.type'] == 'timbre' %}
+									{% elseif configs['footer_' ~ key ~ '_type'] == 'timbre' %}
 										<i class="fa-solid fa-stamp"></i>
 									{% endif %}
 
-									{{ types[configs['footer.' ~ key ~ '.type']] }}</p>
-								{% if configs['footer.' ~ key ~ '.type'] == 'text' %}
-									<p class="text-slate-600 dark:text-slate-200 mt-4 ml-10">{{ configs['footer.' ~ key ~ '.text'] }}</p>
+									{{ types[configs['footer_' ~ key ~ '_type']] }}</p>
+								{% if configs['footer_' ~ key ~ '_type'] == 'text' %}
+									<p class="text-slate-600 dark:text-slate-200 mt-4 ml-10">{{ configs['footer_' ~ key ~ '_text'] }}</p>
 								{% endif %}
 							{% endif %}
 						</div>

@@ -5,7 +5,7 @@
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block body %}
-	{% include "settings/main/_header.html.twig" %}
+	{% include "settings/_header.html.twig" %}
 	<div class="container mx-auto mt-10">
 		<div class="flex flex-col lg:flex-row">
 			<div>
@@ -13,9 +13,7 @@
 			</div>
 			<div class="flex-grow sm:ml-10">
 				<p class="font-extrabold text-4xl text-center">{{ 'Content of your license'|trans({}, 'licence') }}</p>
-				<div class="mt-10">
-					{{ showAlert('success', 'Valid license'|trans({}, 'licence'))}}
-				</div>
+				{{ showAlert('success', 'Valid license'|trans({}, 'licence'), 'mt-16')}}
 				<table class="mt-5">
 					<tr>
 						<td class="text-right font-bold text-base w-1/2">{{ 'Unique identifiers'|trans({}, 'licence') }}

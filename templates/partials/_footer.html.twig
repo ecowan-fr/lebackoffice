@@ -1,13 +1,13 @@
-{% if configs['footer.active'] %}
+{% if configs['footer_active'] %}
 	<footer>
 		<div class="container mx-auto flex items-center justify-between border-t pt-4">
 			{% for partie in ['left','center','right'] %}
 				<div>
-					{% if configs['footer.' ~ partie ~ '.type'] == 'logo' %}
+					{% if configs['footer_' ~ partie ~ '_type'] == 'logo' %}
 						<img data-logolight="{{ asset(logos.light) }}" data-logodark="{{ asset(logos.dark) }}" style="filter: grayscale(100%);" class="h-4 logoprincipal" src="{{ asset(logos.light) }}" alt="Logo lebackoffice">
-					{% elseif configs['footer.' ~ partie ~ '.type'] == 'text' %}
-						<p class="text-sm text-gray-400">{{ configs['footer.' ~ partie ~ '.text'] }}</p>
-					{% elseif configs['footer.' ~ partie ~ '.type'] == 'timbre' %}
+					{% elseif configs['footer_' ~ partie ~ '_type'] == 'text' %}
+						<p class="text-sm text-gray-400">{{ configs['footer_' ~ partie ~ '_text'] }}</p>
+					{% elseif configs['footer_' ~ partie ~ '_type'] == 'timbre' %}
 						{% if fileExist('public/images/timbre_classification/T_' ~ classification|default('DR') ~ '.svg') %}
 							<img class="h-10" src="{{ asset('images/timbre_classification/T_' ~ classification|default('DR') ~ '.svg') }}" alt="timbre">
 						{% else %}

@@ -53,7 +53,7 @@ class ConfigRepository extends ServiceEntityRepository {
         return $data;
     }
 
-    public function saveMultiple(array $data): void {
+    public function saveMultiple(array $data) {
         foreach ($data as $setting => $value) {
             try {
                 $this->save($setting, $value);
@@ -63,59 +63,32 @@ class ConfigRepository extends ServiceEntityRepository {
         }
     }
 
-    public function save(string $setting, string $value): bool {
-        /** @var Config */
-        $Config = $this->findOneBy(['setting' => $setting]);
-        if (!is_null($Config)) {
-            $Config
-                ->setValue($value)
-                ->setUpdatedAt(new DateTimeImmutable);
-            $this->_em->flush();
-            return true;
+    public function save(string $setting, string $value) {
+        try {
+            /** @var Config */
+            $Config = $this->findOneBy(['setting' => $setting]);
+            if (!is_null($Config)) {
+                $Config
+                    ->setValue($value)
+                    ->setUpdatedAt(new DateTimeImmutable);
+                $this->_em->flush();
+                return true;
+            }
+        } catch (Exception $e) {
+            throw $e;
         }
-
-        return throw new Exception("Impossible d'enregistrer la configuration.");
     }
 
     public function getLogos(array $configs): array {
         $logos = [];
-        if (!$configs['structure.logo.custom']) {
+        if (!$configs['structure_logo_custom']) {
             $logos['light'] = "/images/logo/logo-lebackoffice-noir.svg";
             $logos['dark'] = "/images/logo/logo-lebackoffice-blanc.svg";
         } else {
-            $logos['light'] = $configs['structure.logo.url.light'];
-            $logos['dark'] = $configs['structure.logo.url.dark'];
+            $logos['light'] = $configs['structure_logo_url_light'];
+            $logos['dark'] = $configs['structure_logo_url_dark'];
         }
 
         return $logos;
     }
-
-    // /**
-    //  * @return Config[] Returns an array of Config objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Config
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
