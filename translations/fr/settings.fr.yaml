@@ -54,3 +54,5 @@
 'Attention, no system is currently activated.': 'Attention, aucun système n''est actuellement activé.'
 'Setup is good.': 'La configuration est bonne.'
 'The configuration is missing. Add the necessary information in the .env file.': 'La configuration est manquante. Rajoutez les informations nécessaires dans le fichier .env.'
+'WebAuthn / FIDO2 setup': 'Configuration de WebAuthn / FIDO2'
+'The WebAuthn bundle is being updated to be compatible with Symfony 6. It will be implemented when version 4 will be available.': 'Le bundle WebAuthn est en cours des mises à jour pour qu''il soit compatible avec Symfony 6. Il sera implémenté lorsque la version 4 serras disponibles.'

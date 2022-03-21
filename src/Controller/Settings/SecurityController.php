@@ -40,6 +40,6 @@ class SecurityController extends AbstractController {
         )
     ]
     public function webauthn(): Response {
-        return $this->render('settings/security/index.html.twig');
+        return $this->render('settings/security/webauthn.html.twig');
     }
 }

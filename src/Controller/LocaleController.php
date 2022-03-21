@@ -13,6 +13,6 @@ class LocaleController extends AbstractController {
     public function fr(string $locale, Request $request): RedirectResponse {
         $request->getSession()->set('_locale', $locale);
 
-        return $this->redirectToRoute('home.home');
+        return $this->redirect($request->headers->get('referer', $this->generateUrl('home.home')));
     }
 }
