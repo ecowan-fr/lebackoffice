@@ -229,6 +229,25 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "scheb/2fa-bundle": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "6.0",
+            "ref": "1e6f68089146853a790b5da9946fc5974f6fcd49"
+        },
+        "files": [
+            "./config/packages/scheb_2fa.yaml",
+            "./config/routes/scheb_2fa.yaml"
+        ]
+    },
+    "scheb/2fa-email": {
+        "version": "v6.0.1"
+    },
+    "scheb/2fa-trusted-device": {
+        "version": "v6.0.1"
+    },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
         "recipe": {

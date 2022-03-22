@@ -39,3 +39,4 @@
 'An error occurred while communicating with %s': 'Une erreur est survenue lors de la communication avec %s'
 'You are authenticated with %s' : 'Vous êtes authentifié avec %s'
 'No users found with this account %s': 'Aucun utilisateur trouvé avec ce compte %s'
+'Authentication confirmation': 'Confirmation d''authentification'

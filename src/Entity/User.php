@@ -2,15 +2,24 @@
 
 namespace App\Entity;
 
+use LogicException;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface {
+class User
+implements
+    UserInterface,
+    PasswordAuthenticatedUserInterface,
+    TwoFactorInterface,
+    TrustedDeviceInterface {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -57,6 +66,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $azureId;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private string $authCode;
+
+    #[ORM\Column(type: 'boolean')]
+    private $twofabyemail;
+
+    #[ORM\Column(type: 'integer')]
+    private int $trustedVersion;
 
     public function getId(): ?int {
         return $this->id;
@@ -224,10 +242,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function updatedTimestamps(): void {
+    public function preCreate() {
         $this->setUpdatedAt(new DateTimeImmutable());
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new DateTimeImmutable());
+        if (is_null($this->getCreatedAt())) {
+            $this->setCreatedAt(new DateTimeImmutable())
+                ->setTwofabyemail(false)
+                ->setTrustedTokenVersion(0);
         }
     }
 
@@ -293,5 +313,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     public function useOauth(): bool {
         return null !== $this->discordId || null !== $this->googleId || null !== $this->githubId || null !== $this->microsoftId;
+    }
+
+    public function isEmailAuthEnabled(): bool {
+        return $this->twofabyemail;
+    }
+
+    public function getEmailAuthRecipient(): string {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): ?string {
+        if (is_null($this->authCode)) {
+            throw new LogicException('The email authentication code was not set');
+        }
+
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void {
+        $this->authCode = $authCode;
+    }
+
+    public function getTwofabyemail(): ?bool {
+        return $this->twofabyemail;
+    }
+
+    public function setTwofabyemail(bool $twofabyemail): self {
+        $this->twofabyemail = $twofabyemail;
+
+        return $this;
+    }
+
+    public function getTrustedTokenVersion(): int {
+        return $this->trustedVersion;
+    }
+
+    public function setTrustedTokenVersion(int $trustedVersion): self {
+        $this->trustedVersion = $trustedVersion;
+
+        return $this;
     }
 }

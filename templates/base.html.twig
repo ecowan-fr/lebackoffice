@@ -36,14 +36,14 @@
 		<div class='flashbag animate__animated'>
 			{{ showFlashMessage(app.flashes) }}
 		</div>
-		{% if app.user %}
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			{% include "partials/_navbar.html.twig" %}
 			{% include "partials/_lightbox.html.twig" %}
 			<div class="flex-grow">
 			{% endif %}
 			{% block body '' %}
 			{% block js_body '' %}
-			{% if app.user %}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			</div>
 			{% include "partials/_footer.html.twig" %}
 		{% endif %}

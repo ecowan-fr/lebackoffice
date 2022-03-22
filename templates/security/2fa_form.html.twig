@@ -1,0 +1,50 @@
+{% extends 'security/base_security.html.twig' %}
+
+{% block title 'Sign in'|trans({}, 'security') %}
+
+{% block security %}
+	<div class="w-full">
+		<img data-logolight="{{ asset(logos.light) }}" data-logodark="{{ asset(logos.dark) }}" src="{{ asset(logos.light) }}" alt="Logo lebackoffice">
+	</div>
+
+	<div class="mt-8 text-4xl text-gray-700 font-extrabold tracking-tight leading-tight">{{ 'Authentication confirmation'|trans({}, 'security') }}</div>
+	<div class="flex items-baseline mt-2 font-light text-xs">
+		{{ "choose_provider"|trans({}, 'SchebTwoFactorBundle') }}
+		:
+		{% for provider in availableTwoFactorProviders %}
+			<a class=" mx-1" href="{{ path("2fa_login", {"preferProvider": provider}) }}">{{ provider }}</a>
+		{% endfor %}
+	</div>
+
+	<a class="block my-8" href="{{ path('security.logout') }}">
+		<i class="fa-duotone fa-circle-left"></i>
+		{{ 'Back to sign in'|trans({}, 'security') }}</a>
+
+	{% if authenticationError %}
+		{{ showAlert('error', authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle')) }}
+	{% endif %}
+
+
+	<label for="_auth_code" class="mt-6 block mb-2 text-gray-500">
+		{{ "auth_code"|trans({}, 'SchebTwoFactorBundle') ~ ' ' ~ twoFactorProvider }}
+	</label>
+
+	<form class="form" action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
+		<p class="widget">
+			<input class="w-full" id="_auth_code" type="text" name="{{ authCodeParameterName }}" autocomplete="one-time-code" autofocus {# https://www.twilio.com/blog/html-attributes-two-factor-authentication-autocomplete If your 2fa methods are using numeric codes only, add these attributes for better user experience: inputmode="numeric" pattern="[0-9]*" #}/>
+		</p>
+
+		{% if displayTrustedOption %}
+			<label for="_trusted" class="mt-6 block mb-2 text-gray-500">
+				<input id="_trusted" type="checkbox" name="{{ trustedParameterName }}"/>
+				{{ "trusted"|trans({}, 'SchebTwoFactorBundle') }}
+			</label>
+		{% endif %}
+
+		{% if isCsrfProtectionEnabled %}
+			<input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+		{% endif %}
+
+		<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
+	</form>
+{% endblock %}
