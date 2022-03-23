@@ -1,10 +1,10 @@
 .card_setting {
-    @apply card w-full text-center hover:bg-gray-200 dark:hover:bg-gray-500;
-    padding-top: 3rem;
+    @apply card hover:bg-gray-200 dark:hover:bg-gray-500 items-center justify-center flex flex-col;
     transition: .2s;
+    min-width: 250px;
 
     img {
-        @apply h-24 mx-auto mb-8;
+        @apply h-2/6 mb-14;
     }
 
     p {

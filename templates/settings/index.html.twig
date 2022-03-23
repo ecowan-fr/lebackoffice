@@ -5,52 +5,50 @@
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block body %}
-	<div class="container h-full mx-auto flex justify-center items-center">
-		<div class="w-full h-full mt-16 mb-5 md:h-auto md:mt-0">
-			<div class="flex gap-16 justify-center items-center h-full flex-wrap mx-4 xl:mx-auto  md:grid md:flex-nowrap md:grid-cols-2 lg:grid-cols-3 xl:w-9/12 2xl:w-3/5">
-				{% if is_granted('settings.main.view') %}
-					<a href="{{ path('settings.main.index') }}" class="card_setting waves-effect">
-						<img src="{{ asset('images/icons/settings.png') }}" alt="settings">
-						<p class="text-3xl mt-16 mb-5">{{ 'General'|trans({}, 'settings') }}</p>
-					</a>
-				{% endif %}
-				{% if
+	<div class="flex h-full justify-center items-center pt-10">
+		<div class="grid sm:grid-cols-2 md:grid-cols-3 gap-12">
+			{% if is_granted('settings.main.view') %}
+				<a href="{{ path('settings.main.index') }}" class="card_setting waves-effect">
+					<img src="{{ asset('images/icons/settings.png') }}" alt="settings">
+					<p class="text-3xl">{{ 'General'|trans({}, 'settings') }}</p>
+				</a>
+			{% endif %}
+			{% if
 					is_granted('settings.services.vmware.view') or
 					is_granted('settings.services.pterodactyl.view') or
 					is_granted('settings.services.plesk.view') or
 					is_granted('settings.services.domains.view') or
 					is_granted('settings.services.licences.view')
 				%}
-					<a href="#" class="card_setting waves-effect">
-						<img src="{{ asset('images/icons/basket.png') }}" alt="services">
-						<p class="text-3xl mt-16 mb-5">Services</p>
-					</a>
-				{% endif %}
-				{% if is_granted('settings.payments.view') %}
-					<a href="#" class="card_setting waves-effect">
-						<img src="{{ asset('images/icons/credit_card.png') }}" alt="payments">
-						<p class="text-xl mt-16 mb-5">{{ 'Payment methods'|trans({}, 'settings') }}</p>
-					</a>
-				{% endif %}
-				{% if is_granted('settings.billings.view') %}
-					<a href="#" class="card_setting waves-effect">
-						<img src="{{ asset('images/icons/checklist.png') }}" alt="billings">
-						<p class="text-3xl mt-16 mb-5">{{ 'Billing'|trans({}, 'settings') }}</p>
-					</a>
-				{% endif %}
-				{% if is_granted('settings.security.view') %}
-					<a href="{{ path('settings.security.index') }}" class="card_setting waves-effect">
-						<img src="{{ asset('images/icons/lock.png') }}" alt="security">
-						<p class="text-3xl mt-16 mb-5">{{ 'Security'|trans({}, 'settings') }}</p>
-					</a>
-				{% endif %}
-				{% if is_granted('settings.users.view') %}
-					<a href="#" class="card_setting waves-effect">
-						<img src="{{ asset('images/icons/crown.png') }}" alt="users">
-						<p class="text-3xl mt-16 mb-5">{{ 'Users'|trans({}, 'settings') }}</p>
-					</a>
-				{% endif %}
-			</div>
+				<a href="#" class="card_setting waves-effect">
+					<img src="{{ asset('images/icons/basket.png') }}" alt="settings">
+					<p class="text-3xl">Services</p>
+				</a>
+			{% endif %}
+			{% if is_granted('settings.payments.view') %}
+				<a href="#" class="card_setting waves-effect">
+					<img src="{{ asset('images/icons/credit_card.png') }}" alt="settings">
+					<p class="text-xl">{{ 'Payment methods'|trans({}, 'settings') }}</p>
+				</a>
+			{% endif %}
+			{% if is_granted('settings.billings.view') %}
+				<a href="#" class="card_setting waves-effect">
+					<img src="{{ asset('images/icons/checklist.png') }}" alt="settings">
+					<p class="text-3xl">{{ 'Billing'|trans({}, 'settings') }}</p>
+				</a>
+			{% endif %}
+			{% if is_granted('settings.security.view') %}
+				<a href="{{ path('settings.security.index') }}" class="card_setting waves-effect">
+					<img src="{{ asset('images/icons/lock.png') }}" alt="settings">
+					<p class="text-3xl">{{ 'Security'|trans({}, 'settings') }}</p>
+				</a>
+			{% endif %}
+			{% if is_granted('settings.users.view') %}
+				<a href="#" class="card_setting waves-effect">
+					<img src="{{ asset('images/icons/crown.png') }}" alt="settings">
+					<p class="text-3xl">{{ 'Users'|trans({}, 'settings') }}</p>
+				</a>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}
