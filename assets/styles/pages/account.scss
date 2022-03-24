@@ -1,0 +1,19 @@
+nav.menu-horizontal {
+    @apply w-full flex py-4 border-b bg-gray-200 border-gray-300;
+
+    a {
+        @apply py-3 px-8 text-base text-inherit font-bold rounded-md;
+        transition: .2s;
+        &:hover, &.active {
+            @apply bg-gray-300;
+        }
+
+        i {
+            @apply mr-5;
+        }
+    }
+}
+
+div.body-account {
+    @apply h-full pt-16;
+}

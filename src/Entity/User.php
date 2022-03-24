@@ -71,7 +71,7 @@ implements
     private string $authCode;
 
     #[ORM\Column(type: 'boolean')]
-    private $twofabyemail;
+    private $twofa_email;
 
     #[ORM\Column(type: 'integer')]
     private int $trustedVersion;
@@ -246,7 +246,7 @@ implements
         $this->setUpdatedAt(new DateTimeImmutable());
         if (is_null($this->getCreatedAt())) {
             $this->setCreatedAt(new DateTimeImmutable())
-                ->setTwofabyemail(false)
+                ->setTwofa_email(false)
                 ->setTrustedTokenVersion(0);
         }
     }
@@ -316,7 +316,7 @@ implements
     }
 
     public function isEmailAuthEnabled(): bool {
-        return $this->twofabyemail;
+        return $this->twofa_email;
     }
 
     public function getEmailAuthRecipient(): string {
@@ -335,12 +335,12 @@ implements
         $this->authCode = $authCode;
     }
 
-    public function getTwofabyemail(): ?bool {
-        return $this->twofabyemail;
+    public function getTwofa_email(): ?bool {
+        return $this->twofa_email;
     }
 
-    public function setTwofabyemail(bool $twofabyemail): self {
-        $this->twofabyemail = $twofabyemail;
+    public function setTwofa_email(bool $twofa_email): self {
+        $this->twofa_email = $twofa_email;
 
         return $this;
     }
@@ -353,5 +353,13 @@ implements
         $this->trustedVersion = $trustedVersion;
 
         return $this;
+    }
+
+    public function hasTwofa(string $type): bool {
+        switch ($type) {
+            case 'email':
+                return $this->getTwofa_email();
+                break;
+        }
     }
 }

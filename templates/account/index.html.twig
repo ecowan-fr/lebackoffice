@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'My account'|trans({}, 'account') %}
+
+{% block body %}
+	<div class="h-full flex flex-col">
+		{% include "account/_menu.html.twig" %}
+		<div class="container mx-auto h-full flex-grow">
+			<div class="body-account">
+				{{ showAlert('info', "It's coming soon ..."|trans({}, 'global')) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

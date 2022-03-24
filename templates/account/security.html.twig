@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'My account'|trans({}, 'account') %}
+
+{% block body %}
+	<div class="h-full flex flex-col">
+		{% include "account/_menu.html.twig" %}
+		<div class="container mx-auto h-full flex-grow">
+			<div class="relative mt-16">
+				<div class="absolute inset-0 flex items-center" aria-hidden="true">
+					<div class="w-full border-t border-gray-300"></div>
+				</div>
+				<div class="relative flex ml-20">
+					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Change my password'|trans({}, 'account') }}</span>
+				</div>
+			</div>
+			<div class="mt-10 ml-5">
+				<form method="POST">
+					<div class="flex flex-col md:flex-row items-center md:items-baseline justify-center">
+						<div>
+							<label for="password_1" class="block mb-1 text-gray-500">{{ 'New password'|trans({}, 'account') }}</label>
+							<input autocomplete="off" class=" w-96 max-w-full" id="password_1" name="password_1" type="password">
+						</div>
+						<div class="md:ml-10">
+							<label for="password_2" class="mt-4 block mb-1 text-gray-500">{{ 'Confirm your new password'|trans({}, 'account') }}</label>
+							<input autocomplete="off" class=" w-96 max-w-full" id="password_2" name="password_2" type="password">
+						</div>
+					</div>
+					<input type="hidden" name="token" value="{{ csrf_token('account.changepassword') }}"/>
+
+					<button class="large mt-10 md:mt-16 green mx-auto" type="submit">
+						<i class="fad fa-save mr-3"></i>
+						{{ 'Save'|trans({}, 'global') }}</button>
+				</form>
+			</div>
+			<div class="relative mt-16">
+				<div class="absolute inset-0 flex items-center" aria-hidden="true">
+					<div class="w-full border-t border-gray-300"></div>
+				</div>
+				<div class="relative flex ml-20">
+					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Multi-factor authentication'|trans({}, 'account') }}</span>
+				</div>
+			</div>
+			{% set types = {
+					email: {
+						borderColor: 'border-blue-400',
+						bgColor: 'bg-blue-400',
+						icon: 'fa-solid fa-envelope',
+						title: 'Authenticate using a security code received by email'|trans({}, 'account')
+					}
+				} %}
+			{% for key, type in types %}
+				<div class="mt-10">
+					<div style="border-color:{{ type.borderColor }};" class="pb-4 border-4 border-dashed {{ type.borderColor }} rounded-xl font-bold">
+						<p style="background-color:{{ type.bgColor }};" class="{{ type.bgColor }} text-white py-6 px-10">
+							<i class="{{ type.icon }} mr-6 text-xl"></i>
+							{{ type.title }}
+						</p>
+						<div class="px-10">
+							{% if key == 'email' %}
+								{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}
+							{% endif %}
+							<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
+							<form action="{{ path('account.security.setTwofa', { type: key }) }}" method="post">
+								<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="{{ key ~ '_no' }}" name="{{ key }}" {% if not app.user.hasTwofa(key) %} checked {% endif %}>
+								<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="{{ key ~ '_yes' }}" name="{{ key }}" {% if app.user.hasTwofa(key) %} checked {% endif %}>
+								<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/>
+							</form>
+							<div class="radio-group my-5">
+								<label for="{{ key ~ '_no' }}">
+									<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
+									{{ 'Disable'|trans({}, 'global') }}</label>
+								<label for="{{ key ~ '_yes' }}">
+									<i class="fa-solid fa-toggle-on mr-3 text-green-400"></i>
+									{{ 'Enable'|trans({}, 'global') }}</label>
+								<div class="selected"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

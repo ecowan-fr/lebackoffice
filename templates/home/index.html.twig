@@ -20,7 +20,7 @@
 							<div class="text-gray-500 text-lg mt-2">{{ app.user.email }}</div>
 						</div>
 						<div class="mt-8">
-							<a href="" class="green button w-full">{{ 'My account'|trans({}, 'home') }}</a>
+							<a href="{{ path('account.index') }}" class="green button w-full">{{ 'My account'|trans({}, 'home') }}</a>
 						</div>
 					</div>
 					<div class="border-b border-gray-200 text-center rounded-b-xl">
