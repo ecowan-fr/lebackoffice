@@ -125,9 +125,9 @@
 						</div>
 					</div>
 					{% if is_granted('settings.main.edit') %}
-						<button class="large mt-16 green mx-auto" type="submit">
-							<i class="fad fa-save mr-3"></i>
-							{{ 'Save all informations'|trans({}, 'settings') }}</button>
+						<div class="text-center"><button class="large mt-16 green" type="submit">
+							<i class="fa-solid fa-save mr-3"></i>
+							{{ 'Save all informations'|trans({}, 'settings') }}</button></div>
 						<input type="hidden" name="token" value="{{ csrf_token('settings') }}"/>
 					</form>
 				{% endif %}
