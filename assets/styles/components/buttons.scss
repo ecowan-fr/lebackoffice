@@ -4,7 +4,7 @@ button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
-    @apply block shadow bg-gradient-to-r from-blue-400 to-blue-500 text-gray-100 dark:text-gray-100 text-xs text-center font-semibold flex-nowrap cursor-pointer border-none rounded py-3 px-5 select-none;
+    @apply inline-block shadow bg-gradient-to-r from-blue-400 to-blue-500 text-gray-100 dark:text-gray-100 text-xs text-center font-semibold flex-nowrap cursor-pointer border-none rounded py-3 px-5 select-none;
     transition:.2s;
 
     &:active { @apply ring-2 ring-offset-1 ring-offset-gray-100; }
@@ -38,6 +38,8 @@ button,
     }
 
     &.green { @apply from-green-400 to-green-500 ring-green-400; }
+
+    &.yellow { @apply from-yellow-400 to-yellow-500 ring-yellow-400; }
 
     &.red { @apply from-red-400 to-red-500 ring-red-400; }
 

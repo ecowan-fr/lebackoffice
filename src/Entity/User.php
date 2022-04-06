@@ -6,6 +6,7 @@ use LogicException;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Scheb\TwoFactorBundle\Model\BackupCodeInterface;
 use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
@@ -18,7 +19,8 @@ implements
     UserInterface,
     PasswordAuthenticatedUserInterface,
     TwoFactorInterface,
-    TrustedDeviceInterface {
+    TrustedDeviceInterface,
+    BackupCodeInterface {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -68,13 +70,16 @@ implements
     private $azureId;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $authCode;
+    private $authCode;
 
     #[ORM\Column(type: 'boolean')]
-    private $twofa_email;
+    private $twofa_email = false;
 
     #[ORM\Column(type: 'integer')]
-    private int $trustedVersion;
+    private $trustedVersion = 0;
+
+    #[ORM\Column(type: 'json')]
+    private $backupCodes = [];
 
     public function getId(): ?int {
         return $this->id;
@@ -245,9 +250,7 @@ implements
     public function preCreate() {
         $this->setUpdatedAt(new DateTimeImmutable());
         if (is_null($this->getCreatedAt())) {
-            $this->setCreatedAt(new DateTimeImmutable())
-                ->setTwofa_email(false)
-                ->setTrustedTokenVersion(0);
+            $this->setCreatedAt(new DateTimeImmutable());
         }
     }
 
@@ -360,6 +363,33 @@ implements
             case 'email':
                 return $this->getTwofa_email();
                 break;
+            case 'backupCode':
+                return count($this->backupCodes) === 0 ? false : true;
         }
+    }
+
+    public function isBackupCode(string $code): bool {
+        return in_array($code, $this->backupCodes);
+    }
+
+    public function invalidateBackupCode(string $code): void {
+        $key = array_search($code, $this->backupCodes);
+        if ($key !== false) {
+            unset($this->backupCodes[$key]);
+        }
+    }
+
+    public function addBackUpCode(string $backUpCode): void {
+        if (!in_array($backUpCode, $this->backupCodes)) {
+            $this->backupCodes[] = $backUpCode;
+        }
+    }
+
+    public function clearBackupCode(): void {
+        $this->backupCodes = [];
+    }
+
+    public function getbackupCodes(): array {
+        return $this->backupCodes;
     }
 }

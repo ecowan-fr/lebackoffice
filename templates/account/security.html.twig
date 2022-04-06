@@ -28,9 +28,11 @@
 					</div>
 					<input type="hidden" name="token" value="{{ csrf_token('account.changepassword') }}"/>
 
-					<button class="large mt-10 md:mt-16 green mx-auto" type="submit">
-						<i class="fad fa-save mr-3"></i>
-						{{ 'Save'|trans({}, 'global') }}</button>
+					<div class="text-center">
+						<button class="large mt-10 md:mt-16 green" type="submit">
+							<i class="fa-solid fa-save mr-3"></i>
+							{{ 'Save'|trans({}, 'global') }}</button>
+					</div>
 				</form>
 			</div>
 			<div class="relative mt-16">
@@ -41,44 +43,61 @@
 					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Multi-factor authentication'|trans({}, 'account') }}</span>
 				</div>
 			</div>
-			{% set types = {
-					email: {
-						borderColor: 'border-blue-400',
-						bgColor: 'bg-blue-400',
-						icon: 'fa-solid fa-envelope',
-						title: 'Authenticate using a security code received by email'|trans({}, 'account')
-					}
-				} %}
-			{% for key, type in types %}
-				<div class="mt-10">
-					<div style="border-color:{{ type.borderColor }};" class="pb-4 border-4 border-dashed {{ type.borderColor }} rounded-xl font-bold">
-						<p style="background-color:{{ type.bgColor }};" class="{{ type.bgColor }} text-white py-6 px-10">
-							<i class="{{ type.icon }} mr-6 text-xl"></i>
-							{{ type.title }}
-						</p>
-						<div class="px-10">
-							{% if key == 'email' %}
-								{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}
-							{% endif %}
-							<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
-							<form action="{{ path('account.security.setTwofa', { type: key }) }}" method="post">
-								<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="{{ key ~ '_no' }}" name="{{ key }}" {% if not app.user.hasTwofa(key) %} checked {% endif %}>
-								<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="{{ key ~ '_yes' }}" name="{{ key }}" {% if app.user.hasTwofa(key) %} checked {% endif %}>
-								<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/>
-							</form>
-							<div class="radio-group my-5">
-								<label for="{{ key ~ '_no' }}">
-									<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
-									{{ 'Disable'|trans({}, 'global') }}</label>
-								<label for="{{ key ~ '_yes' }}">
-									<i class="fa-solid fa-toggle-on mr-3 text-green-400"></i>
-									{{ 'Enable'|trans({}, 'global') }}</label>
-								<div class="selected"></div>
-							</div>
+			<div class="mt-10">
+				<div class="pb-4 border-4 border-dashed border-blue-400 rounded-xl font-bold">
+					<p class="bg-blue-400 text-white py-6 px-10">
+						<i class="fa-solid fa-envelope mr-6 text-xl"></i>
+						{{ 'Authenticate using a security code received by email'|trans({}, 'account') }}
+					</p>
+					<div class="px-10">
+						{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}
+						<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
+						<form action="{{ path('account.security.setTwofa', { type: 'email' }) }}" method="post">
+							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="{{ 'email_no' }}" name="{{ 'email' }}" {% if not app.user.hasTwofa('email') %} checked {% endif %}>
+							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="{{ 'email_yes' }}" name="{{ 'email' }}" {% if app.user.hasTwofa('email') %} checked {% endif %}>
+							<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/>
+						</form>
+						<div class="radio-group my-5">
+							<label for="{{ 'email_no' }}">
+								<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
+								{{ 'Disable'|trans({}, 'global') }}</label>
+							<label for="{{ 'email_yes' }}">
+								<i class="fa-solid fa-toggle-on mr-3 text-green-400"></i>
+								{{ 'Enable'|trans({}, 'global') }}</label>
+							<div class="selected"></div>
 						</div>
 					</div>
 				</div>
-			{% endfor %}
+			</div>
+			<div class="mt-10">
+				<div class="pb-4 border-4 border-dashed border-yellow-400 rounded-xl font-bold">
+					<p class="bg-yellow-400 text-white py-6 px-10">
+						<i class="fa-solid fa-light-emergency-on mr-6 text-xl"></i>
+						{{ 'Backup Codes'|trans({}, 'account') }}
+					</p>
+					<div class="px-10">
+						<p class="mt-10">{{ 'These backup codes should be carefully stored in a secure place. They will be used to recover your account.'|trans({}, 'account') }}</p>
+						{% if app.user.hasTwofa('backupCode') %}
+							<div class="flex mt-10">
+								<a href="{{ path('account.security.backupcode.generate') }}" class="button large mb-3 yellow btn-load">
+									<i class="fa-solid fa-rotate mr-3"></i>Re-{{ 'Generate backup codes'|trans({}, 'account') }}</a>
+								<a href="{{ path('account.security.backupcode.delete') }}" class="button large mb-3 red ml-5 btn-load">
+									<i class="fa-solid fa-trash mr-3"></i>
+									{{ 'Delete backup codes'|trans({}, 'account') }}</a>
+							</div>
+							<div class="flex my-5 flex-col">
+								{% for code in app.user.backupCodes %}
+									<p class="mt-2 code">{{code}}</p>
+								{% endfor %}
+							</div>
+						{% else %}
+							<a href="{{ path('account.security.backupcode.generate') }}" class="button large mt-10 mb-3 yellow btn-load">
+								<i class="fa-solid fa-circle-plus mr-3"></i>
+								{{ 'Generate backup codes'|trans({}, 'account') }}</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}

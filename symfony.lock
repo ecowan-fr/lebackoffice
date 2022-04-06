@@ -229,6 +229,9 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "scheb/2fa-backup-code": {
+        "version": "v6.0.1"
+    },
     "scheb/2fa-bundle": {
         "version": "6.0",
         "recipe": {

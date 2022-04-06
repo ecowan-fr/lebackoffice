@@ -148,6 +148,15 @@ export default (function () {
         })
     }
 
+    let btnLoad = () => {
+        document.querySelectorAll('a.btn-load').forEach(a => {
+            a.addEventListener('click', () => {
+                a.innerHTML = '<i class=\'fad animate-spin fa-spinner-third\'></i>'
+                a.disabled = true
+            })
+        })
+    }
+
     document.addEventListener("turbo:load", function () {
         Lightbox.init()
         Waves.init()
@@ -169,9 +178,7 @@ export default (function () {
 
         submainlink()
 
-        window.addEventListener('resize', () => {
-            submainlink()
-        })
+        btnLoad()
     })
 
     document.addEventListener("turbo:before-render", function () {

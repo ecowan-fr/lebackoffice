@@ -82,7 +82,7 @@ class AccountController extends AbstractController {
     ]
     public function setTwofa(string $type, Request $request) {
         if ($this->isCsrfTokenValid('account.setTwofa', $request->request->get('token'))) {
-            if ($request->request->get($type)) {
+            if (!is_null($request->request->get($type))) {
                 try {
                     /** @var User */
                     $user = $this->getUser();
@@ -92,16 +92,61 @@ class AccountController extends AbstractController {
                             break;
                     }
                     $this->em->flush();
-                    $this->addFlash('success', $this->translator->trans('Changed password', [], 'account'));
+                    $this->addFlash('success', $this->translator->trans('Settings saved.', [], 'settings'));
                 } catch (Exception $e) {
                     throw $e;
                 }
             } else {
-                $this->addFlash('error', $this->translator->trans('The two values should be equal.', [], 'validators'));
+                $this->addFlash('error', $this->translator->trans('One or more of the given values is invalid.', [], 'validators'));
             }
         } else {
             $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
         }
+        return $this->redirectToRoute('account.security');
+    }
+
+    #[
+        Route(
+            '/security/backup-code/generate',
+            name: 'account.security.backupcode.generate',
+            methods: ['GET']
+        )
+    ]
+    public function backupCodeGenerate() {
+        try {
+            /** @var User */
+            $user = $this->getUser();
+            $user->clearBackupCode();
+            for ($i = 0; $i < 10; $i++) {
+                $user->addBackUpCode(random_int(100000, 999999));
+            }
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('Backup codes generated', [], 'account'));
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('account.security');
+    }
+
+    #[
+        Route(
+            '/security/backup-code/delete',
+            name: 'account.security.backupcode.delete',
+            methods: ['GET']
+        )
+    ]
+    public function clearBackupCodes() {
+        try {
+            /** @var User */
+            $user = $this->getUser();
+            $user->clearBackupCode();
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('Backup codes removed', [], 'account'));
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
         return $this->redirectToRoute('account.security');
     }
 }

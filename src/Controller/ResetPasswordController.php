@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
@@ -33,7 +34,7 @@ class ResetPasswordController extends AbstractController {
     }
 
     #[Route(path: '', name: 'security.resetpassword.request', methods: ['GET', 'POST'])]
-    public function request(Request $request): Response {
+    public function request(Request $request, AuthenticationUtils $authenticationUtils): Response {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -42,9 +43,10 @@ class ResetPasswordController extends AbstractController {
                 $form->get('email')->getData()
             );
         }
+        $form->get('email')->setData($authenticationUtils->getLastUsername());
 
         return $this->render('security/reset_password/request.html.twig', [
-            'requestForm' => $form->createView(),
+            'requestForm' => $form->createView()
         ]);
     }
 
@@ -69,10 +71,10 @@ class ResetPasswordController extends AbstractController {
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address($_ENV['MAILER_FROM'], 'Lebackoffice'))
+            ->from(new Address($_ENV['MAILER_FROM_EMAIL'], $_ENV['MAILER_FROM_NAME']))
             ->to($user->getEmail())
             ->subject('Your password reset request')
-            ->htmlTemplate('security/reset_password/email.html.twig')
+            ->htmlTemplate('emails/reset-password.html.twig')
             ->context([
                 'resetToken' => $resetToken,
             ]);
