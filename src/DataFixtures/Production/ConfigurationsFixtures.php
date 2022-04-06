@@ -31,6 +31,7 @@ class ConfigurationsFixtures extends Fixture implements FixtureGroupInterface {
 
             ["name" => "structure_name", "value" => ""],
             ["name" => "structure_type", "value" => ""],
+            ["name" => "structure_rcs", "value" => ""],
             ["name" => "structure_siret", "value" => ""],
             ["name" => "structure_siren", "value" => ""],
             ["name" => "structure_rna", "value" => ""],

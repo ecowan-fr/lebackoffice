@@ -49,7 +49,7 @@ class AccountController extends AbstractController {
     public function security(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response {
         if ($request->isMethod('POST')) {
             if ($this->isCsrfTokenValid('account.changepassword', $request->request->get('token'))) {
-                if ($request->request->get('password_1') === $request->request->get('password_2')) {
+                if ($request->request->get('password_1') === $request->request->get('password_2') && $request->request->get('password_1') != '' &&  !is_null($request->request->get('password_1'))) {
                     try {
                         /** @var User */
                         $user = $this->getUser();
