@@ -82,7 +82,7 @@
 								<a href="{{ path('account.security.backupcode.generate') }}" class="button large mb-3 yellow btn-load">
 									<i class="fa-solid fa-rotate mr-3"></i>Re-{{ 'Generate backup codes'|trans({}, 'account') }}</a>
 								<a href="{{ path('account.security.backupcode.delete') }}" class="button large mb-3 red ml-5 btn-load">
-									<i class="fa-solid fa-trash mr-3"></i>
+									<i class="fa-solid fa-trash-can mr-3"></i>
 									{{ 'Delete backup codes'|trans({}, 'account') }}</a>
 							</div>
 							<div class="flex my-5 flex-col">
@@ -97,6 +97,14 @@
 						{% endif %}
 					</div>
 				</div>
+			</div>
+			<div class="mt-16">
+				<p class=" text-red-500 font-extrabold text-lg">
+					<i class="fa-solid fa-land-mine-on mr-3"></i>DANGER ZONE</p>
+				<a href="{{ path('account.security.trusteddevice.delete') }}" class="button large mt-8 red btn-load">
+					<i class="fa-solid fa-trash-can mr-3"></i>
+					{{ 'Remove trusted devices'|trans({}, 'account') }}
+				</a>
 			</div>
 		</div>
 	</div>

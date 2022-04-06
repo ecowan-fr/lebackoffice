@@ -149,4 +149,25 @@ class AccountController extends AbstractController {
 
         return $this->redirectToRoute('account.security');
     }
+
+    #[
+        Route(
+            '/security/trusted-device/delete',
+            name: 'account.security.trusteddevice.delete',
+            methods: ['GET']
+        )
+    ]
+    public function removeTrustedDevice() {
+        try {
+            /** @var User */
+            $user = $this->getUser();
+            $user->setTrustedTokenVersion($user->getTrustedTokenVersion() + 1);
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('Trusted devices removed', [], 'account'));
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('account.security');
+    }
 }
