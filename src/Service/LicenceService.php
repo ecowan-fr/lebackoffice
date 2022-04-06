@@ -113,23 +113,24 @@ class LicenceService {
                     }
 
                     if (hash('sha512', $checkHash) != json_decode($decrypted)->hash) {
-                        $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
+                        $this->message = $this->translator->trans('The license is invalid.', [], 'licence') . ' (hash error)';
                         return false;
                     } else {
                         $creation = new Datetime(json_decode($decrypted)->created);
                         $expiration = new Datetime(json_decode($decrypted)->expire);
                         $now = new Datetime();
                         if ($now->diff($expiration)->invert || !$now->diff($creation)->invert) {
-                            $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
+                            $this->message = $this->translator->trans('The license is invalid.', [], 'licence') . ' (time)';
                             return false;
                         } else {
                             if (!is_null($request->server->get('SERVER_ADDR')) && !$this->cidr_match($request->server->get('SERVER_ADDR') === '::1' ? "127.0.0.1" : $request->server->get('SERVER_ADDR'), json_decode($decrypted)->ip)) {
-                                $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
+                                $this->message = $this->translator->trans('The license is invalid.', [], 'licence') . ' (ip)';
                                 return false;
                             } else {
-                                $host = $request->getHost() === 'localhost' ? '127.0.0.1' : $request->getHost();
-                                if (!str_contains($host, json_decode($decrypted)->url)) {
-                                    $this->message = $this->translator->trans('The license is invalid.', [], 'licence');
+                                $host = $request->getHost() === '127.0.0.1' ? 'localhost' : $request->getHost();
+                                $hostOnLicence = json_decode($decrypted)->url === '127.0.0.1' ? 'localhost' : json_decode($decrypted)->url;
+                                if (!str_contains($host, $hostOnLicence)) {
+                                    $this->message = $this->translator->trans('The license is invalid.', [], 'licence') . ' (host)';
                                     return false;
                                 } else {
                                     $this->infos = json_decode($decrypted);
