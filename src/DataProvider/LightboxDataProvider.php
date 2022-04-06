@@ -2,17 +2,16 @@
 
 namespace App\DataProvider;
 
-use Twig\Environment;
 use App\Entity\Lightbox;
+use App\Controller\LightboxController;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LightboxDataProvider implements RestrictedDataProviderInterface, ItemDataProviderInterface {
 
     public function __construct(
         private readonly string $twig_path,
-        private readonly Environment $twig
+        private LightboxController $lightboxController
     ) {
     }
 
@@ -21,7 +20,6 @@ class LightboxDataProvider implements RestrictedDataProviderInterface, ItemDataP
     }
 
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []) {
-        $lightbox = 'lightbox/' . $id . '.html.twig';
-        return file_exists($this->twig_path . '/' . $lightbox) ? new Lightbox(name: $id, html: $this->twig->render($lightbox)) : null;
+        return method_exists(LightboxController::class, $id) ? new Lightbox(name: $id, html: $this->lightboxController->{$id}()) : null;
     }
 }
