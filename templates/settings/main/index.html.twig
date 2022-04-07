@@ -56,7 +56,9 @@
 						</div>
 						<div class="w-full lg:ml-10 mt-4 lg:mt-0">
 							{% if is_granted('settings.main.edit') %}
-								<label for="structure_rna" class="block mb-1 text-gray-500">{{ 'RNA number of the organization'|trans({}, 'settings') }}</label>
+								<label for="structure_rcs" class="block mb-1 text-gray-500">{{ 'RCS number of the organization'|trans({}, 'settings') }}</label>
+								<input id="structure_rcs" name="structure_rcs" class="w-full" placeholder="RCS City A XXXXXXXXX" value="{{ configs.structure_rcs }}" type="text">
+								<label for="structure_rna" class="mt-4 block mb-1 text-gray-500">{{ 'RNA number of the organization'|trans({}, 'settings') }}</label>
 								<input id="structure_rna" name="structure_rna" class="w-full" placeholder="WXXXXXXXXX" value="{{ configs.structure_rna }}" type="text">
 								<label for="structure_siret" class="mt-4 block mb-1 text-gray-500">{{ 'SIRET number of the organization'|trans({}, 'settings') }}</label>
 								<input id="structure_siret" name="structure_siret" class="w-full" placeholder="XXXXXXXXXYYYYY" value="{{ configs.structure_siret }}" type="number">
@@ -125,9 +127,11 @@
 						</div>
 					</div>
 					{% if is_granted('settings.main.edit') %}
-						<div class="text-center"><button class="large mt-16 green" type="submit">
-							<i class="fa-solid fa-save mr-3"></i>
-							{{ 'Save all informations'|trans({}, 'settings') }}</button></div>
+						<div class="text-center">
+							<button class="large mt-16 green" type="submit">
+								<i class="fa-solid fa-save mr-3"></i>
+								{{ 'Save all informations'|trans({}, 'settings') }}</button>
+						</div>
 						<input type="hidden" name="token" value="{{ csrf_token('settings') }}"/>
 					</form>
 				{% endif %}
