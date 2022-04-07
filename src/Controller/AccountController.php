@@ -170,4 +170,25 @@ class AccountController extends AbstractController {
 
         return $this->redirectToRoute('account.security');
     }
+
+    #[
+        Route(
+            '/security/app-two-fa/delete',
+            name: 'account.security.apptwofa.delete',
+            methods: ['GET']
+        )
+    ]
+    public function removeAppTwoFa() {
+        try {
+            /** @var User */
+            $user = $this->getUser();
+            $user->setTotpAppName('')->setTotpSecret('');
+            $this->em->flush();
+            $this->addFlash('success', $this->translator->trans('App removed', [], 'account'));
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('account.security');
+    }
 }

@@ -4,9 +4,8 @@ global.Lightbox = {
             if (item.dataset.lightboxinit == undefined) {
                 let data = item.dataset.lightbox.split(':')
                 let taille = data[0]
-                let module = data[1]
-                let page = data[2]
-                let bgcolor = data[3] != undefined ? data[2] : '#FFFFFF'
+                let page = data[1]
+                let bgcolor = data[2] != undefined ? data[2] : '#FFFFFF'
                 item.dataset.lightboxinit = true
                 item.addEventListener('click', function (e) {
                     return Lightbox[taille](page, bgcolor)

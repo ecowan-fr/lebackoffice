@@ -70,6 +70,35 @@
 				</div>
 			</div>
 			<div class="mt-10">
+				<div class="pb-4 border-4 border-dashed border-emerald-400 rounded-xl font-bold">
+					<p class="bg-emerald-400 text-white py-6 px-10">
+						<i class="fa-solid fa-qrcode mr-6 text-xl"></i>
+						{{ 'Authenticate using a smartphone app'|trans({}, 'account') }}
+					</p>
+					<div class="px-10">
+						{% if app.user.isTotpAuthenticationEnabled() %}
+							<div class="mt-10 flex">
+								<p>{{ 'Name of your app'|trans({}, 'account') ~ ' :'}}</p>
+								<p class="font-normal ml-5">{{ app.user.totpAppName }}</p>
+							</div>
+							<div class="my-5 flex">
+								<p>Token :
+								</p>
+								<p class="font-normal ml-5">{{ app.user.totpSecret }}</p>
+							</div>
+							<a href="{{ path('account.security.apptwofa.delete') }}" class="button large mb-3 red btn-load">
+								<i class="fa-solid fa-trash-can mr-3"></i>
+								{{ 'Remove app'|trans({}, 'account') }}
+							</a>
+						{% else %}
+							<button data-lightbox="M:addAppTwoFa" class="emerald mt-10 mb-6 large">
+								<i class="fa-solid fa-plus mr-3"></i>
+								{{ 'Add a new app'|trans({}, 'account') }}</button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="mt-10">
 				<div class="pb-4 border-4 border-dashed border-yellow-400 rounded-xl font-bold">
 					<p class="bg-yellow-400 text-white py-6 px-10">
 						<i class="fa-solid fa-light-emergency-on mr-6 text-xl"></i>
@@ -95,6 +124,17 @@
 								<i class="fa-solid fa-circle-plus mr-3"></i>
 								{{ 'Generate backup codes'|trans({}, 'account') }}</a>
 						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="mt-10">
+				<div class="pb-4 border-4 border-dashed border-neutral-400 rounded-xl font-bold">
+					<p class="bg-neutral-400 text-white py-6 px-10">
+						<i class="fa-solid fa-key-skeleton mr-6 text-xl"></i>
+						{{ 'Authenticate using a security key'|trans({}, 'account') }}
+					</p>
+					<div class="p-10 pb-6">
+						{{ showAlert('warning', 'Adding security key authentication is under development. Follow this github issue:'|trans({}, 'account') ~ " <a target='_blanck' href='https://github.com/scheb/2fa/issues/25'>https://github.com/scheb/2fa/issues/25</a>") }}
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,34 @@
+<div class='boxtitle'>
+	<div class='flex items-baseline'>
+		<i class="fa-solid fa-plus mr-3"></i>
+		{{ 'Add a new app'|trans({}, 'account') }}</div>
+	<button onclick='Lightbox.close();' class='hidden bg-none shadow-none text-gray-600 waves-effect text-base px-4 py-2'>
+		<i class='fa-solid fa-times pointer m-0'></i>
+	</button>
+</div>
+<div class="boxpad mt-10">
+	<img class="mx-auto" src="{{ qrcode }}" alt="QrCode">
+	<p class="text-center mt-10 font-light text-sm border-t pt-5">{{ 'If the QR CODE does not work, you can enter this token in your application'|trans({}, 'account') }}
+		:</p>
+	<p class="mt-5 font-light text-center">
+		<span class="badge">{{secret}}</span>
+	</p>
+	<div class="mt-5 border-t pt-5">
+		<form action="{{ path('account.security.apptwofa.add') }}" method="POST">
+			<label for="name" class="block mb-1 text-gray-500">{{ 'Name of your app'|trans({}, 'account')}}</label>
+			<input autocomplete="off" class="w-full" id="name" name="name" type="text" required>
+
+			<label for="code" class="mt-4 block mb-1 text-gray-500">{{ 'Confirm a first code'|trans({}, 'account')}}</label>
+			<input autocomplete="off" class="w-full" id="code" name="code" type="number" required>
+
+			<input type="hidden" name="token" value="{{ csrf_token('account.addAppTwoFa') }}">
+			<input type="hidden" name="secret" value="{{ secret }}">
+
+			<div class="text-center">
+				<button class="large mt-10 mb-5 emerald waves-effect waves-light" type="submit">
+					<i class="fa-solid fa-save mr-3"></i>
+					{{ 'Save'|trans({}, 'global') }}</button>
+			</div>
+		</form>
+	</div>
+</div>

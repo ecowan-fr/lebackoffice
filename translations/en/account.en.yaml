@@ -15,3 +15,13 @@
 'Backup codes removed': 'Backup codes removed'
 'Remove trusted devices': 'Remove trusted devices'
 'Trusted devices removed': 'Trusted devices removed'
+'Authenticate using a smartphone app': 'Authenticate using a smartphone app'
+'Add a new app': 'Add a new app'
+'If the QR CODE does not work, you can enter this token in your application': 'If the QR CODE does not work, you can enter this token in your application'
+'New app added': 'New app added'
+'Name of your app': 'Name of your app'
+'Confirm a first code': 'Confirm a first code'*
+'Remove app': 'Remove app'
+'App removed': 'App removed'
+'Adding security key authentication is under development. Follow this github issue:': 'Adding security key authentication is under development. Follow this github issue:'
+'Authenticate using a security key': 'Authenticate using a security key'

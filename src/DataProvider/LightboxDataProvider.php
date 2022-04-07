@@ -10,7 +10,6 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 class LightboxDataProvider implements RestrictedDataProviderInterface, ItemDataProviderInterface {
 
     public function __construct(
-        private readonly string $twig_path,
         private LightboxController $lightboxController
     ) {
     }
@@ -20,6 +19,13 @@ class LightboxDataProvider implements RestrictedDataProviderInterface, ItemDataP
     }
 
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []) {
-        return method_exists(LightboxController::class, $id) ? new Lightbox(name: $id, html: $this->lightboxController->{$id}()) : null;
+        $js = "<script type='text/javascript'>document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (event) => {
+                var btn = form.querySelector('button[type=\"submit\"]')
+                btn.innerHTML = '<i class=\'fad animate-spin fa-spinner-third\'></i>'
+                btn.disabled = true
+            })
+        })</script>";
+        return method_exists(LightboxController::class, $id) ? new Lightbox(name: $id, html: $this->lightboxController->{$id}() . $js) : null;
     }
 }

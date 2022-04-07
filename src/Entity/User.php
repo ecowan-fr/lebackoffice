@@ -7,10 +7,13 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Scheb\TwoFactorBundle\Model\BackupCodeInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface as TotpTwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 
 #[ORM\HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -18,9 +21,10 @@ class User
 implements
     UserInterface,
     PasswordAuthenticatedUserInterface,
-    TwoFactorInterface,
+    EmailTwoFactorInterface,
     TrustedDeviceInterface,
-    BackupCodeInterface {
+    BackupCodeInterface,
+    TotpTwoFactorInterface {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -80,6 +84,12 @@ implements
 
     #[ORM\Column(type: 'json')]
     private $backupCodes = [];
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private $totpSecret;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private $totpAppName;
 
     public function getId(): ?int {
         return $this->id;
@@ -391,5 +401,37 @@ implements
 
     public function getbackupCodes(): array {
         return $this->backupCodes;
+    }
+
+    public function getTotpSecret(): string {
+        return $this->totpSecret;
+    }
+
+    public function setTotpSecret(string $totpSecret): self {
+        $this->totpSecret = $totpSecret;
+
+        return $this;
+    }
+
+    public function getTotpAppName(): ?string {
+        return $this->totpAppName;
+    }
+
+    public function setTotpAppName(string $totpAppName): self {
+        $this->totpAppName = $totpAppName;
+
+        return $this;
+    }
+
+    public function isTotpAuthenticationEnabled(): bool {
+        return $this->totpSecret ? true : false;
+    }
+
+    public function getTotpAuthenticationUsername(): string {
+        return $this->getUserIdentifier();
+    }
+
+    public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface {
+        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 20, 8);
     }
 }
