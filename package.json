@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@hotwired/turbo": "^7.1.0",
+        "@web-auth/webauthn-helper": "^0.0.13",
         "alpinejs": "^3.9.0",
         "animate.css": "^4.1.1",
         "node-waves": "^0.7.6"

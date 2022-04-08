@@ -19,6 +19,9 @@
     "beberlei/assert": {
         "version": "v3.3.2"
     },
+    "brick/math": {
+        "version": "0.9.3"
+    },
     "dasprid/enum": {
         "version": "1.0.3"
     },
@@ -118,6 +121,9 @@
     "endroid/qr-code": {
         "version": "4.4.8"
     },
+    "fgrosse/phpasn1": {
+        "version": "v2.4.0"
+    },
     "fig/link-util": {
         "version": "1.2.0"
     },
@@ -166,6 +172,12 @@
     "league/oauth2-google": {
         "version": "4.0.0"
     },
+    "league/uri": {
+        "version": "6.5.0"
+    },
+    "league/uri-interfaces": {
+        "version": "2.3.0"
+    },
     "lexik/jwt-authentication-bundle": {
         "version": "2.14",
         "recipe": {
@@ -179,7 +191,7 @@
         ]
     },
     "monolog/monolog": {
-        "version": "2.3.5"
+        "version": "2.4.0"
     },
     "namshi/jose": {
         "version": "7.2.3"
@@ -199,11 +211,26 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "nyholm/psr7": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "./config/packages/nyholm_psr7.yaml"
+        ]
+    },
     "paragonie/constant_time_encoding": {
         "version": "v2.5.0"
     },
     "paragonie/random_compat": {
         "version": "v9.99.100"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -280,6 +307,12 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "spomky-labs/cbor-bundle": {
+        "version": "v3.0.0"
+    },
+    "spomky-labs/cbor-php": {
+        "version": "v3.0.0"
     },
     "spomky-labs/otphp": {
         "version": "v10.0.3"
@@ -507,6 +540,9 @@
     "symfony/proxy-manager-bridge": {
         "version": "v6.0.3"
     },
+    "symfony/psr-http-message-bridge": {
+        "version": "v2.1.2"
+    },
     "symfony/routing": {
         "version": "6.0",
         "recipe": {
@@ -682,6 +718,34 @@
     },
     "twig/twig": {
         "version": "v3.3.8"
+    },
+    "web-auth/cose-lib": {
+        "version": "v4.0.2"
+    },
+    "web-auth/metadata-service": {
+        "version": "v4.0.2"
+    },
+    "web-auth/webauthn-lib": {
+        "version": "v4.0.2"
+    },
+    "web-auth/webauthn-symfony-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "9926090a80c2cceeffe96e6c3312b397ea55d4a7"
+        },
+        "files": [
+            "./config/packages/webauthn.yaml",
+            "./config/routes/webauthn_routes.yaml"
+        ]
+    },
+    "web-token/jwt-core": {
+        "version": "v3.0.3"
+    },
+    "web-token/jwt-signature": {
+        "version": "v3.0.3"
     },
     "webmozart/assert": {
         "version": "1.10.0"

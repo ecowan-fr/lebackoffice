@@ -34,6 +34,9 @@ implements
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    private $username;
+
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
@@ -107,6 +110,7 @@ implements
 
     public function setEmail(string $email): self {
         $this->email = $email;
+        $this->username = $email;
 
         return $this;
     }
@@ -118,6 +122,20 @@ implements
      */
     public function getUserIdentifier(): string {
         return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getUsername(): string {
+        return (string) $this->username;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getDisplayName(): string {
+        return (string) $this->firstname . ' ' . $this->lastname;
     }
 
     /**

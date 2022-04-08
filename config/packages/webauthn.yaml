@@ -1,0 +1,11 @@
+webauthn:
+    credential_repository: 'App\Repository\PublicKeyCredentialSourceRepository'
+    user_repository: 'App\Repository\PublicKeyCredentialUserEntityRepository'
+    creation_profiles:
+        default:
+            rp:
+                name: '%env(RELAYING_PARTY_NAME)%'
+                id: '%env(RELAYING_PARTY_ID)%'
+    request_profiles:
+        default:
+            rp_id: '%env(RELAYING_PARTY_ID)%'
