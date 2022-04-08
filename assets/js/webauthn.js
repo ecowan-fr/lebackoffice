@@ -1,32 +1,23 @@
-import { useRegistration, useLogin } from '@web-auth/webauthn-helper';
+import { useLogin, useRegistration } from '@web-auth/webauthn-helper';
 
-export default (function () {
+const webauthnRegister = useRegistration({
+    actionUrl: '/account/security/add',
+    actionHeader: {},
+    optionsUrl: '/account/security/add/options',
+    optionsHeader: {},
+});
 
-    document.addEventListener("turbo:load", function () {
-        let btn = document.getElementById('registerWebAuthn')
-        if (btn != undefined) {
-            btn.addEventListener('click', () => {
-                WebAuthn.register()
-            })
-        }
-    })
-
-    window.WebAuthn = {
-        register() {
-            const registerFunction = useRegistration({
-                actionUrl: '/register',
-                optionsUrl: '/register/options'
-            });
-            registerFunction({
+window.WebAuthn = {
+    register: () => {
+        webauthnRegister({
+            authenticatorSelection: {
                 username: 'thomas@tydoo.fr',
-                displayName: 'JD'
-            }).then((response) => {
-                console.log('resgistration ok');
-                console.log(response);
-            }).catch((error) => {
-                console.log('resgistration nok');
-                console.log(error)
-            });
-        }
+                displayName: 'JD',
+                requireResidentKey: true,
+                userVerification: 'required'
+            }
+        }).then((response) => {
+            console.log(response)
+        });
     }
-})();
+}

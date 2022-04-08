@@ -6,6 +6,17 @@ webauthn:
             rp:
                 name: '%env(RELAYING_PARTY_NAME)%'
                 id: '%env(RELAYING_PARTY_ID)%'
+            authenticator_selection_criteria:
+                require_resident_key: true
+                user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
     request_profiles:
         default:
             rp_id: '%env(RELAYING_PARTY_ID)%'
+            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
+    controllers:
+        enabled: true
+        creation:
+            additional_authenticator:
+                options_path: '/account/security/add/options'
+                result_path: '/account/security/add'
+                user_entity_guesser: 'Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser'

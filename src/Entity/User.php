@@ -34,7 +34,7 @@ implements
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
-    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     private $username;
 
     #[ORM\Column(type: 'json')]
@@ -110,7 +110,6 @@ implements
 
     public function setEmail(string $email): self {
         $this->email = $email;
-        $this->username = $email;
 
         return $this;
     }
@@ -124,11 +123,14 @@ implements
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getUsername(): string {
-        return (string) $this->username;
+    public function setUsername(string $username): self {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string {
+        return $this->username;
     }
 
     /**

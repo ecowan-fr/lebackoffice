@@ -1,4 +1,4 @@
-global.Lightbox = {
+window.Lightbox = {
     init: function () {
         document.querySelectorAll('*[data-lightbox]').forEach(item => {
             if (item.dataset.lightboxinit == undefined) {
@@ -64,5 +64,3 @@ global.Lightbox = {
         })
     }
 }
-
-module.exports = Lightbox

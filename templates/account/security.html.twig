@@ -6,7 +6,7 @@
 	<div class="h-full flex flex-col">
 		{% include "account/_menu.html.twig" %}
 		<div class="container mx-auto h-full flex-grow">
-			<button class="large m-10" id="registerWebAuthn">Ajouter une clé de sécurité</button>
+			<button class="large m-10" onclick="WebAuthn.register()">Ajouter une clé de sécurité</button>
 			<div class="relative mt-16">
 				<div class="absolute inset-0 flex items-center" aria-hidden="true">
 					<div class="w-full border-t border-gray-300"></div>
