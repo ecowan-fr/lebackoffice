@@ -17,6 +17,8 @@ framework:
     php_errors:
         log: true
 
+    ide: '%env(resolve:CODE_EDITOR)%'
+
 when@test:
     framework:
         test: true

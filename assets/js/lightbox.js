@@ -27,7 +27,10 @@ global.Lightbox = {
         return this.box('992', page, bgcolor)
     },
     box: function (taille, page, bgcolor) {
-        return document.getElementById('lightbox').classList.remove('-z-50'), document.getElementById('lightbox').classList.add('z-50'), document.getElementById('lightbox').style.width = taille + "px", this.center(taille), this.api(page), document.getElementById('lightbox').style.visibility = "visible", document.getElementById('lightbox').style.opacity = 1
+        var li = document.getElementById('lightbox');
+        if (li != undefined) {
+            return li.classList.remove('-z-50'), li.classList.add('z-50'), li.style.width = taille + "px", this.center(taille), this.api(page), li.style.visibility = "visible", li.style.opacity = 1
+        }
     },
     center: function (taille) {
         var elem = document.getElementById('lightbox')
