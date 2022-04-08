@@ -16,6 +16,7 @@
 				{{ showAlert('info', 'Several connection systems are available. You can activate or not each of the systems. Make sure to always keep at least one system active.'|trans({}, 'settings'), 'mt-16') }}
 				{% if
 					not configs.login_password and
+					not configs.login_webauthn and
 					not configs.login_oauth_discord and
 					not configs.login_oauth_google and
 					not configs.login_oauth_github and
