@@ -68,7 +68,7 @@ final class PublicKeyCredentialUserEntityRepository implements PublicKeyCredenti
             $user->getUsername(),
             $user->getUserIdentifier(),
             $user->getDisplayName(),
-            null
+            "https://cdn.ecowan.fr/charte-graphique/ecorack/icone/vert/icone-vert-fonce.png"
         );
     }
 }

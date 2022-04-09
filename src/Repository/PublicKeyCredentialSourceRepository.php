@@ -40,13 +40,13 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
                 $publicKeyCredentialSource->getUserHandle(),
                 $publicKeyCredentialSource->getCounter()
             );
+
+            $metadata = $this->publicKeyCredentialMetadataRepository->findOneBy(['aaguid' => $publicKeyCredentialSource->getAaguid()]);
+            $publicKeyCredentialSource->setMetadata($metadata);
+            $this->session->getFlashBag()->add('success', $this->translator->trans('Added your security token successfully (%n)', ["%n" => $metadata->getMetadata()['description']], 'account'));
         }
-        $metadata = $this->publicKeyCredentialMetadataRepository->findOneBy(['aaguid' => $publicKeyCredentialSource->getAaguid()]);
-        $publicKeyCredentialSource->setMetadata($metadata);
 
         parent::saveCredentialSource($publicKeyCredentialSource, $flush);
-
-        $this->session->getFlashBag()->add('success', $this->translator->trans('Added your security token successfully (%n)', ["%n" => $metadata->getMetadata()['description']], 'account'));
     }
 
     public function findOneByAaguid(string $aaguid): ?PublicKeyCredentialSource {
