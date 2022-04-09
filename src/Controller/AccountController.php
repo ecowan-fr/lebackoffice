@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use Exception;
 use App\Entity\User;
+use App\Service\JWTService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Repository\PublicKeyCredentialSourceRepository;
+use App\Repository\PublicKeyCredentialUserEntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -46,7 +49,13 @@ class AccountController extends AbstractController {
             methods: ['GET', 'POST']
         )
     ]
-    public function security(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response {
+    public function security(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository,
+        PublicKeyCredentialUserEntityRepository $publicKeyCredentialUserEntityRepository,
+        JWTService $jWTService
+    ): Response {
         if ($request->isMethod('POST')) {
             if ($this->isCsrfTokenValid('account.changepassword', $request->request->get('token'))) {
                 if ($request->request->get('password_1') === $request->request->get('password_2') && $request->request->get('password_1') != '' &&  !is_null($request->request->get('password_1'))) {
@@ -67,7 +76,9 @@ class AccountController extends AbstractController {
             return $this->redirectToRoute('account.security');
         }
 
-        return $this->render('account/security.html.twig');
+        return $this->render('account/security.html.twig', [
+            "tokens" => $publicKeyCredentialSourceRepository->findAllForUserEntity($publicKeyCredentialUserEntityRepository->findOneByUserHandle($this->getUser()->getUserIdentifier()))
+        ]);
     }
 
     #[

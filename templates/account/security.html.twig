@@ -6,36 +6,94 @@
 	<div class="h-full flex flex-col">
 		{% include "account/_menu.html.twig" %}
 		<div class="container mx-auto h-full flex-grow">
-			<button class="large m-10" onclick="WebAuthn.register()">Ajouter une clé de sécurité</button>
-			<div class="relative mt-16">
-				<div class="absolute inset-0 flex items-center" aria-hidden="true">
-					<div class="w-full border-t border-gray-300"></div>
-				</div>
-				<div class="relative flex ml-20">
-					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Change my password'|trans({}, 'account') }}</span>
-				</div>
-			</div>
-			<div class="mt-10 ml-5">
-				<form method="POST">
-					<div class="flex flex-col md:flex-row items-center md:items-baseline justify-center">
-						<div>
-							<label for="password_1" class="block mb-1 text-gray-500">{{ 'New password'|trans({}, 'account') }}</label>
-							<input autocomplete="off" class=" w-96 max-w-full" id="password_1" name="password_1" type="password" required>
-						</div>
-						<div class="md:ml-10">
-							<label for="password_2" class="mt-4 block mb-1 text-gray-500">{{ 'Confirm your new password'|trans({}, 'account') }}</label>
-							<input autocomplete="off" class=" w-96 max-w-full" id="password_2" name="password_2" type="password" required>
-						</div>
+			{% if configs.login_password %}
+				<div class="relative mt-16">
+					<div class="absolute inset-0 flex items-center" aria-hidden="true">
+						<div class="w-full border-t border-gray-300"></div>
 					</div>
-					<input type="hidden" name="token" value="{{ csrf_token('account.changepassword') }}"/>
+					<div class="relative flex ml-20">
+						<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Change my password'|trans({}, 'account') }}</span>
+					</div>
+				</div>
+				<div class="mt-10 ml-5">
+					<form method="POST">
+						<div class="flex flex-col md:flex-row items-center md:items-baseline justify-center">
+							<div>
+								<label for="password_1" class="block mb-1 text-gray-500">{{ 'New password'|trans({}, 'account') }}</label>
+								<input autocomplete="off" class=" w-96 max-w-full" id="password_1" name="password_1" type="password" required>
+							</div>
+							<div class="md:ml-10">
+								<label for="password_2" class="mt-4 block mb-1 text-gray-500">{{ 'Confirm your new password'|trans({}, 'account') }}</label>
+								<input autocomplete="off" class=" w-96 max-w-full" id="password_2" name="password_2" type="password" required>
+							</div>
+						</div>
+						<input type="hidden" name="token" value="{{ csrf_token('account.changepassword') }}"/>
 
-					<div class="text-center">
-						<button class="large mt-10 md:mt-16 green" type="submit">
-							<i class="fa-solid fa-save mr-3"></i>
-							{{ 'Save'|trans({}, 'global') }}</button>
+						<div class="text-center">
+							<button class="large mt-10 md:mt-16 green" type="submit">
+								<i class="fa-solid fa-save mr-3"></i>
+								{{ 'Save'|trans({}, 'global') }}</button>
+						</div>
+					</form>
+				</div>
+			{% endif %}
+			{% if configs.login_webauthn %}
+				<div class="relative mt-16">
+					<div class="absolute inset-0 flex items-center" aria-hidden="true">
+						<div class="w-full border-t border-gray-300"></div>
 					</div>
-				</form>
-			</div>
+					<div class="relative flex ml-20">
+						<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Login with physical security token (Security key, fingerprint, Windows hello ...)'|trans({}, 'settings') }}</span>
+					</div>
+				</div>
+				<div class="flex mt-16 items-center justify-center">
+					<a href="https://webauthn.io" target="_blanck"><img class=" w-28" src="{{ asset('images/shield.svg') }}" alt="webauthn logo"></a>
+					<p class=" font-bold text-2xl ml-7">WebAuthn / FIDO2 / PasswordLess</p>
+				</div>
+				<button data-redirect="{{ path('account.security') }}" class="large m-12 btn-load mx-auto" onclick="WebAuthn.register(this)">
+					<i class="fa-solid fa-plus mr-3"></i>
+					{{ 'Add a physical security token'|trans({}, 'account') }}</button>
+
+				<p class="my-5 text-lg font-bold">Tokens de sécurité physique liés à votre compte :</p>
+				<table>
+					<thead>
+						<tr>
+							<th class="text-left" scope='col'><input onchange='checkAllCheckboxOfTable(event)' type='checkbox'></th>
+							<th class="text-center" scope='col'>Nom du token</th>
+							<th class="text-center" scope='col'>Date d'ajout</th>
+							<th class="text-center" scope='col'>Token</th>
+							<th class="text-center" scope='col'>Type</th>
+							<th class="text-center" scope='col'>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for token in tokens %}
+							<tr>
+								<td class="text-left"><input type='checkbox'></td>
+								<td class="text-center">Yubikey de Thomas</td>
+								<td class="text-center">13/08/1991</td>
+								<td class="text-center">D6F5G46DFG464G654G</td>
+								<td class="text-center">Yubikey</td>
+								<td class="text-center">
+									<button class="small red mx-auto">
+										<i class="fa-solid fa-trash mr-3"></i>Supprimer</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan='99999'>
+								{% if tokens|length == 0 %}
+									Aucun
+								{% else %}
+									{{ tokens|length }}
+								{% endif %}
+								résultats</td>
+						</tr>
+					</tfoot>
+				</table>
+			{% endif %}
 			<div class="relative mt-16">
 				<div class="absolute inset-0 flex items-center" aria-hidden="true">
 					<div class="w-full border-t border-gray-300"></div>
@@ -122,7 +180,7 @@
 							</div>
 						{% else %}
 							<a href="{{ path('account.security.backupcode.generate') }}" class="button large mt-10 mb-3 yellow btn-load">
-								<i class="fa-solid fa-circle-plus mr-3"></i>
+								<i class="fa-solid fa-plus mr-3"></i>
 								{{ 'Generate backup codes'|trans({}, 'account') }}</a>
 						{% endif %}
 					</div>
@@ -147,6 +205,6 @@
 					{{ 'Remove trusted devices'|trans({}, 'account') }}
 				</a>
 			</div>
-		</div>
-	</div>
-{% endblock %}
+		</tr>
+	</tfoot>
+</div></div>{% endblock %}

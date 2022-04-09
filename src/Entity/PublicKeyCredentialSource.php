@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Symfony\Component\Uid\Ulid;
 use Doctrine\ORM\Mapping as ORM;
 use Webauthn\TrustPath\TrustPath;
@@ -18,6 +19,16 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
     #[ORM\GeneratedValue(strategy: "NONE")]
     private string $id;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $name;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $createdAt;
+
+    #[ORM\OneToOne(targetEntity: PublicKeyCredentialMetadata::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $metadata;
+
     public function __construct(
         string $publicKeyCredentialId,
         string $type,
@@ -30,6 +41,7 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
         int $counter
     ) {
         $this->id = Ulid::generate();
+        $this->createdAt = new DateTimeImmutable();
         parent::__construct($publicKeyCredentialId, $type, $transports, $attestationType, $trustPath, $aaguid, $credentialPublicKey, $userHandle, $counter);
     }
 
@@ -39,6 +51,38 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
 
     public function setId(?string $id): self {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getName(): ?string {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTimeImmutable {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTimeImmutable $createdAt): self {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getMetadata(): ?PublicKeyCredentialMetadata
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(PublicKeyCredentialMetadata $metadata): self
+    {
+        $this->metadata = $metadata;
 
         return $this;
     }

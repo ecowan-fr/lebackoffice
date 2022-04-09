@@ -31,3 +31,7 @@ services:
     App\Twig\FileExistExtension:
         arguments:
             - '%kernel.project_dir%'
+
+    App\Service\JWTService:
+        arguments:
+            - '%kernel.project_dir%'

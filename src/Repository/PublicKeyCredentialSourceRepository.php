@@ -6,11 +6,24 @@ namespace App\Repository;
 
 use App\Entity\PublicKeyCredentialSource;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Repository\PublicKeyCredentialMetadataRepository;
 use Webauthn\PublicKeyCredentialSource as BasePublicKeyCredentialSource;
 use Webauthn\Bundle\Repository\PublicKeyCredentialSourceRepository as BasePublicKeyCredentialSourceRepository;
 
 final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialSourceRepository {
-    public function __construct(ManagerRegistry $registry) {
+
+    private Session $session;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        RequestStack $requestStack,
+        private PublicKeyCredentialMetadataRepository $publicKeyCredentialMetadataRepository,
+        private TranslatorInterface $translator
+    ) {
+        $this->session = $requestStack->getSession();
         parent::__construct($registry, PublicKeyCredentialSource::class);
     }
 
@@ -28,6 +41,11 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
                 $publicKeyCredentialSource->getCounter()
             );
         }
+        $metadata = $this->publicKeyCredentialMetadataRepository->findOneBy(['aaguid' => $publicKeyCredentialSource->getAaguid()]);
+        $publicKeyCredentialSource->setMetadata($metadata);
+
         parent::saveCredentialSource($publicKeyCredentialSource, $flush);
+
+        $this->session->getFlashBag()->add('success', $this->translator->trans('Added your security token successfully (%n)', ["%n" => $metadata->getMetadata()['description']], 'account'));
     }
 }

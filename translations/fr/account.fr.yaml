@@ -25,3 +25,5 @@
 'App removed': 'Application supprimé'
 'Adding security key authentication is under development. Follow this github issue:': 'L''ajout de l''authentification par clé de sécurité est en cours de développement. Suivre cette issue github :'
 'Authenticate using a security key': 'S''authentifier à l''aide d''une clé de sécurité'
+'Add a physical security token': 'Ajouter un token de sécurité physique'
+'Added your security token successfully (%n)': 'Ajout de votre token de sécurité avec succès (%n)'

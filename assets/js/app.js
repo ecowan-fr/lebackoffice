@@ -149,7 +149,7 @@ export default (function () {
     }
 
     let btnLoad = () => {
-        document.querySelectorAll('a.btn-load').forEach(a => {
+        document.querySelectorAll('.btn-load').forEach(a => {
             a.addEventListener('click', () => {
                 a.innerHTML = '<i class=\'fad animate-spin fa-spinner-third\'></i>'
                 a.disabled = true
