@@ -17,7 +17,8 @@
 	{% if configs.login_webauthn %}
 		<button data-redirect="{{ path('home.home') }}" onclick="WebAuthn.login(this);" class="webauthnLogin transparent">
 			<img src="{{ asset('images/shield.svg') }}" alt="webauthn logo">
-			<p>Connexion avec WebAuthn</p>
+			<p>{{ 'Login with'|trans({}, 'global')}}
+				WebAuthn</p>
 		</button>
 	{% endif %}
 	{% if configs.login_password %}
