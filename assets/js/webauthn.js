@@ -5,8 +5,20 @@ const webauthnRegister = useRegistration({
     optionsUrl: '/account/security/webauthn/add/options',
 });
 
+const webauthnLogin = useLogin({
+    actionUrl: '/login/webauthn',
+    optionsUrl: '/login/webauthn/options',
+});
+
 window.WebAuthn = {
     register: (element) => {
+        let redirectUrl;
+        if (element.dataset.redirect == '' || element.dataset.redirect == undefined) {
+            redirectUrl = '/'
+        } else {
+            redirectUrl = element.dataset.redirect
+        }
+
         webauthnRegister({
             attestation: 'direct',
             authenticatorSelection: {
@@ -14,10 +26,33 @@ window.WebAuthn = {
                 userVerification: 'required'
             }
         }).then(response => {
-            Turbo.visit(element.dataset.redirect)
+            Turbo.visit(redirectUrl)
         }).catch(error => {
             alert(error)
-            Turbo.visit(element.dataset.redirect)
+            Turbo.visit(redirectUrl)
+        })
+    },
+
+    login: (element) => {
+        let redirectUrl;
+        if (element.dataset.redirect == '' || element.dataset.redirect == undefined) {
+            redirectUrl = '/'
+        } else {
+            redirectUrl = element.dataset.redirect
+        }
+
+        webauthnLogin({
+            attestation: 'direct',
+            authenticatorSelection: {
+                requireResidentKey: true,
+                userVerification: 'required'
+            }
+        }).then(response => {
+            console.log(response)
+            Turbo.visit(redirectUrl)
+        }).catch(error => {
+            console.log(response)
+            Turbo.visit(redirectUrl)
         })
     }
 }

@@ -52,6 +52,11 @@ security:
             webauthn:
                 secured_rp_ids:
                     - 'localhost'
+                authentication:
+                    enabled: true
+                    routes:
+                        result_path: '/login/webauthn'
+                        options_path: '/login/webauthn/options'
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

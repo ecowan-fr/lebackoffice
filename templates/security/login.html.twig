@@ -11,7 +11,24 @@
 	<div class="flex items-baseline mt-2 font-light text-xs">
 		<div>{{ 'If you do not have an account, please contact the application team.'|trans({}, 'security')}}</div>
 	</div>
+	{% if not configs.login_password and not configs.login_webauthn and not configs.login_oauth_discord and not configs.login_oauth_google and not configs.login_oauth_github and not configs.login_oauth_azure %}
+		{{ showAlert('info', "Aucun systéme de connexion n'est disponible", 'mt-10')}}
+	{% endif %}
+	{% if configs.login_webauthn %}
+		<button data-redirect="{{ path('home.home') }}" onclick="WebAuthn.login(this);" class="webauthnLogin transparent">
+			<img src="{{ asset('images/shield.svg') }}" alt="webauthn logo">
+			<p>Connexion avec WebAuthn</p>
+		</button>
+	{% endif %}
 	{% if configs.login_password %}
+		{% if configs.login_webauthn %}
+			<div class="flex items-center mt-8">
+				<div class="flex-auto mt-px border-t"></div>
+				<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
+				<div class="flex-auto mt-px border-t"></div>
+			</div>
+		{% endif %}
+
 		<form method="post" class="mt-8">
 			<label for="inputEmail" class="mt-6 block mb-2 text-gray-800">{{ 'Email adress'|trans({},'security') }}</label>
 			<input id="inputEmail" value="{{ last_username }}" name="email" class="w-full" type="email" placeholder="someone@ecowan.fr" autocomplete="username" required autofocus>
@@ -32,9 +49,6 @@
 			</div>
 			<button type="submit" class="mt-6 mb-1 large w-full">{{ 'Sign in'|trans({}, 'security') }}</button>
 		</form>
-	{% endif %}
-	{% if not configs.login_password and not configs.login_oauth_discord and not configs.login_oauth_google and not configs.login_oauth_github and not configs.login_oauth_azure %}
-		{{ showAlert('info', "Aucun systéme de connexion n'est disponible", 'mt-10')}}
 	{% endif %}
 	{% if (configs.login_oauth_discord or configs.login_oauth_google or configs.login_oauth_github or configs.login_oauth_azure) %}
 		{% if configs.login_password %}
