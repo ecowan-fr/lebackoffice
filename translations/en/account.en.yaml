@@ -28,3 +28,7 @@
 'Add a physical security token': 'Add a physical security token'
 'Added your security token successfully (%n)': 'Added your security token successfully (%n)'
 'Token removed': 'Token removed'
+'Physical security tokens tied to your account': 'Physical security tokens tied to your account'
+'Description of the token': 'Description of the token'
+'More informations': 'More informations'
+'Date of addition': 'Date of addition'

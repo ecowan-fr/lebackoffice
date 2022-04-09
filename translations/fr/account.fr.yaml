@@ -28,3 +28,7 @@
 'Add a physical security token': 'Ajouter un token de sécurité physique'
 'Added your security token successfully (%n)': 'Ajout de votre token de sécurité avec succès (%n)'
 'Token removed': 'Token supprimé'
+'Physical security tokens tied to your account': 'Tokens de sécurité physique liés à votre compte'
+'Description of the token': 'Description du token'
+'More informations': 'Plus d''informations'
+'Date of addition': 'Date d''ajout'
