@@ -21,10 +21,10 @@ window.Lightbox = {
         return this.box('600', page, bgcolor)
     },
     M: function (page, bgcolor = '#FFFFFF') {
-        return this.box('768', page, bgcolor)
+        return this.box('960', page, bgcolor)
     },
     L: function (page, bgcolor = '#FFFFFF') {
-        return this.box('992', page, bgcolor)
+        return this.box('1280', page, bgcolor)
     },
     box: function (taille, page, bgcolor) {
         var li = document.getElementById('lightbox');

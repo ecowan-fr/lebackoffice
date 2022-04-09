@@ -19,13 +19,10 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
     #[ORM\GeneratedValue(strategy: "NONE")]
     private string $id;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $name;
-
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $createdAt;
 
-    #[ORM\OneToOne(targetEntity: PublicKeyCredentialMetadata::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: PublicKeyCredentialMetadata::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private $metadata;
 
@@ -55,16 +52,6 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
         return $this;
     }
 
-    public function getName(): ?string {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?DateTimeImmutable {
         return $this->createdAt;
     }
@@ -75,13 +62,11 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
         return $this;
     }
 
-    public function getMetadata(): ?PublicKeyCredentialMetadata
-    {
+    public function getMetadata(): ?PublicKeyCredentialMetadata {
         return $this->metadata;
     }
 
-    public function setMetadata(PublicKeyCredentialMetadata $metadata): self
-    {
+    public function setMetadata(PublicKeyCredentialMetadata $metadata): self {
         $this->metadata = $metadata;
 
         return $this;

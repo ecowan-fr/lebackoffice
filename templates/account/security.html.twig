@@ -58,25 +58,55 @@
 				<table>
 					<thead>
 						<tr>
-							<th class="text-left" scope='col'><input onchange='checkAllCheckboxOfTable(event)' type='checkbox'></th>
-							<th class="text-center" scope='col'>Nom du token</th>
+							<th class="text-center" scope='col'>Description du token</th>
+							<th class="text-center" scope='col'>Certification</th>
+							<th class="text-center" scope='col'>Plus d'informations</th>
 							<th class="text-center" scope='col'>Date d'ajout</th>
-							<th class="text-center" scope='col'>Token</th>
-							<th class="text-center" scope='col'>Type</th>
 							<th class="text-center" scope='col'>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for token in tokens %}
 							<tr>
-								<td class="text-left"><input type='checkbox'></td>
-								<td class="text-center">Yubikey de Thomas</td>
-								<td class="text-center">13/08/1991</td>
-								<td class="text-center">D6F5G46DFG464G654G</td>
-								<td class="text-center">Yubikey</td>
 								<td class="text-center">
-									<button class="small red mx-auto">
-										<i class="fa-solid fa-trash mr-3"></i>Supprimer</button>
+									<div class="flex justify-center items-center">
+										<img class="h-5 bg-gray-500" src="{{ token.metadata.metadata.icon }}" alt="icon">
+										<p class="ml-3">{{ token.metadata.metadata.description }}</p>
+									</div>
+								</td>
+								<td class="text-center">
+									{% set statusReport = token.metadata.statusReport|last %}
+									{% if statusReport.status == 'FIDO_CERTIFIED_L1' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-1 text-lg"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L1plus' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-1 text-lg"></i>
+										<i class="fa-solid fa-circle-plus"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L2' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-2 text-lg"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L2plus' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-2 text-lg"></i>
+										<i class="fa-solid fa-circle-plus"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L3' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-3 text-lg"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L3plus' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-3 text-lg"></i>
+										<i class="fa-solid fa-circle-plus"></i>
+									{% endif %}
+								</td>
+								<td class="text-center">
+									<button data-lightbox="L:webauthn?aaguid={{ token.aaguid }}" class="transparent mx-auto">Voir plus d'informations</button>
+								</td>
+								<td class="text-center">{{ token.createdAt|date('d/m/Y H:i:s') }}</td>
+								<td class="text-center">
+									<a href="{{ path('account.security.webauthn.delete', {aaguid: token.aaguid}) }}" class="small red mx-auto button btn-load">
+										<i class="fa-solid fa-trash mr-3"></i>
+										{{ 'Delete'|trans({}, 'global') }}</a>
 								</td>
 							</tr>
 						{% endfor %}
@@ -84,12 +114,9 @@
 					<tfoot>
 						<tr>
 							<td colspan='99999'>
-								{% if tokens|length == 0 %}
-									Aucun
-								{% else %}
-									{{ tokens|length }}
-								{% endif %}
-								résultats</td>
+								{% set result = tokens|length ~ ' ' ~ 'result'|trans({}, 'global') %}
+								{{ tokens|length > 1 ? result ~ 's' : result }}
+							</td>
 						</tr>
 					</tfoot>
 				</table>
@@ -106,16 +133,12 @@
 				<div class="pb-4 border-4 border-dashed border-blue-400 rounded-xl font-bold">
 					<p class="bg-blue-400 text-white py-6 px-10">
 						<i class="fa-solid fa-envelope mr-6 text-xl"></i>
-						{{ 'Authenticate using a security code received by email'|trans({}, 'account') }}
-					</p>
-					<div class="px-10">
-						{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}
-						<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
+						{{ 'Authenticate using a security code received by email'|trans({}, 'account') }}</p>
+					<div class="px-10">{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
 						<form action="{{ path('account.security.setTwofa', { type: 'email' }) }}" method="post">
 							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="{{ 'email_no' }}" name="{{ 'email' }}" {% if not app.user.hasTwofa('email') %} checked {% endif %}>
 							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="{{ 'email_yes' }}" name="{{ 'email' }}" {% if app.user.hasTwofa('email') %} checked {% endif %}>
-							<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/>
-						</form>
+							<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/></form>
 						<div class="radio-group my-5">
 							<label for="{{ 'email_no' }}">
 								<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
@@ -132,8 +155,7 @@
 				<div class="pb-4 border-4 border-dashed border-emerald-400 rounded-xl font-bold">
 					<p class="bg-emerald-400 text-white py-6 px-10">
 						<i class="fa-solid fa-qrcode mr-6 text-xl"></i>
-						{{ 'Authenticate using a smartphone app'|trans({}, 'account') }}
-					</p>
+						{{ 'Authenticate using a smartphone app'|trans({}, 'account') }}</p>
 					<div class="px-10">
 						{% if app.user.isTotpAuthenticationEnabled() %}
 							<div class="mt-10 flex">
@@ -161,8 +183,7 @@
 				<div class="pb-4 border-4 border-dashed border-yellow-400 rounded-xl font-bold">
 					<p class="bg-yellow-400 text-white py-6 px-10">
 						<i class="fa-solid fa-light-emergency-on mr-6 text-xl"></i>
-						{{ 'Backup Codes'|trans({}, 'account') }}
-					</p>
+						{{ 'Backup Codes'|trans({}, 'account') }}</p>
 					<div class="px-10">
 						<p class="mt-10">{{ 'These backup codes should be carefully stored in a secure place. They will be used to recover your account.'|trans({}, 'account') }}</p>
 						{% if app.user.hasTwofa('backupCode') %}
@@ -190,11 +211,8 @@
 				<div class="pb-4 border-4 border-dashed border-neutral-400 rounded-xl font-bold">
 					<p class="bg-neutral-400 text-white py-6 px-10">
 						<i class="fa-solid fa-key-skeleton mr-6 text-xl"></i>
-						{{ 'Authenticate using a security key'|trans({}, 'account') }}
-					</p>
-					<div class="p-10 pb-6">
-						{{ showAlert('warning', 'Adding security key authentication is under development. Follow this github issue:'|trans({}, 'account') ~ " <a target='_blanck' href='https://github.com/scheb/2fa/issues/25'>https://github.com/scheb/2fa/issues/25</a>") }}
-					</div>
+						{{ 'Authenticate using a security key'|trans({}, 'account') }}</p>
+					<div class="p-10 pb-6">{{ showAlert('warning', 'Adding security key authentication is under development. Follow this github issue:'|trans({}, 'account') ~ " <a target='_blanck' href='https://github.com/scheb/2fa/issues/25'>https://github.com/scheb/2fa/issues/25</a>") }}</div>
 				</div>
 			</div>
 			<div class="mt-16">
@@ -202,9 +220,8 @@
 					<i class="fa-solid fa-land-mine-on mr-3"></i>DANGER ZONE</p>
 				<a href="{{ path('account.security.trusteddevice.delete') }}" class="button large mt-8 red btn-load">
 					<i class="fa-solid fa-trash-can mr-3"></i>
-					{{ 'Remove trusted devices'|trans({}, 'account') }}
-				</a>
+					{{ 'Remove trusted devices'|trans({}, 'account') }}</a>
 			</div>
-		</tr>
-	</tfoot>
-</div></div>{% endblock %}
+		</div>
+	</div>
+{% endblock %}

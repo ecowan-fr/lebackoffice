@@ -27,3 +27,4 @@
 'Authenticate using a security key': 'Authenticate using a security key'
 'Add a physical security token': 'Add a physical security token'
 'Added your security token successfully (%n)': 'Added your security token successfully (%n)'
+'Token removed': 'Token removed'

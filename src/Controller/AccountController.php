@@ -26,7 +26,8 @@ class AccountController extends AbstractController {
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly UserRepository $userRepository,
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
+        private readonly PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository
     ) {
     }
 
@@ -196,6 +197,24 @@ class AccountController extends AbstractController {
             $user->setTotpAppName('')->setTotpSecret('');
             $this->em->flush();
             $this->addFlash('success', $this->translator->trans('App removed', [], 'account'));
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('account.security');
+    }
+
+    #[
+        Route(
+            '/security/webauthn/delete/{aaguid}',
+            name: 'account.security.webauthn.delete',
+            methods: ['GET']
+        )
+    ]
+    public function removeWebAuthnToken(string $aaguid) {
+        try {
+            $this->publicKeyCredentialSourceRepository->removeByAaguid($aaguid);
+            $this->addFlash('success', $this->translator->trans('Token removed', [], 'account'));
         } catch (Exception $e) {
             $this->addFlash('error', $e->getMessage());
         }

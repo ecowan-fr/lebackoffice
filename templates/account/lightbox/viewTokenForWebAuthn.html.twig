@@ -1,0 +1,130 @@
+<div class='boxtitle'>
+	<div class='flex items-baseline'>
+		<i class="fa-solid fa-fingerprint mr-3"></i>
+		Token</div>
+	<button onclick='Lightbox.close();' class='hidden bg-none shadow-none text-gray-600 waves-effect text-base px-4 py-2'>
+		<i class='fa-solid fa-times pointer m-0'></i>
+	</button>
+</div>
+<div class="boxpad mt-5">
+	<p class="text-xl font-bold mb-5">Basics</p>
+	<table class="text-center">
+		<thead>
+			<tr>
+				<th class="text-center">Type</th>
+				<th class="text-center">Data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>ID</td>
+				<td>{{ token.id }}</td>
+			</tr>
+			<tr>
+				<td>Type</td>
+				<td>{{ token.type }}</td>
+			</tr>
+			<tr>
+				<td>Attestation Type</td>
+				<td>{{ token.attestationType }}</td>
+			</tr>
+			<tr>
+				<td>Aaguid</td>
+				<td>{{ token.aaguid }}</td>
+			</tr>
+			<tr>
+				<td>Counter</td>
+				<td>{{ token.counter }}</td>
+			</tr>
+			<tr>
+				<td>Created At</td>
+				<td>{{ token.createdAt|date }}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan='99999'>6 results</td>
+			</tr>
+		</tfoot>
+	</table>
+
+	<p class="text-xl font-bold mt-10 mb-5">Metadata</p>
+	<table class="text-center">
+		<thead>
+			<tr>
+				<th class="text-center">Type</th>
+				<th class="text-center">Data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Legal Header</td>
+				<td>{{ token.metadata.metadata.legalHeader }}</td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td>{{ token.metadata.metadata.description }}</td>
+			</tr>
+			<tr>
+				<td>Authenticator Version</td>
+				<td>{{ token.metadata.metadata.authenticatorVersion }}</td>
+			</tr>
+			<tr>
+				<td>Protocol Family</td>
+				<td>{{ token.metadata.metadata.protocolFamily }}</td>
+			</tr>
+			<tr>
+				<td>Icon</td>
+				<td><img class="h-5 bg-gray-500 mx-auto" src="{{ token.metadata.metadata.icon }}" alt="icon"></td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan='99999'>5 results</td>
+			</tr>
+		</tfoot>
+	</table>
+
+	<p class="text-xl font-bold mt-10 mb-5">Status Report</p>
+	{% set statusReport = token.metadata.statusReport|last %}
+	<table class="text-center">
+		<thead>
+			<tr>
+				<th class="text-center">Type</th>
+				<th class="text-center">Data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Status</td>
+				<td>{{ statusReport.status }}</td>
+			</tr>
+			<tr>
+				<td>Effective Date</td>
+				<td>{{ statusReport.effectiveDate }}</td>
+			</tr>
+			<tr>
+				<td>Certification Descriptor</td>
+				<td>{{ statusReport.certificationDescriptor }}</td>
+			</tr>
+			<tr>
+				<td>Certificate Number</td>
+				<td>{{ statusReport.certificateNumber }}</td>
+			</tr>
+			<tr>
+				<td>Certification Policy Version</td>
+				<td>{{ statusReport.certificationPolicyVersion }}</td>
+			</tr>
+			<tr>
+				<td>Certification Requirements Version</td>
+				<td>{{ statusReport.certificationRequirementsVersion }}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan='99999'>6 results</td>
+			</tr>
+		</tfoot>
+	</table>
+
+</div>

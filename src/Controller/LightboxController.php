@@ -4,25 +4,31 @@ namespace App\Controller;
 
 use Exception;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Repository\PublicKeyCredentialSourceRepository;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Webauthn\Bundle\Repository\PublicKeyCredentialUserEntityRepository;
 use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface as TotpTwoFactorInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LightboxController extends AbstractController {
 
     public function __construct(
         private readonly TotpAuthenticatorInterface $totpAuthenticator,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private RequestStack $requestStack,
+        private PublicKeyCredentialSourceRepository $publicKeyCredentialSourceRepository,
+        private PublicKeyCredentialUserEntityRepository $publicKeyCredentialUserEntityRepository
     ) {
     }
 
@@ -90,5 +96,13 @@ class LightboxController extends AbstractController {
             $this->addFlash('error', $this->translator->trans('Invalid CSRF token.', [], 'security'));
         }
         return $this->redirectToRoute('account.security');
+    }
+
+    public function webauthn() {
+        $aaguid = $this->requestStack->getCurrentRequest()->get('aaguid');
+        $token = $this->publicKeyCredentialSourceRepository->findOneByAaguid($aaguid);
+        return $this->renderView('account/lightbox/viewTokenForWebAuthn.html.twig', [
+            "token" => $token
+        ]);
     }
 }

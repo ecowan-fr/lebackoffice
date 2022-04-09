@@ -48,4 +48,23 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
 
         $this->session->getFlashBag()->add('success', $this->translator->trans('Added your security token successfully (%n)', ["%n" => $metadata->getMetadata()['description']], 'account'));
     }
+
+    public function findOneByAaguid(string $aaguid): ?PublicKeyCredentialSource {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        return $qb->select('c')
+            ->from($this->getClass(), 'c')
+            ->where('c.aaguid = :aaguid')
+            ->setParameter(':aaguid', $aaguid)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function removeByAaguid(string $aaguid): void {
+        $entity = $this->findOneByAaguid($aaguid);
+        $em = $this->getEntityManager();
+        $em->remove($entity);
+        $em->flush();
+    }
 }
