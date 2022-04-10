@@ -1,0 +1,27 @@
+webauthn:
+    credential_repository: 'App\Repository\PublicKeyCredentialSourceRepository'
+    user_repository: 'App\Repository\PublicKeyCredentialUserEntityRepository'
+    creation_profiles:
+        default:
+            rp:
+                name: '%env(RELAYING_PARTY_NAME)%'
+                id: '%env(RELAYING_PARTY_ID)%'
+            authenticator_selection_criteria:
+                require_resident_key: true
+                user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
+            attestation_conveyance: !php/const Webauthn\PublicKeyCredentialCreationOptions::ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT
+    request_profiles:
+        default:
+            rp_id: '%env(RELAYING_PARTY_ID)%'
+            user_verification: !php/const Webauthn\AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED
+    controllers:
+        enabled: true
+        creation:
+            additional_authenticator:
+                options_path: '/account/security/webauthn/add/options'
+                result_path: '/account/security/webauthn/add'
+                user_entity_guesser: 'Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser'
+    metadata:
+        enabled: true
+        mds_repository: App\Repository\MetadataStatementRepository
+        status_report_repository: App\Repository\StatusReportRepository

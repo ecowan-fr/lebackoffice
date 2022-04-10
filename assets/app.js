@@ -20,3 +20,4 @@ import Waves from "node-waves"
 import Alpine from 'alpinejs'
 window.Alpine = Alpine
 Alpine.start()
+import WebAuthn from "./js/webauthn";

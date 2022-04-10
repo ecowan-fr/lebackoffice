@@ -16,6 +16,7 @@
 				{{ showAlert('info', 'Several connection systems are available. You can activate or not each of the systems. Make sure to always keep at least one system active.'|trans({}, 'settings'), 'mt-16') }}
 				{% if
 					not configs.login_password and
+					not configs.login_webauthn and
 					not configs.login_oauth_discord and
 					not configs.login_oauth_google and
 					not configs.login_oauth_github and
@@ -30,6 +31,14 @@
 						icon: 'fa-solid fa-key',
 						title: 'Login with email address and password'|trans({}, 'settings'),
 						title_radio: 'Allow (the)'|trans({}, 'global') ~ ' ' ~ 'Login with email address and password'|trans({}, 'settings')|lower,
+						config_env: null
+					},
+					webauthn: {
+						borderColor: 'border-stone-500',
+						bgColor: 'bg-stone-500',
+						icon: 'fa-solid fa-fingerprint',
+						title: 'Login with physical security token (Security key, fingerprint, Windows hello ...)'|trans({}, 'settings'),
+						title_radio: 'Allow (the)'|trans({}, 'global') ~ ' ' ~ 'Login with physical security token (Security key, fingerprint, Windows hello ...)'|trans({}, 'settings')|lower,
 						config_env: null
 					},
 					oauth_discord: {
@@ -57,8 +66,8 @@
 						config_env: app.request.server.get('GITHUB_ID')
 					},
 					oauth_azure: {
-						borderColor: 'border-blue-400',
-						bgColor: 'bg-blue-400',
+						borderColor: '#008ad7',
+						bgColor: '#008ad7',
 						icon: 'fa-brands fa-microsoft',
 						title: 'Login with Microsoft Azure'|trans({}, 'settings'),
 						title_radio: 'Allow (the)'|trans({}, 'global') ~ ' ' ~ 'Login with Microsoft Azure'|trans({}, 'settings')|lower,
@@ -73,6 +82,13 @@
 								{{ type.title }}
 							</p>
 							<div class="px-10">
+								{% if key == 'webauthn' %}
+									<div class="flex mt-10 items-center">
+										<a href="https://webauthn.io" target="_blanck"><img class=" w-28" src="{{ asset('images/shield.svg') }}" alt="webauthn logo"></a>
+										<p class=" font-bold text-2xl ml-7">WebAuthn / FIDO2 / PasswordLess</p>
+									</div>
+									{{ showAlert('info', 'When enabled, each user can add a physical security token. He can then connect with it, without entering his email address or password.'|trans({}, 'settings'), 'mt-10') }}
+								{% endif %}
 								<p class="text-base font-medium mt-10">{{ type.title_radio }}</p>
 								{% if is_granted('settings.security.edit') %}
 									<form action="{{ path('settings.savesetting') }}" method="post">

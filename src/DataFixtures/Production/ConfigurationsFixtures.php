@@ -28,6 +28,7 @@ class ConfigurationsFixtures extends Fixture implements FixtureGroupInterface {
             ["name" => "login_oauth_google", "value" => "0"],
             ["name" => "login_oauth_github", "value" => "0"],
             ["name" => "login_oauth_azure", "value" => "0"],
+            ["name" => "login_webauthn", "value" => "0"],
 
             ["name" => "structure_name", "value" => ""],
             ["name" => "structure_type", "value" => ""],

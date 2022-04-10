@@ -6,35 +6,122 @@
 	<div class="h-full flex flex-col">
 		{% include "account/_menu.html.twig" %}
 		<div class="container mx-auto h-full flex-grow">
-			<div class="relative mt-16">
-				<div class="absolute inset-0 flex items-center" aria-hidden="true">
-					<div class="w-full border-t border-gray-300"></div>
-				</div>
-				<div class="relative flex ml-20">
-					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Change my password'|trans({}, 'account') }}</span>
-				</div>
-			</div>
-			<div class="mt-10 ml-5">
-				<form method="POST">
-					<div class="flex flex-col md:flex-row items-center md:items-baseline justify-center">
-						<div>
-							<label for="password_1" class="block mb-1 text-gray-500">{{ 'New password'|trans({}, 'account') }}</label>
-							<input autocomplete="off" class=" w-96 max-w-full" id="password_1" name="password_1" type="password" required>
-						</div>
-						<div class="md:ml-10">
-							<label for="password_2" class="mt-4 block mb-1 text-gray-500">{{ 'Confirm your new password'|trans({}, 'account') }}</label>
-							<input autocomplete="off" class=" w-96 max-w-full" id="password_2" name="password_2" type="password" required>
-						</div>
+			{% if configs.login_password %}
+				<div class="relative mt-16">
+					<div class="absolute inset-0 flex items-center" aria-hidden="true">
+						<div class="w-full border-t border-gray-300"></div>
 					</div>
-					<input type="hidden" name="token" value="{{ csrf_token('account.changepassword') }}"/>
+					<div class="relative flex ml-20">
+						<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Change my password'|trans({}, 'account') }}</span>
+					</div>
+				</div>
+				<div class="mt-10 ml-5">
+					<form method="POST">
+						<div class="flex flex-col md:flex-row items-center md:items-baseline justify-center">
+							<div>
+								<label for="password_1" class="block mb-1 text-gray-500">{{ 'New password'|trans({}, 'account') }}</label>
+								<input autocomplete="off" class=" w-96 max-w-full" id="password_1" name="password_1" type="password" required>
+							</div>
+							<div class="md:ml-10">
+								<label for="password_2" class="mt-4 block mb-1 text-gray-500">{{ 'Confirm your new password'|trans({}, 'account') }}</label>
+								<input autocomplete="off" class=" w-96 max-w-full" id="password_2" name="password_2" type="password" required>
+							</div>
+						</div>
+						<input type="hidden" name="token" value="{{ csrf_token('account.changepassword') }}"/>
 
-					<div class="text-center">
-						<button class="large mt-10 md:mt-16 green" type="submit">
-							<i class="fa-solid fa-save mr-3"></i>
-							{{ 'Save'|trans({}, 'global') }}</button>
+						<div class="text-center">
+							<button class="large mt-10 md:mt-16 green" type="submit">
+								<i class="fa-solid fa-save mr-3"></i>
+								{{ 'Save'|trans({}, 'global') }}</button>
+						</div>
+					</form>
+				</div>
+			{% endif %}
+			{% if configs.login_webauthn %}
+				<div class="relative mt-16">
+					<div class="absolute inset-0 flex items-center" aria-hidden="true">
+						<div class="w-full border-t border-gray-300"></div>
 					</div>
-				</form>
-			</div>
+					<div class="relative flex ml-20">
+						<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Login with physical security token (Security key, fingerprint, Windows hello ...)'|trans({}, 'settings') }}</span>
+					</div>
+				</div>
+				<div class="flex mt-16 items-center justify-center">
+					<a href="https://webauthn.io" target="_blanck"><img class=" w-28" src="{{ asset('images/shield.svg') }}" alt="webauthn logo"></a>
+					<p class=" font-bold text-2xl ml-7">WebAuthn / FIDO2 / PasswordLess</p>
+				</div>
+				<button data-redirect="{{ path('account.security') }}" class="large m-12 btn-load mx-auto" onclick="WebAuthn.register(this)">
+					<i class="fa-solid fa-plus mr-3"></i>
+					{{ 'Add a physical security token'|trans({}, 'account') }}</button>
+
+				<p class="my-5 text-lg font-bold">{{ 'Physical security tokens tied to your account'|trans({}, 'account')}}
+					:</p>
+				<table>
+					<thead>
+						<tr>
+							<th class="text-center" scope='col'>{{ 'Description of the token'|trans({}, 'account')}}</th>
+							<th class="text-center" scope='col'>Certification</th>
+							<th class="text-center" scope='col'>{{ 'More informations'|trans({}, 'account')}}</th>
+							<th class="text-center" scope='col'>{{ 'Date of addition'|trans({}, 'account')}}</th>
+							<th class="text-center" scope='col'>{{ 'Delete'|trans({}, 'global')}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for token in tokens %}
+							<tr>
+								<td class="text-center">
+									<div class="flex justify-center items-center">
+										<img class="h-5 bg-gray-500" src="{{ token.metadata.metadata.icon }}" alt="icon">
+										<p class="ml-3">{{ token.metadata.metadata.description }}</p>
+									</div>
+								</td>
+								<td class="text-center">
+									{% set statusReport = token.metadata.statusReport|last %}
+									{% if statusReport.status == 'FIDO_CERTIFIED_L1' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-1 text-lg"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L1plus' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-1 text-lg"></i>
+										<i class="fa-solid fa-circle-plus"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L2' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-2 text-lg"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L2plus' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-2 text-lg"></i>
+										<i class="fa-solid fa-circle-plus"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L3' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-3 text-lg"></i>
+									{% elseif statusReport.status == 'FIDO_CERTIFIED_L3plus' %}
+										<i class="fa-solid fa-circle-l text-lg"></i>
+										<i class="fa-solid fa-circle-3 text-lg"></i>
+										<i class="fa-solid fa-circle-plus"></i>
+									{% endif %}
+								</td>
+								<td class="text-center">
+									<button data-lightbox="L:webauthn?aaguid={{ token.aaguid }}" class="transparent mx-auto">Voir plus d'informations</button>
+								</td>
+								<td class="text-center">{{ token.createdAt|date('d/m/Y H:i:s') }}</td>
+								<td class="text-center">
+									<a href="{{ path('account.security.webauthn.delete', {aaguid: token.aaguid}) }}" class="small red mx-auto button btn-load">
+										<i class="fa-solid fa-trash mr-3"></i>
+										{{ 'Delete'|trans({}, 'global') }}</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan='99999'>
+								{% set result = tokens|length ~ ' ' ~ 'result'|trans({}, 'global') %}
+								{{ tokens|length > 1 ? result ~ 's' : result }}
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			{% endif %}
 			<div class="relative mt-16">
 				<div class="absolute inset-0 flex items-center" aria-hidden="true">
 					<div class="w-full border-t border-gray-300"></div>
@@ -47,16 +134,12 @@
 				<div class="pb-4 border-4 border-dashed border-blue-400 rounded-xl font-bold">
 					<p class="bg-blue-400 text-white py-6 px-10">
 						<i class="fa-solid fa-envelope mr-6 text-xl"></i>
-						{{ 'Authenticate using a security code received by email'|trans({}, 'account') }}
-					</p>
-					<div class="px-10">
-						{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}
-						<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
+						{{ 'Authenticate using a security code received by email'|trans({}, 'account') }}</p>
+					<div class="px-10">{{ showAlert('info', "The code will be sent to the email address : %n"|trans({'%n': app.user.email}, 'account'), 'mt-10') }}<p class="text-base font-medium mt-10">{{ 'Multifactor Status'|trans({}, 'account') }}</p>
 						<form action="{{ path('account.security.setTwofa', { type: 'email' }) }}" method="post">
 							<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="{{ 'email_no' }}" name="{{ 'email' }}" {% if not app.user.hasTwofa('email') %} checked {% endif %}>
 							<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="{{ 'email_yes' }}" name="{{ 'email' }}" {% if app.user.hasTwofa('email') %} checked {% endif %}>
-							<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/>
-						</form>
+							<input type="hidden" name="token" value="{{ csrf_token('account.setTwofa') }}"/></form>
 						<div class="radio-group my-5">
 							<label for="{{ 'email_no' }}">
 								<i class="fa-solid fa-toggle-off mr-3 text-red-400"></i>
@@ -73,8 +156,7 @@
 				<div class="pb-4 border-4 border-dashed border-emerald-400 rounded-xl font-bold">
 					<p class="bg-emerald-400 text-white py-6 px-10">
 						<i class="fa-solid fa-qrcode mr-6 text-xl"></i>
-						{{ 'Authenticate using a smartphone app'|trans({}, 'account') }}
-					</p>
+						{{ 'Authenticate using a smartphone app'|trans({}, 'account') }}</p>
 					<div class="px-10">
 						{% if app.user.isTotpAuthenticationEnabled() %}
 							<div class="mt-10 flex">
@@ -102,8 +184,7 @@
 				<div class="pb-4 border-4 border-dashed border-yellow-400 rounded-xl font-bold">
 					<p class="bg-yellow-400 text-white py-6 px-10">
 						<i class="fa-solid fa-light-emergency-on mr-6 text-xl"></i>
-						{{ 'Backup Codes'|trans({}, 'account') }}
-					</p>
+						{{ 'Backup Codes'|trans({}, 'account') }}</p>
 					<div class="px-10">
 						<p class="mt-10">{{ 'These backup codes should be carefully stored in a secure place. They will be used to recover your account.'|trans({}, 'account') }}</p>
 						{% if app.user.hasTwofa('backupCode') %}
@@ -121,7 +202,7 @@
 							</div>
 						{% else %}
 							<a href="{{ path('account.security.backupcode.generate') }}" class="button large mt-10 mb-3 yellow btn-load">
-								<i class="fa-solid fa-circle-plus mr-3"></i>
+								<i class="fa-solid fa-plus mr-3"></i>
 								{{ 'Generate backup codes'|trans({}, 'account') }}</a>
 						{% endif %}
 					</div>
@@ -131,11 +212,8 @@
 				<div class="pb-4 border-4 border-dashed border-neutral-400 rounded-xl font-bold">
 					<p class="bg-neutral-400 text-white py-6 px-10">
 						<i class="fa-solid fa-key-skeleton mr-6 text-xl"></i>
-						{{ 'Authenticate using a security key'|trans({}, 'account') }}
-					</p>
-					<div class="p-10 pb-6">
-						{{ showAlert('warning', 'Adding security key authentication is under development. Follow this github issue:'|trans({}, 'account') ~ " <a target='_blanck' href='https://github.com/scheb/2fa/issues/25'>https://github.com/scheb/2fa/issues/25</a>") }}
-					</div>
+						{{ 'Authenticate using a security key'|trans({}, 'account') }}</p>
+					<div class="p-10 pb-6">{{ showAlert('warning', 'Adding security key authentication is under development. Follow this github issue:'|trans({}, 'account') ~ " <a target='_blanck' href='https://github.com/scheb/2fa/issues/25'>https://github.com/scheb/2fa/issues/25</a>") }}</div>
 				</div>
 			</div>
 			<div class="mt-16">
@@ -143,8 +221,7 @@
 					<i class="fa-solid fa-land-mine-on mr-3"></i>DANGER ZONE</p>
 				<a href="{{ path('account.security.trusteddevice.delete') }}" class="button large mt-8 red btn-load">
 					<i class="fa-solid fa-trash-can mr-3"></i>
-					{{ 'Remove trusted devices'|trans({}, 'account') }}
-				</a>
+					{{ 'Remove trusted devices'|trans({}, 'account') }}</a>
 			</div>
 		</div>
 	</div>
