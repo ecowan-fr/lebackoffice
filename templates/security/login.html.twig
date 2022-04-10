@@ -15,7 +15,7 @@
 		{{ showAlert('info', "Aucun systéme de connexion n'est disponible", 'mt-10')}}
 	{% endif %}
 	{% if configs.login_webauthn %}
-		<button data-redirect="{{ path('home.home') }}" onclick="WebAuthn.login(this);" class="webauthnLogin transparent">
+		<button data-redirect="{{ path('home.home') }}" onclick="WebAuthn.login(this);" class="webauthnLogin transparent btn-load">
 			<img src="{{ asset('images/shield.svg') }}" alt="webauthn logo">
 			<p>{{ 'Login with'|trans({}, 'global')}}
 				WebAuthn</p>
@@ -52,7 +52,7 @@
 		</form>
 	{% endif %}
 	{% if (configs.login_oauth_discord or configs.login_oauth_google or configs.login_oauth_github or configs.login_oauth_azure) %}
-		{% if configs.login_password %}
+		{% if configs.login_password or configs.login_webauthn %}
 			<div class="flex items-center mt-10">
 				<div class="flex-auto mt-px border-t"></div>
 				<div class="mx-2 text-secondary">{{ 'or continue with'|trans({}, 'security') }}</div>
@@ -61,22 +61,22 @@
 		{% endif %}
 		<div class="flex justify-between w-full mt-10 gap-5 mb-5">
 			{% if configs.login_oauth_discord %}
-				<a href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
+				<a title="Discord" href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-discord"></i>
 				</a>
 			{% endif %}
 			{% if configs.login_oauth_google %}
-				<a href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
+				<a title="Google" href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-google"></i>
 				</a>
 			{% endif %}
 			{% if configs.login_oauth_github %}
-				<a href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
+				<a title="Github" href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-github"></i>
 				</a>
 			{% endif %}
 			{% if configs.login_oauth_azure %}
-				<a href="{{ path('oauth.login', {service: 'azure'}) }}" class="link-auth-more waves-effect">
+				<a title="Microsoft Azure" href="{{ path('oauth.login', {service: 'azure'}) }}" class="link-auth-more waves-effect">
 					<i class="fa-brands fa-microsoft"></i>
 				</a>
 			{% endif %}

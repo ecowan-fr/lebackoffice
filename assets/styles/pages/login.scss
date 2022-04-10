@@ -18,6 +18,11 @@
         @apply text-xl font-bold my-3 z-20;
     }
 
+    i {
+        font-size: 110px;
+        margin:40px 0;
+    }
+
     &::after {
         content: "\f577";
         font-family: 'Font Awesome 6 Pro';

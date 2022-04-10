@@ -48,11 +48,10 @@ window.WebAuthn = {
                 userVerification: 'required'
             }
         }).then(response => {
-            console.log(response)
             Turbo.visit(redirectUrl)
         }).catch(error => {
-            console.log(response)
-            Turbo.visit(redirectUrl)
+            alert(error)
+            Turbo.visit('/login')
         })
     }
 }
