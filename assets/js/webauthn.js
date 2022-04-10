@@ -29,6 +29,7 @@ window.WebAuthn = {
             Turbo.visit(redirectUrl)
         }).catch(error => {
             alert(error)
+            console.log(error)
             Turbo.visit(redirectUrl)
         })
     },
@@ -51,6 +52,7 @@ window.WebAuthn = {
             Turbo.visit(redirectUrl)
         }).catch(error => {
             alert(error)
+            console.log(error)
             Turbo.visit('/login')
         })
     }
