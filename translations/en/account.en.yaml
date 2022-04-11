@@ -26,7 +26,7 @@
 'Adding security key authentication is under development. Follow this github issue:': 'Adding security key authentication is under development. Follow this github issue:'
 'Authenticate using a security key': 'Authenticate using a security key'
 'Add a physical security token': 'Add a physical security token'
-'Added your security token successfully (%n)': 'Added your security token successfully (%n)'
+'Added your security token successfully': 'Added your security token successfully'
 'Token removed': 'Token removed'
 'Physical security tokens tied to your account': 'Physical security tokens tied to your account'
 'Description of the token': 'Description of the token'

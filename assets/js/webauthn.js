@@ -10,6 +10,24 @@ const webauthnLogin = useLogin({
     optionsUrl: '/login/webauthn/options',
 });
 
+const sendFlashMessage = async function (type, message, redirectUrl, domain) {
+    let body;
+    if (domain !== null) {
+        body = '{ "type": "' + type + '", "message": "' + message + '", "domainTranslation": "' + domain + '"}'
+    } else {
+        body = '{ "type": "' + type + '", "message": "' + message + '"}'
+    }
+    await fetch("/api/flash", {
+        method: 'POST',
+        body: body,
+        headers: new Headers({
+            "Content-Type": "application/json"
+        })
+    }).then(response => {
+        Turbo.visit(redirectUrl)
+    })
+}
+
 window.WebAuthn = {
     register: (element) => {
         let redirectUrl;
@@ -26,11 +44,19 @@ window.WebAuthn = {
                 userVerification: 'required'
             }
         }).then(response => {
-            Turbo.visit(redirectUrl)
+            if (response.status == 'ok') {
+                sendFlashMessage('success', "Added your security token successfully", redirectUrl, "account")
+            } else {
+                sendFlashMessage('error', response.errorMessage, redirectUrl)
+            }
         }).catch(error => {
-            alert(error)
-            console.log(error)
-            Turbo.visit(redirectUrl)
+            if (error.toString() === '[object Response]') {
+                return error.json();
+            } else {
+                sendFlashMessage('error', error.toString(), redirectUrl)
+            }
+        }).then(json => {
+            sendFlashMessage('error', json.errorMessage, redirectUrl)
         })
     },
 
@@ -49,11 +75,19 @@ window.WebAuthn = {
                 userVerification: 'required'
             }
         }).then(response => {
-            Turbo.visit(redirectUrl)
+            if (response.status == 'ok') {
+                Turbo.visit(redirectUrl)
+            } else {
+                sendFlashMessage('error', response.errorMessage, redirectUrl)
+            }
         }).catch(error => {
-            alert(error)
-            console.log(error)
-            Turbo.visit('/login')
+            if (error.toString() === '[object Response]') {
+                return error.json();
+            } else {
+                sendFlashMessage('error', error.toString(), redirectUrl)
+            }
+        }).then(json => {
+            sendFlashMessage('error', json.errorMessage, redirectUrl)
         })
     }
 }

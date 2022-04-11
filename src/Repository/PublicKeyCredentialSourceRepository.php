@@ -43,7 +43,6 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
 
             $metadata = $this->publicKeyCredentialMetadataRepository->findOneBy(['aaguid' => $publicKeyCredentialSource->getAaguid()]);
             $publicKeyCredentialSource->setMetadata($metadata);
-            $this->session->getFlashBag()->add('success', $this->translator->trans('Added your security token successfully (%n)', ["%n" => $metadata->getMetadata()['description']], 'account'));
         }
 
         parent::saveCredentialSource($publicKeyCredentialSource, $flush);
