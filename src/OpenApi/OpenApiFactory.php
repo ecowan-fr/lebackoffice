@@ -4,6 +4,7 @@ namespace App\OpenApi;
 
 use ApiPlatform\Core\OpenApi\OpenApi;
 use ApiPlatform\Core\OpenApi\Model\PathItem;
+use ApiPlatform\Core\OpenApi\Model\Response;
 use ApiPlatform\Core\OpenApi\Model\Operation;
 use ApiPlatform\Core\OpenApi\Model\RequestBody;
 use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
@@ -82,7 +83,22 @@ class OpenApiFactory implements OpenApiFactoryInterface {
                 ]
             )
         );
+
         $openApi->getPaths()->addPath('/api/login', $pathItem);
+
+        $postFlash = $openApi->getPaths()->getPath('/api/flash');
+
+        /** @var Response */
+        $response = $postFlash->getPost()->getResponses()[201];
+        $r = new Response(
+            $response->getDescription(),
+            $response->getContent(),
+            $response->getHeaders()
+        );
+
+        $postFlash->getPost()->addResponse($r, 201);
+
+        $openApi->getPaths()->addPath('/api/flash_messages/{type}', new PathItem());
 
         return $openApi;
     }

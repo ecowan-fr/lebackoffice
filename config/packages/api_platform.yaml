@@ -8,4 +8,4 @@ api_platform:
     show_webby: false
     title: 'API Lebackoffice by ecowan'
     description: "API for internal users and customers. To consume the api, you must generate a JWT token via `/api/login` and use it in your requests in the header : `Authorization: Bearer {JWT-token}`."
-    version: '1.0.0'
+    version: '1.0.1'
