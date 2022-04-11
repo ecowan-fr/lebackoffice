@@ -4,9 +4,9 @@
 	<div class="container mx-auto flex">
 		<a class="waves-effect {{ route == 'account.index' ? 'active':null }}" href="{{ path('account.index') }}">
 			<i class="fa-duotone fa-file-user text-blue-400"></i>
-			Mon compte</a>
+			{{ 'My account'|trans({}, 'account') }}</a>
 		<a class="waves-effect {{ route == 'account.security' ? 'active':null }}" href="{{ path('account.security') }}">
 			<i class="fa-duotone fa-shield-halved text-yellow-500"></i>
-			Sécurité</a>
+			{{ 'Security'|trans({}, 'settings') }}</a>
 	</div>
 </nav>
