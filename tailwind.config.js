@@ -4,7 +4,7 @@ module.exports = {
     './templates/**/*.html.twig',
     './assets/js/*.js'
   ],
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'class',
   theme: {
     extend: {},
     fontFamily: {
