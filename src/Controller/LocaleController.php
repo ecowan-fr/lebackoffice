@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LocaleController extends AbstractController {
 
-    #[Route(path: '/{locale}', name: 'locale.change', requirements: ['locale' => 'fr|en'], methods: ['GET'])]
-    public function fr(string $locale, Request $request): RedirectResponse {
+    #[Route(path: '/{locale}/{url?}', name: 'locale.change', requirements: ['locale' => 'fr|en', 'url' => '.+'], methods: ['GET'])]
+    public function changeLocale(string $locale, $url, Request $request): RedirectResponse {
         $request->getSession()->set('_locale', $locale);
 
-        return $this->redirect($request->headers->get('referer', $this->generateUrl('home.home')));
+        $go = !is_null($url) ? '/' . $url : $request->headers->get('referer', $this->generateUrl('home.home'));
+
+        return $this->redirect($go);
     }
 }
