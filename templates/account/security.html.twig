@@ -122,12 +122,88 @@
 					</tfoot>
 				</table>
 			{% endif %}
+			{% if configs.login_oauth_discord or configs.login_oauth_google or configs.login_oauth_github or configs.login_oauth_azure %}
+				<div class="relative mt-16">
+					<div class="absolute inset-0 flex items-center" aria-hidden="true">
+						<div class="w-full border-t border-gray-300"></div>
+					</div>
+					<div class="relative flex ml-20">
+						<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Social login'|trans({}, 'account') }}</span>
+					</div>
+				</div>
+				<table class="mt-10">
+					<thead>
+						<tr>
+							<th class="text-center" scope='col'>Type</th>
+							<th class="text-center" scope='col'>ID</th>
+							<th class="text-center" scope='col'>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set oauths = {
+							discord:
+							{
+								displayName: 'Discord',
+								icon: 'fa-brands fa-discord',
+								id: app.user.discordId
+							},
+							google:
+							{
+								displayName: 'Google',
+								icon: 'fa-brands fa-google',
+								id: app.user.googleId
+							},
+							github:
+							{
+								displayName: 'Github',
+								icon: 'fa-brands fa-github',
+								id: app.user.githubId
+							},
+							azure:
+							{
+								displayName: 'Microsoft Azure',
+								icon: 'fa-brands fa-microsoft',
+								id: app.user.azureId
+							}
+						} %}
+						{% set oauthcount = 0 %}
+						{% for key, oauth in oauths %}
+							{% if configs['login_oauth_' ~ key ] %}
+								{% set oauthcount = oauthcount + 1 %}
+								<tr>
+									<td class="text-center font-bold">
+										<i class="{{ oauth.icon }} mr-3 text-lg"></i>
+										{{ oauth.displayName }}</td>
+									<td class="text-center">{{ oauth.id }}</td>
+									<td class="text-center">
+										{% if oauth.id %}
+											<a href="{{ path('oauth.disconnect', {service:key}) }}" class="mx-auto red button btn-load">
+												<i class="fa-solid fa-link-slash mr-3"></i>Déliez votre compte</a>
+										{% else %}
+											<a href="{{ path('oauth.login', {service:key}) }}" class="mx-auto green button btn-load">
+												<i class="fa-solid fa-link mr-3"></i>Liez un compte</a>
+										{% endif %}
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan='99999'>
+								{% set result = oauthcount ~ ' ' ~ 'result'|trans({}, 'global') %}
+								{{ oauthcount > 1 ? result ~ 's' : result }}
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			{% endif %}
 			<div class="relative mt-16">
 				<div class="absolute inset-0 flex items-center" aria-hidden="true">
 					<div class="w-full border-t border-gray-300"></div>
 				</div>
 				<div class="relative flex ml-20">
-					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Multi-factor authentication'|trans({}, 'account') }}</span>
+					<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'Multi-factor login'|trans({}, 'account') }}</span>
 				</div>
 			</div>
 			<div class="mt-10">

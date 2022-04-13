@@ -20,6 +20,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
@@ -32,12 +33,15 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
 
     protected string $serviceName = '';
 
+    protected string $redirect = 'home.home';
+
     public function __construct(
         private readonly ClientRegistry $clientRegistry,
         protected EntityManagerInterface $em,
         private readonly RouterInterface $router,
         private readonly UserRepository $userRepository,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly TokenStorageInterface $tokenStorage
     ) {
     }
 
@@ -49,7 +53,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         return $this->getClient()->fetchUserFromToken($credentials);
     }
 
-    protected function getUserFromResourceOwner(ResourceOwnerInterface $resourceOwner, UserRepository $repository): ?User {
+    protected function getUserFromResourceOwner(ResourceOwnerInterface $resourceOwner, UserRepository $repository, TokenStorageInterface $token): ?User {
         return null;
     }
 
@@ -79,7 +83,8 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
             );
         }
 
-        $user = $this->getUserFromResourceOwner($resourceOwner, $this->userRepository);
+        $user = $this->getUserFromResourceOwner($resourceOwner, $this->userRepository, $this->tokenStorage);
+
         if (null === $user) {
             throw new UserOauthNotFoundException($resourceOwner);
         }
@@ -100,7 +105,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->router->generate('home.home'));
+        return new RedirectResponse($this->router->generate($this->redirect));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response {
