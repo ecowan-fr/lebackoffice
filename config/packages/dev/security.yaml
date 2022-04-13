@@ -1,0 +1,6 @@
+security:
+    firewalls:
+        main:
+            webauthn:
+                secured_rp_ids:
+                    - 'localhost'
