@@ -178,10 +178,12 @@
 									<td class="text-center">
 										{% if oauth.id %}
 											<a href="{{ path('oauth.disconnect', {service:key}) }}" class="mx-auto red button btn-load">
-												<i class="fa-solid fa-link-slash mr-3"></i>Déliez votre compte</a>
+												<i class="fa-solid fa-link-slash mr-3"></i>
+												{{ 'Unlink your account'|trans({}, 'account') }}</a>
 										{% else %}
 											<a href="{{ path('oauth.login', {service:key}) }}" class="mx-auto green button btn-load">
-												<i class="fa-solid fa-link mr-3"></i>Liez un compte</a>
+												<i class="fa-solid fa-link mr-3"></i>
+												{{ 'Link your account'|trans({}, 'account') }}</a>
 										{% endif %}
 									</td>
 								</tr>
