@@ -73,7 +73,8 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "web-auth/webauthn-symfony-bundle": "^4.0",
-        "wohali/oauth2-discord-new": "^1.1"
+        "wohali/oauth2-discord-new": "^1.1",
+        "doctrine/doctrine-fixtures-bundle": "^3.4"
     },
     "config": {
         "allow-plugins": {
@@ -127,7 +128,6 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/debug-bundle": "6.0.*",
         "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "6.0.*",
