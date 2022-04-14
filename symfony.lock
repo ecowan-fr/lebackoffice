@@ -592,6 +592,9 @@
     "symfony/string": {
         "version": "v6.0.3"
     },
+    "symfony/thanks": {
+        "version": "v1.2.10"
+    },
     "symfony/translation": {
         "version": "6.0",
         "recipe": {
