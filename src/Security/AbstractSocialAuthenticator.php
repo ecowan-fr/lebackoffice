@@ -101,7 +101,9 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         $session = $request->getSession();
 
         $session->getFlashBag()->add('success', $this->translator->trans('You are authenticated with %s', ['%s' => $this->serviceName], 'security'));
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName) && $this->redirect === 'home.home') {
+            dump('targetpath');
             return new RedirectResponse($targetPath);
         }
 
