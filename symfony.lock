@@ -317,6 +317,9 @@
     "spomky-labs/otphp": {
         "version": "v10.0.3"
     },
+    "stella-maris/clock": {
+        "version": "0.1.4"
+    },
     "symfony/asset": {
         "version": "v6.0.3"
     },
