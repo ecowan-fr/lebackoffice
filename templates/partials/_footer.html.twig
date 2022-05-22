@@ -8,10 +8,11 @@
 					{% elseif configs['footer_' ~ partie ~ '_type'] == 'text' %}
 						<p class="text-sm text-gray-400">{{ configs['footer_' ~ partie ~ '_text'] }}</p>
 					{% elseif configs['footer_' ~ partie ~ '_type'] == 'timbre' %}
-						{% if fileExist('public/images/timbre_classification/T_' ~ classification|default('DR') ~ '.svg') %}
-							<img class="h-10" src="{{ asset('images/timbre_classification/T_' ~ classification|default('DR') ~ '.svg') }}" alt="timbre">
+						{% set file = 'public/images/timbre_classification/' ~ classification|default('restreint') ~ '_timbre.svg' %}
+						{% if fileExist(file) %}
+							<img class="h-10" src="{{ asset(file) }}" alt="timbre">
 						{% else %}
-							<img class="h-10" src="{{ 'https://cdn.ecowan.fr/confidentialite/T_' ~ classification|default('DR') ~ '.svg' }}" alt="timbre">
+							<img class="h-10" src="{{ 'https://cdn.ecowan.fr/classification/' ~ classification|default('restreint') ~ '_timbre.svg' }}" alt="timbre">
 						{% endif %}
 					{% endif %}
 				</div>
