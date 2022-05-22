@@ -12,7 +12,7 @@ class JWTService {
     public function __construct(
         private readonly string $kernel_dir
     ) {
-        $JWT = file_get_contents($kernel_dir . DIRECTORY_SEPARATOR . 'blobWebAuthn.jwt');
+        $JWT = file_get_contents($kernel_dir . DIRECTORY_SEPARATOR . 'blobWebAuthn_20220601.jwt');
         $JWTJson = base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $JWT)[1])));
         $this->JWTDecoded = json_decode($JWTJson);
     }
