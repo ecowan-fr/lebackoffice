@@ -4,6 +4,7 @@ namespace App\Security;
 
 use Exception;
 use App\Entity\User;
+use App\Repository\ConfigRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use League\OAuth2\Client\Token\AccessToken;
@@ -41,7 +42,8 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         private readonly RouterInterface $router,
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-        private readonly TokenStorageInterface $tokenStorage
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly ConfigRepository $configRepository
     ) {
     }
 
@@ -66,6 +68,11 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
     }
 
     public function authenticate(Request $request): Passport {
+        if (!$this->configRepository->findOneBy(['setting' => 'login_oauth_' . $this->serviceName])->getValue()) {
+            throw new CustomUserMessageAuthenticationException(
+                $this->translator->trans('An authentication exception occurred.', ['%s' => $this->serviceName], 'security')
+            );
+        }
         $client = $this->getClient();
         try {
             $accessToken = $client->getAccessToken();
