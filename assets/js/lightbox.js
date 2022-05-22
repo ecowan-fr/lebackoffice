@@ -29,7 +29,7 @@ window.Lightbox = {
     box: function (taille, page, bgcolor) {
         var li = document.getElementById('lightbox');
         if (li != undefined) {
-            return li.classList.remove('-z-50'), li.classList.add('z-50'), li.style.width = taille + "px", this.center(taille), this.api(page), li.style.visibility = "visible", li.style.opacity = 1
+            return li.classList.remove('-z-50'), li.classList.add('z-50'), li.style.width = taille + "px", this.center(taille), this.scrollToTop(), this.api(page), li.style.visibility = "visible", li.style.opacity = 1
         }
     },
     center: function (taille) {
@@ -38,6 +38,9 @@ window.Lightbox = {
         if ("Microsoft Internet Explorer" == navigator.appName) o = 1;
         else var o = 0;
         o || (e -= 9), e = e < 0 ? 0 : e, elem.style.left = e + 'px', elem
+    },
+    scrollToTop: function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     getPageDimensions: function () {
         var i, t, e, o;
