@@ -120,7 +120,7 @@ class MainController extends AbstractController {
         Route(
             path: '/footer',
             name: 'settings.main.footer',
-            methods: ['GET', 'POST']
+            methods: ['GET']
         )
     ]
     public function footer(): Response {

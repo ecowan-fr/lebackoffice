@@ -66,7 +66,7 @@ class LightboxController extends AbstractController {
 
     #[
         Route(
-            '/account/security/app-two-fa/add',
+            path: '/account/security/app-two-fa/add',
             name: 'account.security.apptwofa.add',
             methods: ['POST']
         )
