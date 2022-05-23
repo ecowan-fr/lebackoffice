@@ -6,8 +6,6 @@ Le SVG est obligatoire afin de toujours avoir une qualité optimale.
 
 TYPE : FICHIER
 --------------------------------------------------
-
-DIFFUSION RESTREINTE : T_DR.svg
-CONFIDENTIEL : T_C.svg
-CONFIDENTIEL PERSONNNEL : T_CP.svg
-HAUTEMENT CONFIDENTIEL : T_HC.svg
+RESTREINT : restreint_timbre.svg
+CONFIDENTIEL : confidentiel_timbre.svg
+SECRET : secret_timbre.svg
