@@ -10,7 +10,7 @@
 	<a href="{{ path('settings.main.footer') }}" class="waves-effect {{ route == 'settings.main.footer' ? 'active':null }}">
 		<i class="fa-duotone fa-border-bottom text-green-600"></i>
 		{{ 'Footer'|trans({}, 'global') }}</a>
-	{% if is_granted('service_mode.edit') %}
+	{% if is_granted('settings.service_mode.edit') %}
 		<a href="{{ path('settings.main.servicemode') }}" class="waves-effect {{ route == 'settings.main.servicemode' ? 'active':null }}">
 			<i class="fa-solid fa-wrench text-red-500"></i>
 			Service mode</a>

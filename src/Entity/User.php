@@ -234,9 +234,6 @@ implements
         $this->setRoles([
             "login",
 
-            "service_mode.login",
-            "service_mode.edit",
-
             "settings.view",
             "settings.main.view",
             "settings.main.edit",
@@ -275,7 +272,10 @@ implements
 
             "settings.users.view",
             "settings.users.edit",
-            "settings.users.delete"
+            "settings.users.delete",
+
+            "settings.service_mode.login",
+            "settings.service_mode.edit"
         ]);
 
         return $this;

@@ -133,7 +133,7 @@ class MainController extends AbstractController {
             name: 'settings.main.servicemode',
             methods: ['GET']
         ),
-        Security("is_granted('settings.main.edit') and is_granted('service_mode.edit')")
+        Security("is_granted('settings.main.edit') and is_granted('settings.service_mode.edit')")
     ]
     public function serviceMode(): Response {
         return $this->render('settings/main/servicemode.html.twig');

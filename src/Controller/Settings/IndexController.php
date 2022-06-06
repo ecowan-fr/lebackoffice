@@ -36,22 +36,15 @@ class IndexController extends AbstractController {
             name: 'settings.savesetting',
             methods: ['POST']
         ),
-        Security("is_granted('settings.main.edit') or is_granted('settings.security.edit')")
+        Security("
+            is_granted('settings.main.edit') or
+            is_granted('settings.security.edit') or
+            is_granted('settings.service_mode.edit')
+        ")
     ]
     public function saveSetting(Request $request, ConfigRepository $configRepository, TranslatorInterface $translator): RedirectResponse {
         if ($this->isCsrfTokenValid('settings', $request->request->get('token'))) {
             try {
-                foreach ($request->request->all() as $key => $value) {
-                    if (
-                        $key != 'token' && (
-                            (str_contains('main', $value) and !$this->isGranted('settings.main.edit')) ||
-                            (str_contains('security', $value) and !$this->isGranted('settings.security.edit'))
-                        )
-                    ) {
-                        throw $this->createAccessDeniedException();
-                    }
-                }
-
                 $configRepository->saveMultiple($request->request->all());
                 $this->addFlash('success', $translator->trans('Settings saved.', [], 'settings'));
             } catch (Exception $e) {

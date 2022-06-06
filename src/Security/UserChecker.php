@@ -28,7 +28,7 @@ class UserChecker implements UserCheckerInterface {
             return;
         }
 
-        if (!in_array('login', $user->getRoles()) || ($this->configRepository->findOneBy(['setting' => 'service_mode'])->getValue() && !in_array('service_mode.login', $user->getRoles()))) {
+        if (!in_array('login', $user->getRoles()) || ($this->configRepository->findOneBy(['setting' => 'service_mode'])->getValue() && !in_array('settings.service_mode.login', $user->getRoles()))) {
             throw new CustomUserMessageAuthenticationException(
                 $this->translator->trans('An authentication exception occurred.', [], 'security')
             );
