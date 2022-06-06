@@ -52,7 +52,9 @@ class ConfigurationsFixtures extends Fixture implements FixtureGroupInterface {
             ["name" => "footer_center_type", "value" => null], //logo || text || timbre || null
             ["name" => "footer_center_text", "value" => null],
             ["name" => "footer_right_type", "value" => "text"], //logo || text || timbre || null
-            ["name" => "footer_right_text", "value" => "Confidentiel"]
+            ["name" => "footer_right_text", "value" => "Confidentiel"],
+
+            ["name" => "service_mode", "value" => "0"]
         ];
 
         foreach ($configurations as $configData) {

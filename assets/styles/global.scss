@@ -47,7 +47,7 @@ a {
     @apply bg-white dark:bg-gray-700 shadow-md rounded-xl p-5;
 
     &.nopad {
-       padding: 0;
+        padding: 0;
     }
 }
 
@@ -107,5 +107,55 @@ div.flashbag {
         &:first-child {
             @apply mt-0;
         }
+    }
+}
+
+div.service_mode {
+    position:fixed;
+    background-color: rgba(255, 0, 0, 0.7);
+    z-index: 9999;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+
+    &.top {
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+
+    &.right {
+        top: 18px;
+        bottom: 50px;
+        right: 0;
+        writing-mode: vertical-rl;
+    }
+
+    &.bottom {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        font-size: 28px;
+        font-weight:400;
+        line-height: 50px;
+    }
+
+    &.left {
+        top: 18px;
+        bottom: 50px;
+        left: 0;
+        writing-mode: vertical-rl;
+    }
+
+    &.center {
+        top:50%;
+        text-align: center;
+        transform: translateY(-50%);
+        color:rgba(255, 0, 0, 0.1);
+        font-size: 9em;
+        width: 100%;
+        background-color: transparent;
+        z-index: -1;
     }
 }

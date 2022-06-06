@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Repository\ConfigRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -29,12 +30,17 @@ class ResetPasswordController extends AbstractController {
         private readonly UserRepository $userRepository,
         private readonly MailerInterface $mailer,
         private readonly TranslatorInterface $translator,
-        private readonly ResetPasswordHelperInterface $resetPasswordHelper
+        private readonly ResetPasswordHelperInterface $resetPasswordHelper,
+        private readonly ConfigRepository $configRepository
     ) {
     }
 
     #[Route(path: '', name: 'security.resetpassword.request', methods: ['GET', 'POST'])]
     public function request(Request $request, AuthenticationUtils $authenticationUtils): Response {
+        if (!$this->configRepository->findOneBy(['setting' => 'login_password'])->getValue()) {
+            return $this->redirectToRoute('security.login');
+        }
+
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -91,6 +97,10 @@ class ResetPasswordController extends AbstractController {
 
     #[Route(path: '/check-email', name: 'security.resetpassword.checkemail', methods: ['GET'])]
     public function checkEmail(): Response {
+        if (!$this->configRepository->findOneBy(['setting' => 'login_password'])->getValue()) {
+            return $this->redirectToRoute('security.login');
+        }
+
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
@@ -104,6 +114,10 @@ class ResetPasswordController extends AbstractController {
 
     #[Route(path: '/reset/{token}', name: 'security.resetpassword.resetpassword', methods: ['GET', 'POST'])]
     public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher, string $token = null): Response {
+        if (!$this->configRepository->findOneBy(['setting' => 'login_password'])->getValue()) {
+            return $this->redirectToRoute('security.login');
+        }
+
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.

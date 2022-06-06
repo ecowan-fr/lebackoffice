@@ -232,6 +232,11 @@ implements
     public function setFullRoles(): self {
 
         $this->setRoles([
+            "login",
+
+            "service_mode.login",
+            "service_mode.edit",
+
             "settings.view",
             "settings.main.view",
             "settings.main.edit",

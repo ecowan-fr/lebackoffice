@@ -34,7 +34,7 @@ class MainController extends AbstractController {
         Route(
             path: '',
             name: 'settings.main.index',
-            methods: ['GET', 'POST']
+            methods: ['GET']
         )
     ]
     public function index(): Response {
@@ -125,5 +125,17 @@ class MainController extends AbstractController {
     ]
     public function footer(): Response {
         return $this->render('settings/main/footer.html.twig');
+    }
+
+    #[
+        Route(
+            path: '/service_mode',
+            name: 'settings.main.servicemode',
+            methods: ['GET']
+        ),
+        Security("is_granted('settings.main.edit') and is_granted('service_mode.edit')")
+    ]
+    public function serviceMode(): Response {
+        return $this->render('settings/main/servicemode.html.twig');
     }
 }

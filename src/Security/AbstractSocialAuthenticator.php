@@ -70,7 +70,7 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
     public function authenticate(Request $request): Passport {
         if (!$this->configRepository->findOneBy(['setting' => 'login_oauth_' . $this->serviceName])->getValue()) {
             throw new CustomUserMessageAuthenticationException(
-                $this->translator->trans('An authentication exception occurred.', ['%s' => $this->serviceName], 'security')
+                $this->translator->trans('An authentication exception occurred.', [], 'security')
             );
         }
         $client = $this->getClient();
@@ -110,7 +110,6 @@ abstract class AbstractSocialAuthenticator extends OAuth2Authenticator {
         $session->getFlashBag()->add('success', $this->translator->trans('You are authenticated with %s', ['%s' => $this->serviceName], 'security'));
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName) && $this->redirect === 'home.home') {
-            dump('targetpath');
             return new RedirectResponse($targetPath);
         }
 

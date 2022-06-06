@@ -33,6 +33,15 @@
 		{% block js_head '' %}
 	</head>
 	<body class="bg-gray-100 dark:bg-gray-800 text-slate-600 dark:text-slate-200">
+		{% if configs.service_mode %}
+			<div class="service_mode top">SERVICE MODE</div>
+			<div class="service_mode right">SERVICE MODE</div>
+			<div class="service_mode bottom">[ENV:
+				{{ app.environment|upper }}][DEBUG:
+				{{ app.debug == 1 ? 'YES':'NO' }}] API ENDPOINTS & SALES DISABLED</div>
+			<div class="service_mode left">SERVICE MODE</div>
+			<div class="service_mode center">SERVICE MODE</div>
+		{% endif %}
 		<div class='flashbag animate__animated'>
 			{{ showFlashMessage(app.flashes) }}
 		</div>
