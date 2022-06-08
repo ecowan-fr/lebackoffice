@@ -115,8 +115,7 @@
 					<tfoot>
 						<tr>
 							<td colspan='99999'>
-								{% set result = tokens|length ~ ' ' ~ 'result'|trans({}, 'global') %}
-								{{ tokens|length > 1 ? result ~ 's' : result }}
+								{{ tokens|length ~ ' ' ~ 'result'|trans({}, 'global') ~ (tokens|length > 1 ? 's':'') }}
 							</td>
 						</tr>
 					</tfoot>
@@ -193,8 +192,7 @@
 					<tfoot>
 						<tr>
 							<td colspan='99999'>
-								{% set result = oauthcount ~ ' ' ~ 'result'|trans({}, 'global') %}
-								{{ oauthcount > 1 ? result ~ 's' : result }}
+								{{ oauthcount|length ~ ' ' ~ 'result'|trans({}, 'global') ~ (oauthcount|length > 1 ? 's':'') }}
 							</td>
 						</tr>
 					</tfoot>

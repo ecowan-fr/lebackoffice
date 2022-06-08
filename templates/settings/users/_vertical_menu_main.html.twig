@@ -1,0 +1,10 @@
+{% set route = app.request.get('_route') %}
+
+<div class="vertical_menu">
+	<a href="{{ path('settings.users.index') }}" class="waves-effect {{ route == 'settings.users.index' ? 'active':null }}">
+		<i class="fa-duotone fa-users-gear text-red-500"></i>
+		{{ 'Users list'|trans({}, 'settings') }}</a>
+	<a href="{{ path('settings.users.saad') }}" class="waves-effect {{ route == 'settings.users.saad' ? 'active':null }}">
+		<i class="fa-brands fa-microsoft" style="color:#008ad7;"></i>
+		{{ 'Azure AD synchronization'|trans({}, 'settings') }}</a>
+</div>

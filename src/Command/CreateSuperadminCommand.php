@@ -107,6 +107,7 @@ class CreateSuperadminCommand extends Command {
             ->setLastname($lastname)
             ->setFirstname($firstname)
             ->setEmail($email)
+            ->setCreatedMethod('console')
             ->setFullRoles();
 
         $this->userRepository->upgradePassword($user, $this->userPasswordHasher->hashPassword($user, $io->askQuestion($questionPassword)));

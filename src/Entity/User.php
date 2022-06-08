@@ -94,6 +94,9 @@ implements
     #[ORM\Column(type: 'string', nullable: true)]
     private $totpAppName;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $createdMethod;
+
     public function getId(): ?int {
         return $this->id;
     }
@@ -459,5 +462,15 @@ implements
 
     public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface {
         return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 20, 8);
+    }
+
+    public function getCreatedMethod(): ?string {
+        return $this->createdMethod;
+    }
+
+    public function setCreatedMethod(string $createdMethod): self {
+        $this->createdMethod = $createdMethod;
+
+        return $this;
     }
 }

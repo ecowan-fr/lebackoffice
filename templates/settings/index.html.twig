@@ -44,7 +44,7 @@
 				</a>
 			{% endif %}
 			{% if is_granted('settings.users.view') %}
-				<a href="#" class="card_setting waves-effect">
+				<a href="{{ path('settings.users.index') }}" class="card_setting waves-effect">
 					<img src="{{ asset('images/icons/crown.png') }}" alt="settings">
 					<p class="text-3xl">{{ 'Users'|trans({}, 'settings') }}</p>
 				</a>

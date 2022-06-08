@@ -9,9 +9,9 @@
 		{% elseif route starts with 'settings.security' %}
 			<a href='#' class='step'><img src='{{ asset('images/icons/lock.png') }}' alt='services'>
 				{{ 'Security'|trans({}, 'settings') }}</a>
-		{% elseif route starts with 'settings.services' %}
-			<a href='#' class='step'><img src='{{ asset('images/services/vmware.png') }}' alt='services'>
-				Vmware</a>";
+		{% elseif route starts with 'settings.users' %}
+			<a href='#' class='step'><img src='{{ asset('images/icons/crown.png') }}' alt='services'>
+				{{ 'Users'|trans({}, 'settings') }}</a>
 		{% endif %}
 	</nav>
 </div>

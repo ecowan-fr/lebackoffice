@@ -57,3 +57,5 @@
 'The configuration is missing. Add the necessary information in the .env file.': 'La configuration est manquante. Rajoutez les informations nécessaires dans le fichier .env.'
 'Login with physical security token (Security key, fingerprint, Windows hello ...)': 'Connexion avec token de sécurité physique (Clé de sécurité, empreinte digitale, Windows hello ...)'
 'When enabled, each user can add a physical security token. He can then connect with it, without entering his email address or password.': 'Quand cela est activé, chaque utilisateur peut ajouter un token physique de sécurité. Il peut alors se connecter avec celui-ci, sans inscrire son adresse email ni son mot de passe.'
+'Users list': 'Liste des utilisateurs'
+'Azure AD synchronization': 'Synchronisation Azure AD'

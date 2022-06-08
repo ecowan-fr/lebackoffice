@@ -2,8 +2,12 @@ table {
     @apply w-full divide-y divide-gray-200 dark:divide-gray-700 bg-gray-50 dark:bg-gray-900 shadow-md overflow-hidden rounded-lg;
 
     th, tfoot td {
-            @apply px-6 pt-3 pb-2 text-left text-sm font-medium text-gray-500;
-        }
+        @apply py-3 text-sm font-bold text-gray-500 text-center;
+    }
+
+    tfoot td {
+        @apply text-left pl-6;
+    }
 
     tbody {
         @apply divide-y divide-gray-200 dark:divide-gray-700;
@@ -13,7 +17,7 @@ table {
         }
 
         td {
-            @apply px-6 py-2 text-sm align-middle;
+            @apply py-3 text-sm align-middle text-center;
         }
     }
 }
