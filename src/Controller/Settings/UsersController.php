@@ -4,10 +4,12 @@ namespace App\Controller\Settings;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 #[
     Route('/settings/users'),
@@ -22,9 +24,20 @@ class UsersController extends AbstractController {
             methods: ['GET']
         )
     ]
-    public function users(UserRepository $userRepository): Response {
+    public function users(
+        UserRepository $userRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $pagination = $paginator->paginate($userRepository->findAll(), $request->get('page', 1), 50);
+        $nbrOfPages = ceil($pagination->getTotalItemCount() / $pagination->getItemNumberPerPage());
+        $firstItem = ($pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage()) + 1 - $pagination->getItemNumberPerPage();
+        $lastItem = $nbrOfPages == $pagination->getCurrentPageNumber() ? $pagination->getTotalItemCount() : $pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage();
         return $this->render('settings/users/index.html.twig', [
-            "users" => $userRepository->findAll()
+            "pagination" => $pagination,
+            "nbrOfPages" => $nbrOfPages,
+            "firstItem" => $firstItem,
+            "lastItem" => $lastItem
         ]);
     }
 

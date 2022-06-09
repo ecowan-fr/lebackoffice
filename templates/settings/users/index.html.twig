@@ -29,7 +29,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for user in users %}
+						{% for user in pagination.items %}
 							<tr>
 								<td>
 									<a href="{{ path('settings.users.unique.show', {id: user.id}) }}">{{ user.lastname ~ ' ' ~ user.firstname }}</a>
@@ -53,7 +53,30 @@
 					<tfoot>
 						<tr>
 							<td colspan='99999'>
-								{{ users|length ~ ' ' ~ 'result'|trans({}, 'global') ~ (users|length > 1 ? 's':'') }}
+								<div class="flex justify-between items-center">
+									<div>
+										{% if pagination.currentPageNumber > 1 %}
+											<a href="{{ path('settings.users.index', {page: pagination.currentPageNumber - 1}) }}" class="button transparent">
+												<i class="fa-solid fa-angle-left mr-3"></i>Précédent</a>
+										{% else %}
+											<button class="transparent" disabled>
+												<i class="fa-solid fa-angle-left mr-3"></i>Précédent</button>
+										{% endif %}
+									</div>
+									<div>
+										{{ firstItem ~ ' à ' ~ lastItem ~ ' sur ' ~ pagination.getTotalItemCount() }}</div>
+									<div>
+										{% if pagination.currentPageNumber < nbrOfPages %}
+											<a href="{{ path('settings.users.index', {page: pagination.currentPageNumber + 1}) }}" class="button transparent">
+												Suivant<i class="fa-solid fa-angle-right ml-3"></i>
+											</a>
+										{% else %}
+											<button class="transparent" disabled>
+												Suivant<i class="fa-solid fa-angle-right ml-3"></i>
+											</button>
+										{% endif %}
+									</div>
+								</div>
 							</td>
 						</tr>
 					</tfoot>

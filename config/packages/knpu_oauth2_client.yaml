@@ -20,11 +20,11 @@ knpu_oauth2_client:
             client_secret: '%env(GITHUB_SECRET)%'
             redirect_route: oauth.check
             redirect_params:
-              service: github
+                service: github
         azure:
             type: azure
             client_id: '%env(AZURE_ID)%'
             client_secret: '%env(AZURE_SECRET)%'
             redirect_route: oauth.check
             redirect_params:
-              service: azure
+                service: azure
