@@ -27,7 +27,7 @@ class UsersFixtures extends Fixture implements FixtureGroupInterface {
 
         for ($i = 0; $i < 500; $i++) {
             $user = (new User)
-                ->setCreatedMethod($faker->randomElement(['console', 'azure', 'user']))
+                ->setCreatedMethod('console')
                 ->setEmail($faker->email())
                 ->setLastname($faker->lastName())
                 ->setFirstname($faker->firstName())
