@@ -12,8 +12,18 @@ table {
     tbody {
         @apply divide-y divide-gray-200 dark:divide-gray-700;
 
+        tr:hover {
+            @apply bg-gray-100;
+            transition: .1s;
+        }
+
         tr:nth-child(odd) {
             @apply bg-white dark:bg-gray-900;
+
+            &:hover {
+                @apply bg-gray-100;
+                transition: .1s;
+            }
         }
 
         td {
