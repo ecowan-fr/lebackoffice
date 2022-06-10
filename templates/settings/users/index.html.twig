@@ -46,7 +46,7 @@
 									{{ user.createdMethod }}
 								</td>
 								<td>{{ user.createdAt|date('d/m/Y h:m:i') }}</td>
-								<td>{{ user.lastLoginAt|date('d/m/Y h:m:i') }}</td>
+								<td>{{  user.lastLoginAt != null ? user.lastLoginAt|date('d/m/Y h:m:i') : '--' }}</td>
 							</tr>
 						{% endfor %}
 					</tbody>
