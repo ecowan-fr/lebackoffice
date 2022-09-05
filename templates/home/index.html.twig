@@ -11,7 +11,7 @@
 					{{ app.user.lastname }}</p>
 			</div>
 			<div class="flex relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
-				<div class="avatar z-10 waves-effect" style="background-image: url('https://d17v9ds8p1uxd3.cloudfront.net/img_hum/ava_3.png')" :class="! showMenu ? 'border-gray-300 dark:border-gray-700' : 'border-blue-500'" @click="showMenu = !showMenu"></div>
+				<div class="avatar z-10 waves-effect" style="background-image: url('https://cdn-icons-png.flaticon.com/512/149/149071.png')" :class="! showMenu ? 'border-gray-300 dark:border-gray-700' : 'border-blue-500'" @click="showMenu = !showMenu"></div>
 				<div x-show="showMenu" class="absolute -right-6 -top-5 w-80 card nopad" x-transition:enter=" transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
 					<div class="p-6 flex items-center justify-center border-b border-gray-200 w-full flex-col">
 						<div class="mt-28 text-center">
