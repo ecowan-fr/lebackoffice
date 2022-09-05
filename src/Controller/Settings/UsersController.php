@@ -29,7 +29,7 @@ class UsersController extends AbstractController {
         PaginatorInterface $paginator,
         Request $request
     ): Response {
-        $pagination = $paginator->paginate($userRepository->findAll(), $request->get('page', 1), 50);
+        $pagination = $paginator->paginate($userRepository->findAll(), $request->get('page', 1), 15);
         $nbrOfPages = ceil($pagination->getTotalItemCount() / $pagination->getItemNumberPerPage());
         $firstItem = ($pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage()) + 1 - $pagination->getItemNumberPerPage();
         $lastItem = $nbrOfPages == $pagination->getCurrentPageNumber() ? $pagination->getTotalItemCount() : $pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage();
