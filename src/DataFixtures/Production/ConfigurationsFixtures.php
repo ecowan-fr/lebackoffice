@@ -45,6 +45,7 @@ class ConfigurationsFixtures extends Fixture implements FixtureGroupInterface {
             ["name" => "structure_logo_custom", "value" => "1"],
             ["name" => "structure_logo_url_light", "value" => "/images/logo/logo-lebackoffice-noir.svg"],
             ["name" => "structure_logo_url_dark", "value" => "/images/logo/logo-lebackoffice-blanc.svg"],
+            ["name" => "structure_icone_url", "value" => "/images/logo/icone-lebackoffice.svg"],
 
             ["name" => "footer_active", "value" => "1"],
             ["name" => "footer_left_type", "value" => "logo"], //logo || text || timbre || null
