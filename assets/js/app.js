@@ -161,9 +161,6 @@ export default (function () {
         Lightbox.init()
         Waves.init()
 
-        Waves.attach('button.circle', ['waves-circle'])
-        Waves.attach('a.button.circle', ['waves-circle'])
-
         Waves.attach('button.transparent')
         Waves.attach('a.button.transparent')
 

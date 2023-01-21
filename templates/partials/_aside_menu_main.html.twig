@@ -1,18 +1,12 @@
-<aside id="menuMain" data-turbo-permanent class="bg-white dark:bg-black m-1 pl-6 pr-4">
-	<div class="mainMenu">
-		<div class="flex items-center justify-between mt-10">
-			<a class="logo waves-effect" href="{{ path('home.home') }}">
-				<img src="{{ asset(logos.icone) }}" alt="Icone lebackoffice">
-				<p>Dashboard</p>
-			</a>
-			<button class="transparent circle ellipsis">
-				<i class="fa-solid fa-fw fa-ellipsis-vertical"></i>
-			</button>
-		</div>
-		<div class="mb-4">
-			<button class="transparent circle">
-				<i class="fa-solid fa-fw fa-chevron-left"></i>
-			</button>
-		</div>
+<aside id="menuMain" data-turbo-permanent>
+	<div class="flex items-center justify-center mt-10 px-4">
+		<a class="logo waves-effect" href="{{ path('home.home') }}">
+			<img src="{{ asset(logos.icone) }}" alt="Icone lebackoffice">
+		</a>
+	</div>
+	<div class="mainMenuItems">
+		<a href="/">
+			<i class="fa-regular fa-grid-2"></i>
+		</a>
 	</div>
 </aside>

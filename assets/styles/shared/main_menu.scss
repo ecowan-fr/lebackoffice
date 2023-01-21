@@ -1,16 +1,12 @@
-div.mainMenu {
-    @apply flex flex-col justify-between h-full;
+aside#menuMain {
+    @apply flex flex-col justify-between h-full bg-white dark:bg-black m-2;
 
     a.logo {
-        @apply flex items-center text-2xl text-black font-bold p-2 rounded-full;
+        @apply flex items-center text-xl text-black font-bold p-2 rounded-full;
         transition: .2s;
 
         img {
-            @apply h-10;
-        }
-
-        p {
-            @apply ml-8 mr-4;
+            @apply h-12;
         }
 
         &:hover {
@@ -18,10 +14,14 @@ div.mainMenu {
         }
     }
 
-    button.ellipsis {
-        @apply ml-6 text-lg;
-        padding:0 !important;
-        width: 40px;
-        height: 40px;
+    div.mainMenuItems {
+        @apply grow flex flex-col items-center pt-10 px-2 text-center;
+        a {
+            @apply w-full;
+
+            i {
+                @apply text-4xl;
+            }
+        }
     }
 }

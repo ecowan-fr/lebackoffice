@@ -1,9 +1,19 @@
+$bg-light:rgb(243, 246, 248);
+$bg-dark:rgb(16, 18, 20);
+
 html, body {
     @apply w-full h-screen min-h-screen;
 }
 
 body {
     @apply font-marianne flex flex-col;
+    background-color: $bg-light;
+    color: rgb(28, 34, 43);
+}
+
+.dark body {
+    background-color: $bg-dark;
+    color: white;
 }
 
 .waves-effect {display: block;}
