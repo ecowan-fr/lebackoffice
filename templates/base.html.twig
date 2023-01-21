@@ -46,12 +46,17 @@
 			{{ showFlashMessage(app.flashes) }}
 		</div>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			{% include "partials/_lightbox.html.twig" %}
-			<div class="flex">
-
-			{% endif %}
-			{% block body '' %}
-			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<div class="container flex mx-auto items-stretch h-full">
+				{% include "partials/_lightbox.html.twig" %}
+				<aside id="menuMain" data-turbo-permanent class="bg-white dark:bg-black m-1 pl-6 pr-4">
+					{% include "partials/_aside_menu_main.html.twig" %}
+				</aside>
+				<div class="grow m-1">
+				{% endif %}
+				{% block body '' %}
+				{% block js_body '' %}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				</div>
 			</div>
 		{% endif %}
 	</body>
