@@ -47,7 +47,12 @@
 		</div>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			{% include "partials/_lightbox.html.twig" %}
+			<div class="flex">
+
+			{% endif %}
+			{% block body '' %}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			</div>
 		{% endif %}
-		{% block body '' %}
 	</body>
 </html>
