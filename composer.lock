@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fa4a911b831da9dcbcc87be56b9da38",
+    "content-hash": "55036fd7749750077b15545f96e7a5c4",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4428,7 +4428,7 @@
         },
         {
             "name": "scheb/2fa-backup-code",
-            "version": "v6.4.0",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-backup-code.git",
@@ -4471,13 +4471,13 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-backup-code/tree/v6.4.0"
+                "source": "https://github.com/scheb/2fa-backup-code/tree/v6.5.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-bundle",
-            "version": "v6.4.0",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-bundle.git",
@@ -4538,13 +4538,13 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-bundle/tree/v6.4.0"
+                "source": "https://github.com/scheb/2fa-bundle/tree/v6.5.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-email",
-            "version": "v6.4.0",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-email.git",
@@ -4587,13 +4587,13 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-email/tree/v6.4.0"
+                "source": "https://github.com/scheb/2fa-email/tree/v6.5.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-totp",
-            "version": "v6.4.0",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-totp.git",
@@ -4638,26 +4638,26 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-totp/tree/v6.4.0"
+                "source": "https://github.com/scheb/2fa-totp/tree/v6.5.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-trusted-device",
-            "version": "v6.4.0",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-trusted-device.git",
-                "reference": "1c9a793779a0234120c6eb445fa76e9b754e547a"
+                "reference": "b918e67c58d105c0753f59e0b1c7ca4621358f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scheb/2fa-trusted-device/zipball/1c9a793779a0234120c6eb445fa76e9b754e547a",
-                "reference": "1c9a793779a0234120c6eb445fa76e9b754e547a",
+                "url": "https://api.github.com/repos/scheb/2fa-trusted-device/zipball/b918e67c58d105c0753f59e0b1c7ca4621358f82",
+                "reference": "b918e67c58d105c0753f59e0b1c7ca4621358f82",
                 "shasum": ""
             },
             "require": {
-                "lcobucci/clock": "^2.0",
+                "lcobucci/clock": "^2.0 || ^3.0",
                 "lcobucci/jwt": "^4.0",
                 "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
                 "scheb/2fa-bundle": "self.version"
@@ -4689,9 +4689,9 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-trusted-device/tree/v6.4.0"
+                "source": "https://github.com/scheb/2fa-trusted-device/tree/v6.5.0"
             },
-            "time": "2022-12-10T15:20:09+00:00"
+            "time": "2023-01-21T11:16:02+00:00"
         },
         {
             "name": "spomky-labs/cbor-bundle",
