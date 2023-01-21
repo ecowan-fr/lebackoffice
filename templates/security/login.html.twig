@@ -61,22 +61,22 @@
 		{% endif %}
 		<div class="flex justify-between w-full mt-10 gap-5 mb-5">
 			{% if configs.login_oauth_discord %}
-				<a title="Discord" href="{{ path('oauth.login', {service: 'discord'}) }}" class="link-auth-more waves-effect">
+				<a title="Discord" href="{{ path('oauth.login', {service: 'discord'}) }}" class="button transparent link-auth-more waves-effect !text-blue-500 !dark:text-blue-400">
 					<i class="fa-brands fa-discord"></i>
 				</a>
 			{% endif %}
 			{% if configs.login_oauth_google %}
-				<a title="Google" href="{{ path('oauth.login', {service: 'google'}) }}" class="link-auth-more waves-effect">
+				<a title="Google" href="{{ path('oauth.login', {service: 'google'}) }}" class="button transparent link-auth-more waves-effect !text-blue-500 !dark:text-blue-400">
 					<i class="fa-brands fa-google"></i>
 				</a>
 			{% endif %}
 			{% if configs.login_oauth_github %}
-				<a title="Github" href="{{ path('oauth.login', {service: 'github'}) }}" class="link-auth-more waves-effect">
+				<a title="Github" href="{{ path('oauth.login', {service: 'github'}) }}" class="button transparent link-auth-more waves-effect !text-blue-500 !dark:text-blue-400">
 					<i class="fa-brands fa-github"></i>
 				</a>
 			{% endif %}
 			{% if configs.login_oauth_azure %}
-				<a title="Microsoft Azure" href="{{ path('oauth.login', {service: 'azure'}) }}" class="link-auth-more waves-effect">
+				<a title="Microsoft Azure" href="{{ path('oauth.login', {service: 'azure'}) }}" class="button transparent link-auth-more waves-effect !text-blue-500 !dark:text-blue-400">
 					<i class="fa-brands fa-microsoft"></i>
 				</a>
 			{% endif %}
