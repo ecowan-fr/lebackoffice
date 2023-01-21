@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
+use App\State\LightboxProvider;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiFilter;
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     operations: [
         new Get(
+            provider: LightboxProvider::class,
             uriTemplate: '/lightbox/{name}',
             openapiContext: [
                 'tags' => ['Internal functioning of the backoffice'],

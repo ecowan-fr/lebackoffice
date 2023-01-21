@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\Post;
+use App\State\FlashMessageProcessor;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiFilter;
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ApiResource(
+    processor: FlashMessageProcessor::class,
     operations: [
         new Post(
             uriTemplate: '/flash',

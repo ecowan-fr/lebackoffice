@@ -1,14 +1,13 @@
 <?php
 
-namespace App\DataPersister;
+namespace App\State;
 
-use App\Entity\FlashMessage;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
-use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class FlashMessageDataPersister implements DataPersisterInterface {
+class FlashMessageProcessor implements ProcessorInterface {
 
     public function __construct(
         private readonly RequestStack $request,
@@ -16,19 +15,7 @@ class FlashMessageDataPersister implements DataPersisterInterface {
     ) {
     }
 
-    public function supports($data): bool {
-        return $data instanceof FlashMessage;
-    }
-
-    /**
-     * Persists the data.
-     *
-     * @param FlashMessage $data
-     *
-     * @return object Void will not be supported in API Platform 3, an object should always be returned
-     */
-    public function persist($data) {
-
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void {
         try {
             $message = $this->translator->trans($data->getMessage(), [], $data->getDomainTranslation());
         } catch (\Throwable $th) {
@@ -38,10 +25,5 @@ class FlashMessageDataPersister implements DataPersisterInterface {
         /** @var Session */
         $session = $this->request->getCurrentRequest()->getSession();
         $session->getFlashBag()->add($data->getType(), $message);
-        return $data;
-    }
-
-    public function remove($data) {
-        return;
     }
 }
