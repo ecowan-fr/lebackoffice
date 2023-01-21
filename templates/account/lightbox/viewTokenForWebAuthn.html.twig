@@ -93,22 +93,33 @@
 				<td>Effective Date</td>
 				<td>{{ statusReport.effectiveDate }}</td>
 			</tr>
-			<tr>
-				<td>Certification Descriptor</td>
-				<td>{{ statusReport.certificationDescriptor }}</td>
-			</tr>
-			<tr>
-				<td>Certificate Number</td>
-				<td>{{ statusReport.certificateNumber }}</td>
-			</tr>
-			<tr>
-				<td>Certification Policy Version</td>
-				<td>{{ statusReport.certificationPolicyVersion }}</td>
-			</tr>
-			<tr>
-				<td>Certification Requirements Version</td>
-				<td>{{ statusReport.certificationRequirementsVersion }}</td>
-			</tr>
+			{% if statusReport.certificationDescriptor is defined %}
+				<tr>
+					<td>Certification Descriptor</td>
+					<td>{{ statusReport.certificationDescriptor }}</td>
+				</tr>
+			{% endif %}
+
+			{% if statusReport.certificateNumber is defined %}
+				<tr>
+					<td>Certificate Number</td>
+					<td>{{ statusReport.certificateNumber }}</td>
+				</tr>
+			{% endif %}
+
+			{% if statusReport.certificationPolicyVersion is defined %}
+				<tr>
+					<td>Certification Policy Version</td>
+					<td>{{ statusReport.certificationPolicyVersion }}</td>
+				</tr>
+			{% endif %}
+
+			{% if statusReport.certificationRequirementsVersion is defined %}
+				<tr>
+					<td>Certification Requirements Version</td>
+					<td>{{ statusReport.certificationRequirementsVersion }}</td>
+				</tr>
+			{% endif %}
 		</tbody>
 	</table>
 </div>
