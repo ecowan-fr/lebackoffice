@@ -149,7 +149,7 @@
 						<p class="font-bold text-lg">{{ 'Light version (by default)'|trans({}, 'settings') }}</p>
 						{% if configs.structure_logo_url_light == '/images/logo/logo-lebackoffice-noir.svg' %}
 							{% if is_granted('settings.main.edit') %}
-								<label class="waves-effect addlicence mt-6">
+								<label class="waves-effect border_point mt-6">
 									<i class="fa-duotone fa-image text-blue-400 text-7xl"></i>
 									<span class="mt-5 block text-lg font-medium text-gray-700">{{ 'Upload a logo'|trans({}, 'settings') }}
 										light</span>
@@ -174,7 +174,7 @@
 						<p class="font-bold text-lg">{{ 'Dark version'|trans({}, 'settings') }}</p>
 						{% if configs.structure_logo_url_dark == '/images/logo/logo-lebackoffice-blanc.svg' %}
 							{% if is_granted('settings.main.edit') %}
-								<label class="waves-effect addlicence mt-6">
+								<label class="waves-effect border_point mt-6">
 									<i class="fa-duotone fa-image text-blue-800 text-7xl"></i>
 									<span class="mt-5 block text-lg font-medium text-gray-700">{{ 'Upload a logo'|trans({}, 'settings') }}
 										dark</span>

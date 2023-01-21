@@ -1,17 +1,39 @@
 input,
 select,
 textarea {
-    @apply bg-white dark:bg-gray-800 rounded-md py-2 px-4 text-base shadow-inner outline-none border border-gray-300 dark:border-gray-500 placeholder-gray-300 dark:placeholder-gray-600;
-    transition:.1s;
+    @apply bg-white border-gray-300 placeholder-gray-300 dark:bg-zinc-900 dark:placeholder-gray-600 dark:border-zinc-700 rounded-md py-2 px-4 text-base shadow-inner outline-none border;
+    transition:.2s;
 
-    &:focus { @apply ring-2 ring-offset-1 ring-offset-gray-100 dark:ring-offset-gray-800; }
+    &:focus { 
+        box-shadow: 0 0 0 6px rgba($color: #000, $alpha: .05);
+    }
+
+    &:disabled {
+        @apply cursor-not-allowed bg-gray-300;
+
+        &:hover {
+            @apply shadow-none;
+        }
+    }
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+    &:focus { 
+        box-shadow: 0 0 0 6px rgba($color: #fff, $alpha:.2);
+    }
+
+    &:disabled {
+        @apply cursor-not-allowed bg-zinc-700;
+    }
 }
 
 div.select {
     @apply select-none cursor-pointer flex w-full align-middle justify-between bg-white dark:bg-gray-800 rounded-md text-base shadow-inner border border-gray-300 dark:border-gray-500 placeholder-gray-300 dark:placeholder-gray-600 relative;
 }
 
-input[type="radio"] {
+input[type="radio"] {   
     @apply hidden;
 
     &:checked + .label {
