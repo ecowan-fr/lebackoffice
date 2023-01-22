@@ -5,15 +5,16 @@ namespace App\Controller\Settings;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[
     Route('/settings/users'),
-    Security("is_granted('settings.view') and is_granted('settings.users.view')")
+    IsGranted(new Expression("is_granted('settings.view') and is_granted('settings.users.view')"))
 ]
 class UsersController extends AbstractController {
 

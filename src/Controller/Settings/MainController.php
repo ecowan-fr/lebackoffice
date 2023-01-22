@@ -5,19 +5,19 @@ namespace App\Controller\Settings;
 use Exception;
 use App\Repository\ConfigRepository;
 use App\Service\FileUploaderService;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[
     Route('/settings/main'),
-    Security("is_granted('settings.view') and is_granted('settings.main.view')")
+    IsGranted(new Expression("is_granted('settings.view') and is_granted('settings.main.view')"))
 ]
 class MainController extends AbstractController {
 
@@ -133,7 +133,7 @@ class MainController extends AbstractController {
             name: 'settings.main.servicemode',
             methods: ['GET']
         ),
-        Security("is_granted('settings.main.edit') and is_granted('settings.service_mode.edit')")
+        IsGranted(new Expression("is_granted('settings.main.edit') and is_granted('settings.service_mode.edit')"))
     ]
     public function serviceMode(): Response {
         return $this->render('settings/main/servicemode.html.twig');
