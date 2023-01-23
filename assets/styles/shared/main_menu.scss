@@ -39,5 +39,5 @@ aside#menuMain {
 }
 
 div#posMenuMain {
-    @apply w-1 h-12 bg-blue-500 absolute rounded-r-md;
+    @apply w-1 h-12 bg-blue-500 absolute rounded-r-md transition;
 }
