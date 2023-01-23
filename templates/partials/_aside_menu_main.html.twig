@@ -1,6 +1,6 @@
 {% set route = app.request.get('_route') %}
-
-<aside id="menuMain">
+<div id="activeroute" class="hidden" data-route="{{ route }}"></div>
+<aside id="menuMain" data-turbo-permanent>
 	<div id="posMenuMain"></div>
 	<div class="flex items-center justify-center mt-10 mb-8">
 		<a class="logo waves-effect" href="{{ path('home.home') }}">
@@ -9,7 +9,7 @@
 	</div>
 	<div class="grow">
 		<div class="mainMenuItems">
-			<a href="{{ path('home.home') }}" class="waves-effect {{ (route == 'home.home') ? 'active' : '' }}">
+			<a href="{{ path('home.home') }}" class="waves-effect" data-route="home.home">
 				<i class="fa-light fa-grid-2"></i>
 			</a>
 			<a class="waves-effect">
@@ -30,7 +30,7 @@
 				<i class="fa-light fa-code"></i>
 			</a>
 			{% if is_granted('settings.view') %}
-				<a href="{{ path('settings.main.index') }}" class="waves-effect {{ (route starts with 'settings') ? 'active' : '' }}">
+				<a href="{{ path('settings.main.index') }}" class="waves-effect" data-route="settings">
 					<i class="fa-light fa-gear"></i>
 				</a>
 			{% endif %}

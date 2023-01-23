@@ -1,14 +1,32 @@
+const reLocPosMenuMain = (activeMenu) => {
+    document.querySelector('#posMenuMain').style.top = (activeMenu.getBoundingClientRect().top + 5) + 'px'
+}
+
 const posMenuMain = () => {
+    const activeRoute = document.querySelector('#activeroute').dataset.route
+
+    let activeMenu = null
+
     document.querySelectorAll('div.mainMenuItems a').forEach(a => {
-        if (!a.classList.contains('active')) {
-            a.children[0].classList.replace('fa-solid', 'fa-light')
+        a.children[0].classList.replace('fa-solid', 'fa-light')
+        a.classList.remove('active')
+
+        const route = a.dataset.route
+
+        if (activeRoute.startsWith(route)) {
+            activeMenu = a
         }
     })
 
-    let activeMenu = document.querySelector('div.mainMenuItems a.active')
     activeMenu.children[0].classList.replace('fa-light', 'fa-solid')
-    document.querySelector('#posMenuMain').style.top = (activeMenu.getBoundingClientRect().top + 5) + 'px'
+    activeMenu.classList.add('active')
 
+
+    reLocPosMenuMain(activeMenu)
+
+    window.addEventListener('resize', (e) => {
+        reLocPosMenuMain(activeMenu)
+    })
 }
 
 export default posMenuMain;
