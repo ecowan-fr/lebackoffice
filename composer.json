@@ -20,7 +20,7 @@
         "ext-simplexml": "*",
         "ext-tokenizer": "*",
         "ext-zend-opcache": "*",
-        "api-platform/core": "^3.0",
+        "api-platform/core": "^3.1",
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
