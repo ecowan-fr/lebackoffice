@@ -72,7 +72,7 @@
         "thenetworg/oauth2-azure": "^2.1",
         "twig/extra-bundle": "^3.5",
         "twig/twig": "^3.5",
-        "web-auth/webauthn-symfony-bundle": "^4.4",
+        "web-auth/webauthn-symfony-bundle": "^4.5",
         "wohali/oauth2-discord-new": "^1.2"
     },
     "config": {
