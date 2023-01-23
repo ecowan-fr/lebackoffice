@@ -18,15 +18,19 @@ const posMenuMain = () => {
         }
     })
 
-    activeMenu.children[0].classList.replace('fa-light', 'fa-solid')
-    activeMenu.classList.add('active')
+    if (activeMenu === null) {
+        document.querySelector('#posMenuMain').classList.add('hidden')
+    } else {
+        document.querySelector('#posMenuMain').classList.remove('hidden')
+        activeMenu.children[0].classList.replace('fa-light', 'fa-solid')
+        activeMenu.classList.add('active')
 
-
-    reLocPosMenuMain(activeMenu)
-
-    window.addEventListener('resize', (e) => {
         reLocPosMenuMain(activeMenu)
-    })
+
+        window.addEventListener('resize', (e) => {
+            reLocPosMenuMain(activeMenu)
+        })
+    }
 }
 
 export default posMenuMain;
