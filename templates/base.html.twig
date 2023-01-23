@@ -46,10 +46,10 @@
 			{{ showFlashMessage(app.flashes) }}
 		</div>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			<div class="container flex mx-auto items-stretch h-full">
+			<div class="container mx-auto h-full my-2">
 				{% include "partials/_lightbox.html.twig" %}
 				{% include "partials/_aside_menu_main.html.twig" %}
-				<div class="grow m-1">
+				<div class="ml-[100px]">
 				{% endif %}
 				{% block body '' %}
 				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -57,4 +57,4 @@
 			</div>
 		{% endif %}
 	</body>
-</html>
+</html></body></html>

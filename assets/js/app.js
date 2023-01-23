@@ -123,30 +123,7 @@ export default (function () {
         })
     }
 
-    let submainlink = function () {
-        //Icon sur le menu principal
-        let submainlinkSet = false
-        document.querySelectorAll('a.mainmenu').forEach(item => {
-            item.addEventListener('mousedown', event => { item.classList.add("zoomed") })
-            item.addEventListener('mouseup', event => { item.classList.remove("zoomed") })
 
-            let submainlink = document.querySelector('#submainlink')
-            if (String(item.dataset.menu).split(' ').includes(document.location.pathname.split('/')[1])) {
-                item.classList.add('selected')
-                item.children[0].classList.replace('fa-light', 'fa-solid')
-                submainlink.style.left = item.offsetLeft + 'px'
-                submainlink.style.width = item.offsetWidth + 'px'
-                submainlink.classList.add('bg-blue-500')
-                submainlinkSet = true
-            } else {
-                item.classList.remove('selected')
-                item.children[0].classList.replace('fa-solid', 'fa-light')
-                if (!submainlinkSet) {
-                    submainlink.classList.remove('bg-blue-500')
-                }
-            }
-        })
-    }
 
     let btnLoad = () => {
         document.querySelectorAll('.btn-load').forEach(a => {
@@ -172,8 +149,6 @@ export default (function () {
         autoSelectRadio()
 
         setTheme()
-
-        submainlink()
 
         btnLoad()
     })

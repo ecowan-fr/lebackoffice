@@ -10,3 +10,8 @@ import Alpine from 'alpinejs'
 window.Alpine = Alpine
 Alpine.start()
 import WebAuthn from "./js/webauthn";
+import posMenuMain from './js/posMenuMain';
+
+document.addEventListener("turbo:load", function () {
+    posMenuMain()
+})

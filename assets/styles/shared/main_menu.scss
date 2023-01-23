@@ -1,12 +1,12 @@
 aside#menuMain {
-    @apply flex flex-col justify-between h-full bg-white dark:bg-black m-2;
+    @apply flex flex-col justify-between bg-white dark:bg-black rounded-l-lg fixed top-2 bottom-2 w-[100px];
 
     a.logo {
         @apply flex items-center text-xl text-black font-bold p-2 rounded-full;
         transition: .2s;
 
         img {
-            @apply h-12;
+            @apply h-10;
         }
 
         &:hover {
@@ -15,13 +15,29 @@ aside#menuMain {
     }
 
     div.mainMenuItems {
-        @apply grow flex flex-col items-center pt-10 px-2 text-center;
+        @apply grow flex flex-col items-center text-center border-t pt-4 relative;
         a {
-            @apply w-full;
+            @apply py-5 px-8 transition duration-100 rounded-lg;
 
             i {
-                @apply text-4xl;
+                @apply text-2xl text-gray-600;
+            }
+
+            &:hover {
+                background-color: $bg-light;
+            }
+
+            &.active i {
+                @apply text-blue-500;
             }
         }
     }
+}
+
+.dark aside#menuMain div.mainMenuItems a:hover {
+    background-color: $bg-dark;
+}
+
+div#posMenuMain {
+    @apply w-1 h-12 bg-blue-500 absolute rounded-r-md;
 }

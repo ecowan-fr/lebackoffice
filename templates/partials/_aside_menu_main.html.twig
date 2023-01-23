@@ -1,12 +1,39 @@
-<aside id="menuMain" data-turbo-permanent>
-	<div class="flex items-center justify-center mt-10 px-4">
+{% set route = app.request.get('_route') %}
+
+<aside id="menuMain">
+	<div id="posMenuMain"></div>
+	<div class="flex items-center justify-center mt-10 mb-8">
 		<a class="logo waves-effect" href="{{ path('home.home') }}">
 			<img src="{{ asset(logos.icone) }}" alt="Icone lebackoffice">
 		</a>
 	</div>
-	<div class="mainMenuItems">
-		<a href="/">
-			<i class="fa-regular fa-grid-2"></i>
-		</a>
+	<div class="grow">
+		<div class="mainMenuItems">
+			<a href="{{ path('home.home') }}" class="waves-effect {{ (route == 'home.home') ? 'active' : '' }}">
+				<i class="fa-light fa-grid-2"></i>
+			</a>
+			<a class="waves-effect">
+				<i class="fa-light fa-users"></i>
+			</a>
+			<a class="waves-effect">
+				<i class="fa-light fa-box-full"></i>
+			</a>
+			<a class="waves-effect">
+				<i class="fa-light fa-money-check-alt"></i>
+			</a>
+		</div>
+	</div>
+
+	<div>
+		<div class="mainMenuItems pb-2">
+			<a href="/api" target="_blanck" class="waves-effect">
+				<i class="fa-light fa-code"></i>
+			</a>
+			{% if is_granted('settings.view') %}
+				<a href="{{ path('settings.main.index') }}" class="waves-effect {{ (route starts with 'settings') ? 'active' : '' }}">
+					<i class="fa-light fa-gear"></i>
+				</a>
+			{% endif %}
+		</div>
 	</div>
 </aside>
