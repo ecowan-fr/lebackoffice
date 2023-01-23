@@ -2,6 +2,9 @@ div#lightbox {
     @apply absolute top-20 opacity-0 rounded-lg p-5;
     box-shadow: 0 2px 10px rgba(0,0,0,.16);
     transition: .1s;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 100%;
 
     div.boxtitle { @apply font-extrabold text-lg font-visby flex justify-between; }
 

@@ -28,7 +28,7 @@ const sendFlashMessage = async function (type, message, redirectUrl, domain) {
     })
 }
 
-window.WebAuthn = {
+export default window.WebAuthn = {
     register: (element) => {
         let redirectUrl;
         if (element.dataset.redirect == '' || element.dataset.redirect == undefined) {
