@@ -1,6 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends '_extends/submenu.html.twig' %}
 
-{% block title 'Users'|trans({}, 'settings') %}
+{% block title 'Settings'|trans({}, 'settings') %}
+
+{% block submenu %}
+	{% include "settings/_submenu.html.twig" %}
+{% endblock %}
 
 {% block body %}
 	{% include "settings/_header.html.twig" %}

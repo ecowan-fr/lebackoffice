@@ -1,0 +1,12 @@
+{% extends "_extends/base.html.twig" %}
+
+{% block type_template %}
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		{% block submenu '' %}
+		<div class="ml-[354px]">
+		{% endif %}
+		{% block body '' %}
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		</div>
+	{% endif %}
+{% endblock %}

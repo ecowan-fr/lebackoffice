@@ -49,12 +49,10 @@
 			<div class="container mx-auto h-full my-2">
 				{% include "partials/_lightbox.html.twig" %}
 				{% include "partials/_aside_menu_main.html.twig" %}
-				<div class="ml-[100px]">
-				{% endif %}
-				{% block body '' %}
-				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				</div>
+			{% endif %}
+			{% block type_template '' %}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			</div>
 		{% endif %}
 	</body>
-</html></body></html>
+</html>
