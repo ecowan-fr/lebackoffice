@@ -56,7 +56,11 @@ export default window.WebAuthn = {
                 sendFlashMessage('error', error.toString(), redirectUrl)
             }
         }).then(json => {
-            sendFlashMessage('error', json.errorMessage, redirectUrl)
+            if (json.errorMessage !== undefined) {
+                sendFlashMessage('error', json.errorMessage, redirectUrl)
+            } else {
+                sendFlashMessage('error', 'Error !', redirectUrl)
+            }
         })
     },
 
@@ -87,7 +91,11 @@ export default window.WebAuthn = {
                 sendFlashMessage('error', error.toString(), redirectUrl)
             }
         }).then(json => {
-            sendFlashMessage('error', json.errorMessage, redirectUrl)
+            if (json.errorMessage !== undefined) {
+                sendFlashMessage('error', json.errorMessage, redirectUrl)
+            } else {
+                sendFlashMessage('error', 'Error !', redirectUrl)
+            }
         })
     }
 }

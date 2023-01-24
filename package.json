@@ -6,16 +6,16 @@
         "@symfony/webpack-encore": "^4.2",
         "autoprefixer": "^10.4",
         "core-js": "^3.27",
+        "json5": "^2.2",
+        "loader-utils": "^2.0",
         "postcss-loader": "^7.0",
         "regenerator-runtime": "^0.13",
         "sass": "^1.57",
         "sass-loader": "^13.2",
         "tailwindcss": "^3.2",
-        "webpack-notifier": "^1.15",
         "webpack": "^5.75",
         "webpack-cli": "^5.0",
-        "loader-utils": "^2.0",
-        "json5": "^2.2"
+        "webpack-notifier": "^1.15"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@hotwired/turbo": "^7.2",
+        "@simplewebauthn/browser": "^7.0.0",
         "@web-auth/webauthn-helper": "^0.0.13",
         "alpinejs": "^3.11",
         "animate.css": "^4.1",
