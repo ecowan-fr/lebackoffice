@@ -16,6 +16,8 @@ aside#menuMain {
 
     div.mainMenuItems {
         @apply grow flex flex-col items-center text-center border-t pt-4 relative;
+        border-color: $bg-light;
+
         a {
             @apply py-5 px-8 transition duration-100 rounded-lg;
 
@@ -34,8 +36,12 @@ aside#menuMain {
     }
 }
 
-.dark aside#menuMain div.mainMenuItems a:hover {
-    background-color: $bg-dark;
+.dark aside#menuMain div.mainMenuItems  {
+    border-color: $bg-dark;
+
+    a:hover {
+        background-color: $bg-dark;
+    }
 }
 
 div#posMenuMain {

@@ -1,3 +1,16 @@
 aside#subMenu {
-    @apply flex flex-col justify-between bg-white dark:bg-black fixed top-2 bottom-2 w-[250px] ml-[102px];
+    @apply flex flex-col bg-white dark:bg-black fixed top-2 bottom-2 w-[257px] ml-[102px];
+
+    div#globalSeatch {
+        @apply border-b flex pl-5 items-center overflow-hidden;
+        border-color: $bg-light;
+
+        input {
+            @apply border-0 rounded-none py-3 shadow-none placeholder-gray-400 bg-transparent;
+        }
+    }
+}
+
+.dark aside#subMenu div#globalSeatch {
+    border-color: $bg-dark;
 }

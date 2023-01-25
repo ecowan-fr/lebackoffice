@@ -2,8 +2,14 @@
 
 {% block type_template %}
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		{% block submenu '' %}
-		<div class="ml-[354px]">
+		<aside id="subMenu">
+			<div id="globalSeatch">
+				<i class="fa-light fa-magnifying-glass"></i>
+				<form action="/search"><input type="search" placeholder="Search..."></form>
+			</div>
+			{% block submenu '' %}
+		</aside>
+		<div class="ml-[361px]">
 		{% endif %}
 		{% block body '' %}
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}

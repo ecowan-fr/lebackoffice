@@ -46,7 +46,7 @@
 			{{ showFlashMessage(app.flashes) }}
 		</div>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			<div class="container mx-auto h-full my-2">
+			<div class="h-full m-2">
 				{% include "partials/_lightbox.html.twig" %}
 				{% include "partials/_aside_menu_main.html.twig" %}
 			{% endif %}
