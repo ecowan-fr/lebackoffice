@@ -52,8 +52,10 @@ const runWebAuthnCeremoni = async (element, optionUrl, verificationUrl, type) =>
     } catch (error) {
         if (error.name === 'InvalidStateError' && type == 'register') {
             sendFlashMessage('error', 'Error: Authenticator was probably already registered by user', redirectUrl(element))
+            return;
         } else {
             sendFlashMessage('error', error, redirectUrl(element))
+            return;
         }
     }
 
@@ -66,10 +68,12 @@ const runWebAuthnCeremoni = async (element, optionUrl, verificationUrl, type) =>
     }).then(data => {
         if (data.ok && type == 'register') {
             sendFlashMessage('success', "Added your security token successfully", redirectUrl(element), "account")
+            return;
         } else if (data.ok) {
             Turbo.visit(redirectUrl(element))
+            return;
         } else {
-            return data.json()
+            return data.json();
         }
     }).then(error => {
         error && sendFlashMessage('error', error.errorMessage, redirectUrl(element))
