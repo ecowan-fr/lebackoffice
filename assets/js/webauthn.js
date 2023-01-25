@@ -72,7 +72,7 @@ const runWebAuthnCeremoni = async (element, optionUrl, verificationUrl, type) =>
             return data.json()
         }
     }).then(error => {
-        sendFlashMessage('error', error.errorMessage, redirectUrl(element))
+        error && sendFlashMessage('error', error.errorMessage, redirectUrl(element))
     })
 }
 
