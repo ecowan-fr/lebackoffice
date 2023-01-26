@@ -27,7 +27,7 @@ class DiscordAuthenticator extends AbstractSocialAuthenticator {
 
             $this->redirect = 'account.security';
         } else {
-            $user = $repository->findForOauth('discord', $discordUser->getId());
+            $user = $repository->findForOauth($this->serviceName, $discordUser->getId());
         }
 
         return $user;
