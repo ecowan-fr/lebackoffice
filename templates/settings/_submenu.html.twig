@@ -1,27 +1,64 @@
+{% set route = app.request.get('_route') %}
 <div class="flex flex-col h-full justify-between">
 	<div class="flex flex-col">
-		<div class="linkHub">
-			<p class="mainLink">FAVORITES</p>
-			<a class="mainLink">Mirage</a>
-			<a class="mainLink">Mashroom</a>
-			<a class="mainLink">Weedo</a>
-			<a class="mainLink">Lonely Walls</a>
-		</div>
-		<div class="linkHub">
-			<p class="mainLink">Essential Bottle</p>
-			<a class="mainLink">New Shtetl</a>
-			<a class="mainLink">Nintendo</a>
-			<a class="mainLink">Mirage</a>
-			<a class="mainLink">Mashroom</a>
-			<a class="mainLink">Lonely Walls</a>
-			<a class="mainLink">Unique</a>
-			<a class="subLink">Website</a>
-			<a class="subLink">iOS App</a>
-			<a class="subLink">Dribble Shot</a>
-			<a class="mainLink">Select</a>
-			<a class="mainLink">Weedo</a>
-			<a class="mainLink">Virgin Galatic</a>
-			<a class="mainLink">Zephyr</a>
-		</div>
+		{% if is_granted('settings.main.view') %}
+			<div class="linkHub">
+				<p>
+					<i class="fa-solid fa-angle-down"></i>
+					{{ 'General'|trans({}, 'settings') }}</p>
+				<a href="{{ path('settings.main.index') }}" class="{{ route == 'settings.main.index' ? 'active':'' }}">
+					<i class="fa-regular fa-city text-green-500"></i>Ma structure</a>
+				<a href="{{ path('settings.main.licence') }}" class="{{ route == 'settings.main.licence' ? 'active':'' }}">
+					<i class="fa-regular fa-file-certificate text-blue-500"></i>Licence</a>
+				{% if is_granted('settings.service_mode.edit') %}
+					<a href="{{ path('settings.main.servicemode') }}" class="{{ route == 'settings.main.servicemode' ? 'active':'' }}">
+						<i class="fa-regular fa-wrench text-red-500"></i>Service mode</a>
+				{% endif %}
+			</div>
+		{% endif %}
+		{% if is_granted('settings.services.view') %}
+			<div class="linkHub">
+				<p>
+					<i class="fa-solid fa-angle-down"></i>
+					Services</p>
+			</div>
+		{% endif %}
+		{% if is_granted('settings.payments.view') %}
+			<div class="linkHub">
+				<p>
+					<i class="fa-solid fa-angle-down"></i>
+					{{ 'Payment methods'|trans({}, 'settings') }}</p>
+			</div>
+		{% endif %}
+		{% if is_granted('settings.billings.view') %}
+			<div class="linkHub">
+				<p>
+					<i class="fa-solid fa-angle-down"></i>
+					{{ 'Billing'|trans({}, 'settings') }}</p>
+			</div>
+		{% endif %}
+		{% if is_granted('settings.security.view') %}
+			<div class="linkHub">
+				<p>
+					<i class="fa-solid fa-angle-down"></i>
+					{{ 'Security'|trans({}, 'settings') }}</p>
+				<a href="{{ path('settings.security.index') }}" class="{{ route == 'settings.security.index' ? 'active':'' }}">
+					<i class="fa-regular fa-arrow-right-to-arc text-purple-500"></i>
+					{{ 'Login systems'|trans({}, 'settings') }}</a>
+			</div>
+		{% endif %}
+		{% if is_granted('settings.users.view') %}
+			<div class="linkHub">
+				<p>
+					<i class="fa-solid fa-angle-down"></i>
+					{{ 'Users'|trans({}, 'settings') }}</p>
+				<a href="{{ path('settings.users.index') }}" class="{{ route == 'settings.users.index' ? 'active':'' }}">
+					<i class="fa-regular fa-users-gear text-sky-500"></i>
+					{{ 'Users list'|trans({}, 'settings') }}</a>
+				<a href="{{ path('settings.users.saad') }}" class="{{ route == 'settings.users.saad' ? 'active':'' }}">
+					<i class="fa-brands fa-microsoft"></i>
+					{{ 'Azure AD synchronization'|trans({}, 'settings') }}</a>
+			</div>
+		{% endif %}
 	</div>
 </div>

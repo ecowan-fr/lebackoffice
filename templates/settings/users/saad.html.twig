@@ -7,15 +7,7 @@
 {% endblock %}
 
 {% block body %}
-	{% include "settings/_header.html.twig" %}
-	<div class="container mx-auto mt-10">
-		<div class="flex flex-col lg:flex-row">
-			<div>
-				{% include "settings/users/_vertical_menu_main.html.twig" %}
-			</div>
-			<div class="flex-grow sm:ml-10">
-				<p class="font-extrabold text-4xl text-center">{{ 'Azure AD synchronization'|trans({}, 'settings') }}</p>
-			</div>
-		</div>
+	<div class="container mx-auto">
+		<p class="font-extrabold text-4xl text-center">{{ 'Azure AD synchronization'|trans({}, 'settings') }}</p>
 	</div>
 {% endblock %}

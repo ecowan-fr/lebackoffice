@@ -241,25 +241,7 @@ implements
             "settings.main.view",
             "settings.main.edit",
 
-            "settings.services.vmware.view",
-            "settings.services.vmware.edit",
-            "settings.services.vmware.delete",
-
-            "settings.services.pterodactyl.view",
-            "settings.services.pterodactyl.edit",
-            "settings.services.pterodactyl.delete",
-
-            "settings.services.plesk.view",
-            "settings.services.plesk.edit",
-            "settings.services.plesk.delete",
-
-            "settings.services.domains.view",
-            "settings.services.domains.edit",
-            "settings.services.domains.delete",
-
-            "settings.services.licences.view",
-            "settings.services.licences.edit",
-            "settings.services.licences.delete",
+            "settings.services.view",
 
             "settings.payments.view",
             "settings.payments.edit",
@@ -354,7 +336,7 @@ implements
     }
 
     public function useOauth(): bool {
-        return null !== $this->discordId || null !== $this->googleId || null !== $this->githubId || null !== $this->microsoftId;
+        return null !== $this->discordId || null !== $this->googleId || null !== $this->githubId || null !== $this->azureId;
     }
 
     public function isEmailAuthEnabled(): bool {
