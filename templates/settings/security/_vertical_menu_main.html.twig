@@ -1,7 +1,0 @@
-{% set route = app.request.get('_route') %}
-
-<div class="vertical_menu">
-	<a href="{{ path('settings.security.index') }}" class="waves-effect {{ route == 'settings.security.index' ? 'active':null }}">
-		<i class="fa-duotone fa-arrow-right-to-arc text-green-500"></i>
-		{{ 'Login systems'|trans({}, 'settings') }}</a>
-</div>

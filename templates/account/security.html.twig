@@ -69,40 +69,44 @@
 					<tbody>
 						{% for token in tokens %}
 							<tr>
-								<td class="text-center">
-									<div class="flex justify-center items-center">
-										<img class="h-5 bg-gray-500" src="{{ token.metadata.metadata.icon }}" alt="icon">
-										<p class="ml-3">{{ token.metadata.metadata.description }}</p>
-									</div>
-								</td>
-								<td class="text-center">
-									{% set statusReport = token.metadata.statusReport|last %}
-									{% if statusReport.status == 'FIDO_CERTIFIED_L1' %}
-										<i class="fa-solid fa-circle-l text-lg"></i>
-										<i class="fa-solid fa-circle-1 text-lg"></i>
-									{% elseif statusReport.status == 'FIDO_CERTIFIED_L1plus' %}
-										<i class="fa-solid fa-circle-l text-lg"></i>
-										<i class="fa-solid fa-circle-1 text-lg"></i>
-										<i class="fa-solid fa-circle-plus"></i>
-									{% elseif statusReport.status == 'FIDO_CERTIFIED_L2' %}
-										<i class="fa-solid fa-circle-l text-lg"></i>
-										<i class="fa-solid fa-circle-2 text-lg"></i>
-									{% elseif statusReport.status == 'FIDO_CERTIFIED_L2plus' %}
-										<i class="fa-solid fa-circle-l text-lg"></i>
-										<i class="fa-solid fa-circle-2 text-lg"></i>
-										<i class="fa-solid fa-circle-plus"></i>
-									{% elseif statusReport.status == 'FIDO_CERTIFIED_L3' %}
-										<i class="fa-solid fa-circle-l text-lg"></i>
-										<i class="fa-solid fa-circle-3 text-lg"></i>
-									{% elseif statusReport.status == 'FIDO_CERTIFIED_L3plus' %}
-										<i class="fa-solid fa-circle-l text-lg"></i>
-										<i class="fa-solid fa-circle-3 text-lg"></i>
-										<i class="fa-solid fa-circle-plus"></i>
-									{% endif %}
-								</td>
-								<td class="text-center">
-									<button data-lightbox="L:webauthn?aaguid={{ token.aaguid }}" class="transparent mx-auto">Voir plus d'informations</button>
-								</td>
+								{% if token.metadata is not null %}
+									<td class="text-center">
+										<div class="flex justify-center items-center">
+											<img class="h-5 bg-gray-500" src="{{ token.metadata.metadata.icon }}" alt="icon">
+											<p class="ml-3">{{ token.metadata.metadata.description }}</p>
+										</div>
+									</td>
+									<td class="text-center">
+										{% set statusReport = token.metadata.statusReport|last %}
+										{% if statusReport.status == 'FIDO_CERTIFIED_L1' %}
+											<i class="fa-solid fa-circle-l text-lg"></i>
+											<i class="fa-solid fa-circle-1 text-lg"></i>
+										{% elseif statusReport.status == 'FIDO_CERTIFIED_L1plus' %}
+											<i class="fa-solid fa-circle-l text-lg"></i>
+											<i class="fa-solid fa-circle-1 text-lg"></i>
+											<i class="fa-solid fa-circle-plus"></i>
+										{% elseif statusReport.status == 'FIDO_CERTIFIED_L2' %}
+											<i class="fa-solid fa-circle-l text-lg"></i>
+											<i class="fa-solid fa-circle-2 text-lg"></i>
+										{% elseif statusReport.status == 'FIDO_CERTIFIED_L2plus' %}
+											<i class="fa-solid fa-circle-l text-lg"></i>
+											<i class="fa-solid fa-circle-2 text-lg"></i>
+											<i class="fa-solid fa-circle-plus"></i>
+										{% elseif statusReport.status == 'FIDO_CERTIFIED_L3' %}
+											<i class="fa-solid fa-circle-l text-lg"></i>
+											<i class="fa-solid fa-circle-3 text-lg"></i>
+										{% elseif statusReport.status == 'FIDO_CERTIFIED_L3plus' %}
+											<i class="fa-solid fa-circle-l text-lg"></i>
+											<i class="fa-solid fa-circle-3 text-lg"></i>
+											<i class="fa-solid fa-circle-plus"></i>
+										{% endif %}
+									</td>
+									<td class="text-center">
+										<button data-lightbox="L:webauthn?aaguid={{ token.aaguid }}" class="transparent mx-auto">Voir plus d'informations</button>
+									</td>
+								{% else %}
+									<td colspan="3" class=" bg-gray-300">Aucune informations sur ce token n'est disponible</td>
+								{% endif %}
 								<td class="text-center">{{ token.createdAt|date('d/m/Y H:i:s') }}</td>
 								<td class="text-center">
 									<a href="{{ path('account.security.webauthn.delete', {aaguid: token.aaguid}) }}" class="small red mx-auto button btn-load">
