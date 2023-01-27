@@ -238,26 +238,18 @@ implements
             "login",
 
             "settings.view",
-            "settings.main.view",
-            "settings.main.edit",
+            "settings.edit",
 
             "settings.services.view",
 
             "settings.payments.view",
-            "settings.payments.edit",
-            "settings.payments.delete",
 
             "settings.billings.view",
-            "settings.billings.edit",
-            "settings.billings.delete",
 
             "settings.security.view",
             "settings.security.edit",
-            "settings.security.delete",
 
             "settings.users.view",
-            "settings.users.edit",
-            "settings.users.delete",
 
             "settings.service_mode.login",
             "settings.service_mode.edit"

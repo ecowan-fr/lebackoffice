@@ -11,7 +11,11 @@ aside#subMenu {
     }
 
     div.linkHub {
-        @apply mt-4 text-sm flex flex-col px-2;
+        @apply mt-8 text-sm flex flex-col px-2;
+
+        &:first-child {
+            @apply mt-4;
+        }
 
         p {
             @apply ml-3 mb-2;
@@ -45,6 +49,14 @@ aside#subMenu {
     }
 }
 
-.dark aside#subMenu div#globalSeatch {
+.dark aside#subMenu  {
+    div#globalSeatch {
     border-color: $bg-dark;
+    }
+
+    div.linkHub a {
+        &:hover,&.active {
+            background-color: $bg-dark;
+        }
+    } 
 }

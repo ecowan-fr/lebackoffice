@@ -21,7 +21,18 @@ class SecurityController extends AbstractController {
             methods: ['GET']
         )
     ]
-    public function security(): Response {
-        return $this->render('settings/security/index.html.twig');
+    public function index(): Response {
+        return $this->redirectToRoute('settings.index');
+    }
+
+    #[
+        Route(
+            path: '/login-system',
+            name: 'settings.security.loginsystem',
+            methods: ['GET']
+        )
+    ]
+    public function loginsystem(): Response {
+        return $this->render('settings/security/login_system.html.twig');
     }
 }

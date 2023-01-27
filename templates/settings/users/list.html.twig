@@ -3,7 +3,7 @@
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block submenu %}
-	{% include "settings/_submenu.html.twig" %}
+	{% include "settings/partials/_submenu.html.twig" %}
 {% endblock %}
 
 {% block body %}
@@ -27,7 +27,7 @@
 				{% for user in pagination.items %}
 					<tr>
 						<td>
-							<a href="{{ path('settings.users.unique.show', {id: user.id}) }}">{{ user.lastname ~ ' ' ~ user.firstname }}</a>
+							<a href="{{ path('settings.users.show', {id: user.id}) }}">{{ user.lastname ~ ' ' ~ user.firstname }}</a>
 						</td>
 						<td>{{ user.email }}</td>
 						<td>
@@ -51,7 +51,7 @@
 						<div class="flex justify-between items-center">
 							<div>
 								{% if pagination.currentPageNumber > 1 %}
-									<a href="{{ path('settings.users.index', {page: pagination.currentPageNumber - 1}) }}" class="button transparent">
+									<a href="{{ path('settings.users.list', {page: pagination.currentPageNumber - 1}) }}" class="button transparent">
 										<i class="fa-solid fa-angle-left mr-3"></i>Précédent</a>
 								{% else %}
 									<button class="transparent" disabled>
@@ -62,7 +62,7 @@
 								{{ firstItem ~ ' à ' ~ lastItem ~ ' sur ' ~ pagination.getTotalItemCount() }}</div>
 							<div>
 								{% if pagination.currentPageNumber < nbrOfPages %}
-									<a href="{{ path('settings.users.index', {page: pagination.currentPageNumber + 1}) }}" class="button transparent">
+									<a href="{{ path('settings.users.list', {page: pagination.currentPageNumber + 1}) }}" class="button transparent">
 										Suivant<i class="fa-solid fa-angle-right ml-3"></i>
 									</a>
 								{% else %}

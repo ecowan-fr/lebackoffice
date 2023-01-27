@@ -32,18 +32,18 @@ class IndexController extends AbstractController {
 
     #[
         Route(
-            path: '/savesetting',
+            path: '/save-setting',
             name: 'settings.savesetting',
             methods: ['POST']
         ),
         IsGranted(
             new Expression("
-            is_granted('settings.main.edit') or
+            is_granted('settings.edit') or
             is_granted('settings.security.edit') or
             is_granted('settings.service_mode.edit')")
         )
     ]
-    public function saveSetting(Request $request, ConfigRepository $configRepository, TranslatorInterface $translator): RedirectResponse {
+    public function savesetting(Request $request, ConfigRepository $configRepository, TranslatorInterface $translator): RedirectResponse {
         if ($this->isCsrfTokenValid('settings', $request->request->get('token'))) {
             try {
                 $configRepository->saveMultiple($request->request->all());

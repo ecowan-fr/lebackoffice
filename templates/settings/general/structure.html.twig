@@ -3,7 +3,7 @@
 {% block title 'Settings'|trans({}, 'settings') %}
 
 {% block submenu %}
-	{% include "settings/_submenu.html.twig" %}
+	{% include "settings/partials/_submenu.html.twig" %}
 {% endblock %}
 
 {% block body %}
@@ -17,7 +17,7 @@
 				<span class="px-2 bg-gray-100 mb-1 text-base font-bold text-gray-500">{{ 'The basics'|trans({}, 'global') }}</span>
 			</div>
 		</div>
-		{% if is_granted('settings.main.edit') %}
+		{% if is_granted('settings.edit') %}
 			<form action="{{ path('settings.savesetting') }}" method="post">
 			{% endif %}
 			<div class="flex flex-col lg:flex-row w-full mt-10">
@@ -29,7 +29,7 @@
 								3: 'Company'|trans({}, 'settings'),
 								4: 'Other'|trans({}, 'global')
 							} %}
-					{% if is_granted('settings.main.edit') %}
+					{% if is_granted('settings.edit') %}
 						<label for="structure_name" class="block mb-1 text-gray-500">{{ 'Organization name'|trans({},'settings')}}
 							<span class="font-bold text-red-600">*</span>
 						</label>
@@ -51,7 +51,7 @@
 					{% endif %}
 				</div>
 				<div class="w-full lg:ml-10 mt-4 lg:mt-0">
-					{% if is_granted('settings.main.edit') %}
+					{% if is_granted('settings.edit') %}
 						<label for="structure_rcs" class="block mb-1 text-gray-500">{{ 'RCS number of the organization'|trans({}, 'settings') }}</label>
 						<input id="structure_rcs" name="structure_rcs" class="w-full" placeholder="RCS City A XXXXXXXXX" value="{{ configs.structure_rcs }}" type="text">
 						<label for="structure_rna" class="mt-4 block mb-1 text-gray-500">{{ 'RNA number of the organization'|trans({}, 'settings') }}</label>
@@ -97,7 +97,7 @@
 			</div>
 			<div class="flex flex-col lg:flex-row w-full mt-10">
 				<div class="w-full">
-					{% if is_granted('settings.main.edit') %}
+					{% if is_granted('settings.edit') %}
 						<label for="structure_email" class="block mb-1 text-gray-500">{{ 'Email contact of the organisation'|trans({}, 'settings') }}
 							<span class="font-bold text-red-600">*</span>
 						</label>
@@ -113,7 +113,7 @@
 					{% endif %}
 				</div>
 				<div class="w-full lg:ml-10 mt-4 lg:mt-0">
-					{% if is_granted('settings.main.edit') %}
+					{% if is_granted('settings.edit') %}
 						<label for="structure_adress" class="block mb-1 text-gray-500">{{ 'Full address of the organisation'|trans({}, 'settings') }}</label>
 						<textarea name="structure_adress" id="structure_adress" class="w-full" style="height:7.5rem;">{{ configs.structure_adress }}</textarea>
 					{% else %}
@@ -122,7 +122,7 @@
 					{% endif %}
 				</div>
 			</div>
-			{% if is_granted('settings.main.edit') %}
+			{% if is_granted('settings.edit') %}
 				<div class="text-center">
 					<button class="large mt-16 green" type="submit">
 						<i class="fa-solid fa-save mr-3"></i>
@@ -144,12 +144,12 @@
 			<div class="w-full text-center flex flex-col items-center">
 				<p class="font-bold text-lg">{{ 'Light version (by default)'|trans({}, 'settings') }}</p>
 				{% if configs.structure_logo_url_light == '/images/logo/logo-lebackoffice-noir.svg' %}
-					{% if is_granted('settings.main.edit') %}
+					{% if is_granted('settings.edit') %}
 						<label class="waves-effect border_point mt-6">
 							<i class="fa-duotone fa-image text-blue-400 text-7xl"></i>
 							<span class="mt-5 block text-lg font-medium text-gray-700">{{ 'Upload a logo'|trans({}, 'settings') }}
 								light</span>
-							<form action="{{ path('settings.main.saveLogo') }}" method="post" enctype="multipart/form-data">
+							<form action="{{ path('settings.general.savelogo') }}" method="post" enctype="multipart/form-data">
 								<input onchange="submit();" name="structure_logo_url_light" type='file' class="hidden" accept=".png,.jpg,.jpeg,.svg">
 								<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo') }}"/>
 							</form>
@@ -161,20 +161,20 @@
 					<div class="bg-gray-100 p-10 mt-5 rounded-md w-full">
 						<img src="{{ configs.structure_logo_url_light }}" alt="Logo" class="max-w-full">
 					</div>
-					{% if is_granted('settings.main.edit') %}
-						<a href="{{ path('settings.main.deleteLogo', {type:'structure_logo_url_light'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
+					{% if is_granted('settings.edit') %}
+						<a href="{{ path('settings.general.deletelogo', {type:'structure_logo_url_light'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
 					{% endif %}
 				{% endif %}
 			</div>
 			<div class="w-full lg:ml-10 mt-4 lg:mt-0 text-center flex flex-col items-center">
 				<p class="font-bold text-lg">{{ 'Dark version'|trans({}, 'settings') }}</p>
 				{% if configs.structure_logo_url_dark == '/images/logo/logo-lebackoffice-blanc.svg' %}
-					{% if is_granted('settings.main.edit') %}
+					{% if is_granted('settings.edit') %}
 						<label class="waves-effect border_point mt-6">
 							<i class="fa-duotone fa-image text-blue-800 text-7xl"></i>
 							<span class="mt-5 block text-lg font-medium text-gray-700">{{ 'Upload a logo'|trans({}, 'settings') }}
 								dark</span>
-							<form action="{{ path('settings.main.saveLogo') }}" method="post" enctype="multipart/form-data">
+							<form action="{{ path('settings.general.savelogo') }}" method="post" enctype="multipart/form-data">
 								<input onchange="submit();" name="structure_logo_url_dark" type='file' class="hidden" accept=".png,.jpg,.jpeg,.svg">
 								<input type="hidden" name="token" value="{{ csrf_token('settings-main-logo') }}"/>
 							</form>
@@ -186,15 +186,15 @@
 					<div class="bg-gray-800 p-10 mt-5 rounded-md w-full">
 						<img src="{{ configs.structure_logo_url_dark }}" alt="Logo" class="max-w-full">
 					</div>
-					{% if is_granted('settings.main.edit') %}
-						<a href="{{ path('settings.main.deleteLogo', {type:'structure_logo_url_dark'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
+					{% if is_granted('settings.edit') %}
+						<a href="{{ path('settings.general.deletelogo', {type:'structure_logo_url_dark'}) }}" class="button transparent mt-5">{{ 'Delete'|trans({}, 'global') }}</a>
 					{% endif %}
 				{% endif %}
 			</div>
 		</div>
 		<div class="mt-14">
 			<p class="text-base font-medium">{{ 'Use custom logos on the backoffice'|trans({}, 'settings') }}</p>
-			{% if is_granted('settings.main.edit') %}
+			{% if is_granted('settings.edit') %}
 				<form action="{{ path('settings.savesetting') }}" method="post">
 					<input class="radio-tesla" onchange="submit();" value="0" type="radio" id="structure_logo_custom_no" name="structure_logo_custom" {% if not configs.structure_logo_custom %} checked {% endif %}>
 					<input class="radio-tesla" onchange="submit();" value="1" type="radio" id="structure_logo_custom_yes" name="structure_logo_custom" {% if configs.structure_logo_custom %} checked {% endif %}>

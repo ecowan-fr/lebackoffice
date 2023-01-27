@@ -25,7 +25,18 @@ class UsersController extends AbstractController {
             methods: ['GET']
         )
     ]
-    public function users(
+    public function index(): Response {
+        return $this->redirectToRoute('settings.index');
+    }
+
+    #[
+        Route(
+            path: '/list',
+            name: 'settings.users.list',
+            methods: ['GET']
+        )
+    ]
+    public function list(
         UserRepository $userRepository,
         PaginatorInterface $paginator,
         Request $request
@@ -34,7 +45,7 @@ class UsersController extends AbstractController {
         $nbrOfPages = ceil($pagination->getTotalItemCount() / $pagination->getItemNumberPerPage());
         $firstItem = ($pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage()) + 1 - $pagination->getItemNumberPerPage();
         $lastItem = $nbrOfPages == $pagination->getCurrentPageNumber() ? $pagination->getTotalItemCount() : $pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage();
-        return $this->render('settings/users/index.html.twig', [
+        return $this->render('settings/users/list.html.twig', [
             "pagination" => $pagination,
             "nbrOfPages" => $nbrOfPages,
             "firstItem" => $firstItem,
@@ -56,11 +67,11 @@ class UsersController extends AbstractController {
     #[
         Route(
             path: '/show/{id}',
-            name: 'settings.users.unique.show',
+            name: 'settings.users.show',
             methods: ['GET']
         )
     ]
-    public function showUser(User $user): Response {
+    public function show(User $user): Response {
         return $this->render('settings/users/show.html.twig', [
             'user' => $user
         ]);
