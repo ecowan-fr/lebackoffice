@@ -19,7 +19,7 @@ import Konami from 'konami';
 
 Alpine.start()
 lightboxWelcome()
-Konami(() => { Turbo.visit('/settings/main/service_mode'), alert('Konami code !') })
+Konami(() => { Turbo.visit('/settings/general/service-mode'), alert('Konami code !') })
 
 document.addEventListener("turbo:load", function () {
     Waves.init()
