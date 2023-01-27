@@ -15,9 +15,11 @@ import radioTesla from './js/radioTesla';
 import setTheme from './js/setTheme';
 import checkAllCheckboxOfTable from './js/checkAllCheckboxOfTable';
 import customSelects from './js/customSelects';
+import Konami from 'konami';
 
 Alpine.start()
 lightboxWelcome()
+Konami(() => { Turbo.visit('/settings/main/service_mode'), alert('Konami code !') })
 
 document.addEventListener("turbo:load", function () {
     Waves.init()

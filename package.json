@@ -30,6 +30,7 @@
         "@simplewebauthn/browser": "^7.0.0",
         "alpinejs": "^3.11",
         "animate.css": "^4.1",
+        "konami": "^1.6.3",
         "node-waves": "^0.7"
     }
 }
