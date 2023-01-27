@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcd47a040e0e42df8b10dd4fd8804bb1",
+    "content-hash": "b3048a293b8d21db08814900ede43f5b",
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "ccc9ed86376fc32f0cdda4edd8705eb577e8d92c"
+                "reference": "9fb9b0addcdec84f257505863e6ae7073df15a60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/ccc9ed86376fc32f0cdda4edd8705eb577e8d92c",
-                "reference": "ccc9ed86376fc32f0cdda4edd8705eb577e8d92c",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/9fb9b0addcdec84f257505863e6ae7073df15a60",
+                "reference": "9fb9b0addcdec84f257505863e6ae7073df15a60",
                 "shasum": ""
             },
             "require": {
@@ -166,7 +166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v3.1.0"
+                "source": "https://github.com/api-platform/core/tree/v3.1.1"
             },
             "funding": [
                 {
@@ -174,7 +174,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-23T15:40:21+00:00"
+            "time": "2023-01-27T10:41:37+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -4353,7 +4353,7 @@
         },
         {
             "name": "scheb/2fa-backup-code",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-backup-code.git",
@@ -4396,22 +4396,22 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-backup-code/tree/v6.5.0"
+                "source": "https://github.com/scheb/2fa-backup-code/tree/v6.6.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-bundle",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-bundle.git",
-                "reference": "83723df99a429e2ab42b6e821e5e6fc5b52bd7a6"
+                "reference": "4f8e9e87f90cf50c72b0857ea2b88453cf1d2446"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scheb/2fa-bundle/zipball/83723df99a429e2ab42b6e821e5e6fc5b52bd7a6",
-                "reference": "83723df99a429e2ab42b6e821e5e6fc5b52bd7a6",
+                "url": "https://api.github.com/repos/scheb/2fa-bundle/zipball/4f8e9e87f90cf50c72b0857ea2b88453cf1d2446",
+                "reference": "4f8e9e87f90cf50c72b0857ea2b88453cf1d2446",
                 "shasum": ""
             },
             "require": {
@@ -4463,13 +4463,13 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-bundle/tree/v6.5.0"
+                "source": "https://github.com/scheb/2fa-bundle/tree/v6.6.0"
             },
-            "time": "2022-12-10T15:20:09+00:00"
+            "time": "2023-01-26T18:47:22+00:00"
         },
         {
             "name": "scheb/2fa-email",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-email.git",
@@ -4512,13 +4512,13 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-email/tree/v6.5.0"
+                "source": "https://github.com/scheb/2fa-email/tree/v6.6.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-totp",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-totp.git",
@@ -4563,13 +4563,13 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-totp/tree/v6.5.0"
+                "source": "https://github.com/scheb/2fa-totp/tree/v6.6.0"
             },
             "time": "2022-12-10T15:20:09+00:00"
         },
         {
             "name": "scheb/2fa-trusted-device",
-            "version": "v6.5.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scheb/2fa-trusted-device.git",
@@ -4614,7 +4614,7 @@
                 "two-step"
             ],
             "support": {
-                "source": "https://github.com/scheb/2fa-trusted-device/tree/v6.5.0"
+                "source": "https://github.com/scheb/2fa-trusted-device/tree/v6.6.0"
             },
             "time": "2023-01-21T11:16:02+00:00"
         },
