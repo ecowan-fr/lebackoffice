@@ -3,7 +3,8 @@
 {% block title 'Dashboard' %}
 
 {% block body %}
-	<div class="flex justify-end mx-5 mt-10">
+	<div class="flex justify-between mx-5 mt-10">
+		<p>Welcome on board !</p>
 		<div class="flex relative" x-data="{ showMenu : false }" @click.away="showMenu = false">
 			<div class="avatar z-10 waves-effect" style="background-image: url('https://cdn-icons-png.flaticon.com/512/149/149071.png')" :class="! showMenu ? 'border-gray-300 dark:border-gray-700' : 'border-blue-500'" @click="showMenu = !showMenu"></div>
 			<div x-show="showMenu" class="absolute -right-6 -top-5 w-80 card nopad" x-transition:enter=" transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
