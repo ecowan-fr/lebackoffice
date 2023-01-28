@@ -42,7 +42,9 @@ final class PublicKeyCredentialSourceRepository extends BasePublicKeyCredentialS
             );
 
             $metadata = $this->publicKeyCredentialMetadataRepository->findOneBy(['aaguid' => $publicKeyCredentialSource->getAaguid()]);
-            $publicKeyCredentialSource->setMetadata($metadata);
+            if ($metadata) {
+                $publicKeyCredentialSource->setMetadata($metadata);
+            }
         }
 
         parent::saveCredentialSource($publicKeyCredentialSource, $flush);

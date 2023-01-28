@@ -1,4 +1,4 @@
-window.Lightbox = {
+export default window.Lightbox = {
     init: function () {
         document.querySelectorAll('*[data-lightbox]').forEach(item => {
             if (item.dataset.lightboxinit == undefined) {
@@ -29,22 +29,11 @@ window.Lightbox = {
     box: function (taille, page, bgcolor) {
         var li = document.getElementById('lightbox');
         if (li != undefined) {
-            return li.classList.remove('-z-50'), li.classList.add('z-50'), li.style.width = taille + "px", this.center(taille), this.scrollToTop(), this.api(page), li.style.visibility = "visible", li.style.opacity = 1
+            return li.classList.remove('-z-50'), li.classList.add('z-50'), li.style.width = taille + "px", this.scrollToTop(), this.api(page), li.style.visibility = "visible", li.style.opacity = 1
         }
-    },
-    center: function (taille) {
-        var elem = document.getElementById('lightbox')
-        var e = (this.getPageDimensions()[0] - taille) / 2;
-        if ("Microsoft Internet Explorer" == navigator.appName) o = 1;
-        else var o = 0;
-        o || (e -= 9), e = e < 0 ? 0 : e, elem.style.left = e + 'px', elem
     },
     scrollToTop: function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    },
-    getPageDimensions: function () {
-        var i, t, e, o;
-        return window.innerHeight && window.scrollMaxY ? (i = document.body.scrollWidth, t = window.innerHeight + window.scrollMaxY) : document.body.scrollHeight > document.body.offsetHeight ? (i = document.body.scrollWidth, t = document.body.scrollHeight) : (i = document.body.offsetWidth, t = document.body.offsetHeight), self.innerHeight ? (e = self.innerWidth, o = self.innerHeight) : document.documentElement && document.documentElement.clientHeight ? (e = document.documentElement.clientWidth, o = document.documentElement.clientHeight) : document.body && (e = document.body.clientWidth, o = document.body.clientHeight), pageHeight = t < o ? o : t, pageWidth = i < e ? e : i, arrayPageSize = new Array(e, o, pageWidth, pageHeight), arrayPageSize
     },
     close: function (id) {
         return document.getElementById('lightbox').classList.add('-z-50'), document.getElementById('lightbox').classList.remove('z-50'), document.getElementById('lightbox').style.visibility = "hidden", document.getElementById('lightbox').style.opacity = 0

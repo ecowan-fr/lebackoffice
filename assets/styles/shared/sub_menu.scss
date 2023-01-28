@@ -1,0 +1,62 @@
+aside#subMenu {
+    @apply flex flex-col bg-white dark:bg-black fixed top-2 bottom-2 w-[257px] ml-[102px];
+
+    div#globalSeatch {
+        @apply border-b flex pl-5 items-center overflow-hidden;
+        border-color: $bg-light;
+
+        input {
+            @apply border-0 rounded-none py-3 shadow-none placeholder-gray-400 bg-transparent;
+        }
+    }
+
+    div.linkHub {
+        @apply mt-8 text-sm flex flex-col px-2;
+
+        &:first-child {
+            @apply mt-4;
+        }
+
+        p {
+            @apply ml-3 mb-2;
+
+            i {
+                @apply fa-fw mr-3;
+            }
+        }
+
+        a {
+            @apply text-inherit p-2 pl-3 rounded-lg transition duration-100;
+
+            i {
+                @apply fa-fw mr-3;
+            }
+
+            &:hover,&.active {
+                background-color: $bg-light;
+            }
+
+            &.subLink {
+                @apply pl-14 relative text-gray-400 text-xs;
+
+                &::before {
+                    content: "\e455";
+                    font-family: 'Font Awesome 6 Pro';
+                    @apply absolute top-2 left-7 text-sm font-bold;
+                }
+            }
+        }
+    }
+}
+
+.dark aside#subMenu  {
+    div#globalSeatch {
+    border-color: $bg-dark;
+    }
+
+    div.linkHub a {
+        &:hover,&.active {
+            background-color: $bg-dark;
+        }
+    } 
+}

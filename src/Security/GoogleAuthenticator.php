@@ -27,7 +27,7 @@ class GoogleAuthenticator extends AbstractSocialAuthenticator {
 
             $this->redirect = 'account.security';
         } else {
-            $user = $repository->findForOauth('azure', $googleUser->getId());
+            $user = $repository->findForOauth($this->serviceName, $googleUser->getId());
         }
 
         return $user;

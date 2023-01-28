@@ -5,15 +5,16 @@ namespace App\Controller\Settings;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[
     Route('/settings/users'),
-    Security("is_granted('settings.view') and is_granted('settings.users.view')")
+    IsGranted(new Expression("is_granted('settings.view') and is_granted('settings.users.view')"))
 ]
 class UsersController extends AbstractController {
 
@@ -24,7 +25,18 @@ class UsersController extends AbstractController {
             methods: ['GET']
         )
     ]
-    public function users(
+    public function index(): Response {
+        return $this->redirectToRoute('settings.index');
+    }
+
+    #[
+        Route(
+            path: '/list',
+            name: 'settings.users.list',
+            methods: ['GET']
+        )
+    ]
+    public function list(
         UserRepository $userRepository,
         PaginatorInterface $paginator,
         Request $request
@@ -33,7 +45,7 @@ class UsersController extends AbstractController {
         $nbrOfPages = ceil($pagination->getTotalItemCount() / $pagination->getItemNumberPerPage());
         $firstItem = ($pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage()) + 1 - $pagination->getItemNumberPerPage();
         $lastItem = $nbrOfPages == $pagination->getCurrentPageNumber() ? $pagination->getTotalItemCount() : $pagination->getCurrentPageNumber() * $pagination->getItemNumberPerPage();
-        return $this->render('settings/users/index.html.twig', [
+        return $this->render('settings/users/list.html.twig', [
             "pagination" => $pagination,
             "nbrOfPages" => $nbrOfPages,
             "firstItem" => $firstItem,
@@ -55,11 +67,11 @@ class UsersController extends AbstractController {
     #[
         Route(
             path: '/show/{id}',
-            name: 'settings.users.unique.show',
+            name: 'settings.users.show',
             methods: ['GET']
         )
     ]
-    public function showUser(User $user): Response {
+    public function show(User $user): Response {
         return $this->render('settings/users/show.html.twig', [
             'user' => $user
         ]);

@@ -1,0 +1,80 @@
+{% extends '_extends/submenu.html.twig' %}
+
+{% block title 'Settings'|trans({}, 'settings') %}
+
+{% block submenu %}
+	{% include "settings/partials/_submenu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto">
+		<p class="font-extrabold text-4xl text-center">{{ 'Users list'|trans({}, 'settings') }}</p>
+		<div class="flex justify-end">
+			<a class="button mt-10 large">
+				<i class="fa-solid fa-plus mr-3"></i>Ajouter un utilisateur</a>
+		</div>
+		<table class="mt-10">
+			<thead>
+				<tr>
+					<th>Nom et prénom</th>
+					<th>Adresse email</th>
+					<th>Créer par</th>
+					<th>Créer le</th>
+					<th>Derniére connexion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in pagination.items %}
+					<tr>
+						<td>
+							<a href="{{ path('settings.users.show', {id: user.id}) }}">{{ user.lastname ~ ' ' ~ user.firstname }}</a>
+						</td>
+						<td>{{ user.email }}</td>
+						<td>
+							{% if user.createdMethod == 'console' %}
+								<i class="fa-solid fa-terminal"></i>
+							{% elseif user.createdMethod == 'azure' %}
+								<i class="fa-brands fa-microsoft"></i>
+							{% else %}
+								<i class="fa-solid fa-user-crown"></i>
+							{% endif %}
+							{{ user.createdMethod }}
+						</td>
+						<td>{{ user.createdAt|date('d/m/Y h:m:i') }}</td>
+						<td>{{  user.lastLoginAt != null ? user.lastLoginAt|date('d/m/Y h:m:i') : '--' }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan='99999'>
+						<div class="flex justify-between items-center">
+							<div>
+								{% if pagination.currentPageNumber > 1 %}
+									<a href="{{ path('settings.users.list', {page: pagination.currentPageNumber - 1}) }}" class="button transparent">
+										<i class="fa-solid fa-angle-left mr-3"></i>Précédent</a>
+								{% else %}
+									<button class="transparent" disabled>
+										<i class="fa-solid fa-angle-left mr-3"></i>Précédent</button>
+								{% endif %}
+							</div>
+							<div>
+								{{ firstItem ~ ' à ' ~ lastItem ~ ' sur ' ~ pagination.getTotalItemCount() }}</div>
+							<div>
+								{% if pagination.currentPageNumber < nbrOfPages %}
+									<a href="{{ path('settings.users.list', {page: pagination.currentPageNumber + 1}) }}" class="button transparent">
+										Suivant<i class="fa-solid fa-angle-right ml-3"></i>
+									</a>
+								{% else %}
+									<button class="transparent" disabled>
+										Suivant<i class="fa-solid fa-angle-right ml-3"></i>
+									</button>
+								{% endif %}
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

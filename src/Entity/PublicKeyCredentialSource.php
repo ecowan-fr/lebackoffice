@@ -23,7 +23,7 @@ class PublicKeyCredentialSource extends BasePublicKeyCredentialSource {
     private $createdAt;
 
     #[ORM\OneToOne(targetEntity: PublicKeyCredentialMetadata::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $metadata;
 
     public function __construct(

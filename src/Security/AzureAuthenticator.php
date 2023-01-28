@@ -27,7 +27,7 @@ class AzureAuthenticator extends AbstractSocialAuthenticator {
 
             $this->redirect = 'account.security';
         } else {
-            $user = $repository->findForOauth('azure', $azureUser->getId());
+            $user = $repository->findForOauth($this->serviceName, $azureUser->getId());
         }
 
         return $user;

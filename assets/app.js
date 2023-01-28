@@ -1,12 +1,41 @@
 import './app.scss';
 
+//Librairies externes
 import * as Turbo from "@hotwired/turbo"
-import Lightbox from "./js/lightbox.js";
-import App from "./js/app.js";
-import submitButtonLoader from "./js/submitButtonLoader.js";
-import lightboxWelcome from "./js/lightboxWelcome.js"
 import Waves from "node-waves"
 import Alpine from 'alpinejs'
-window.Alpine = Alpine
-Alpine.start()
+
+//Scripts Lebackoffice
+import posMenuMain from './js/posMenuMain';
 import WebAuthn from "./js/webauthn";
+import Lightbox from "./js/lightbox";
+import lightboxWelcome from "./js/lightboxWelcome"
+import buttonsLoader from "./js/buttonsLoader";
+import radioTesla from './js/radioTesla';
+import setTheme from './js/setTheme';
+import checkAllCheckboxOfTable from './js/checkAllCheckboxOfTable';
+import customSelects from './js/customSelects';
+import Konami from 'konami';
+
+Alpine.start()
+lightboxWelcome()
+Konami(() => { Turbo.visit('/settings/general/service-mode'), alert('Konami code !') })
+
+document.addEventListener("turbo:load", function () {
+    Waves.init()
+    Waves.attach('button.transparent')
+    Waves.attach('a.button.transparent')
+    Waves.attach('button', ['waves-light'])
+    Waves.attach('a.button', ['waves-light'])
+
+    posMenuMain()
+    Lightbox.init()
+    buttonsLoader()
+    radioTesla()
+    setTheme()
+    customSelects()
+})
+
+document.addEventListener("turbo:before-render", function () {
+    clearTimeout(document.timeoutFlash)
+})

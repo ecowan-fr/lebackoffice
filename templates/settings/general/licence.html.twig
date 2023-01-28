@@ -1,0 +1,56 @@
+{% extends '_extends/submenu.html.twig' %}
+
+{% block title 'Settings'|trans({}, 'settings') %}
+
+{% block submenu %}
+	{% include "settings/partials/_submenu.html.twig" %}
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto">
+		<p class="font-extrabold text-4xl text-center">{{ 'Content of your license'|trans({}, 'licence') }}</p>
+		{{ showAlert('success', 'Valid license'|trans({}, 'licence'), 'mt-16')}}
+		<table class="mt-5">
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'Unique identifiers'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2">{{ licence.id }}</td>
+			</tr>
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'License type'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2 align-middle">{{ licence.type == 'premium' ? '<i class="fa-solid text-xl fa-circle-star text-yellow-500"></i> Premium' : '<i class="fa-solid text-xl fa-shield-heart text-lime-600"></i> Community'  }}</td>
+			</tr>
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'Account email address'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2">{{ licence.email }}</td>
+			</tr>
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'Authorized URL'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2">https://*.{{ licence.url }}</td>
+			</tr>
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'IP address range allowed'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2">{{ licence.ip }}</td>
+			</tr>
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'Creation date'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2">{{ licence.created|date('d/m/Y H:i:s e') }}</td>
+			</tr>
+			<tr>
+				<td class="text-right font-bold text-base w-1/2">{{ 'Expiration date'|trans({}, 'licence') }}
+					:</td>
+				<td class="w-1/2">{{ licence.expire|date('d/m/Y H:i:s e') }}</td>
+			</tr>
+		</table>
+		{% if is_granted('settings.edit') %}
+			<div class="mt-5">
+				{{ showAlert('info', 'To modify your license, go to the ". env" file of your installation and modify the APP_LICENCE environment variable.'|trans({},'licence'))}}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

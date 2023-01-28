@@ -27,7 +27,7 @@ class GithubAuthenticator extends AbstractSocialAuthenticator {
 
             $this->redirect = 'account.security';
         } else {
-            $user = $repository->findForOauth('azure', $githubUser->getId());
+            $user = $repository->findForOauth($this->serviceName, $githubUser->getId());
         }
 
         return $user;

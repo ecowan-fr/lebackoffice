@@ -17,7 +17,7 @@ class SocialLoginController extends AbstractController {
     private const SCOPES = [
         'discord' => ['identify'],
         'google' => [],
-        'github' => ['read:user'],
+        'github' => ['user'],
         'azure' => ['profile']
     ];
 

@@ -4,12 +4,13 @@ namespace App\Controller\Settings;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[
     Route('/settings/security'),
-    Security("is_granted('settings.view') and is_granted('settings.security.view')")
+    IsGranted(new Expression("is_granted('settings.view') and is_granted('settings.security.view')"))
 ]
 class SecurityController extends AbstractController {
 
@@ -20,7 +21,18 @@ class SecurityController extends AbstractController {
             methods: ['GET']
         )
     ]
-    public function security(): Response {
-        return $this->render('settings/security/index.html.twig');
+    public function index(): Response {
+        return $this->redirectToRoute('settings.index');
+    }
+
+    #[
+        Route(
+            path: '/login-system',
+            name: 'settings.security.loginsystem',
+            methods: ['GET']
+        )
+    ]
+    public function loginsystem(): Response {
+        return $this->render('settings/security/login_system.html.twig');
     }
 }

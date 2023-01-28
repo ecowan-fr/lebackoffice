@@ -84,9 +84,11 @@ class ConfigRepository extends ServiceEntityRepository {
         if (!$configs['structure_logo_custom']) {
             $logos['light'] = "/images/logo/logo-lebackoffice-noir.svg";
             $logos['dark'] = "/images/logo/logo-lebackoffice-blanc.svg";
+            $logos['icone'] = "/images/logo/icone-lebackoffice.svg";
         } else {
             $logos['light'] = $configs['structure_logo_url_light'];
             $logos['dark'] = $configs['structure_logo_url_dark'];
+            $logos['icone'] = $configs['structure_icone_url'];
         }
 
         return $logos;

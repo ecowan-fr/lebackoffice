@@ -1,4 +1,4 @@
-export default (function () {
+const lightboxWelcome = () => {
     document.createCookieWelcome = () => {
         localStorage.setItem('lightboxWelcome', "yes");
     }
@@ -9,4 +9,6 @@ export default (function () {
             Lightbox.S('welcome')
         }
     })
-})()
+}
+
+export default lightboxWelcome
